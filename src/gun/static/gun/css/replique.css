@@ -1,0 +1,166 @@
+body{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+}
+#content-general {
+    margin: 32px auto;
+    width: 90%;
+    padding-top: 20px;
+}
+body{
+    background-color: var(--color-gray9);
+    align-items: center;
+    justify-content: center;
+    height: 90vh;
+    color: var(--color-text-white);
+}
+
+.choix_avatar{
+    margin: 4rem auto 2rem;
+}
+.choix_avatar img{
+    margin-bottom: 1rem;
+}
+
+.end_button{
+    margin: auto;
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    width: 172px;
+}
+.btn_ender{
+    padding: 0.5rem 2rem;
+    border: 0;
+    background-color: transparent;
+    color: var(--color-text-white);
+    font-size: 14px;
+    cursor: pointer;
+    border-radius: 50px;
+
+}
+
+.style1{
+    background-color: var(--color-blue-light);
+    text-align: center;
+    border: 0;
+    cursor: pointer;
+    font-size: 16px;
+    margin: 1rem auto;
+    width: 100%;
+
+}
+.style2{
+    border: 2px solid var(--color-text-white);
+    background-color: transparent;
+}
+form img{
+    width: 100%;
+    margin: 0;
+    border-radius: 10px;
+}
+
+.fps{
+    margin: 5rem auto 0;
+    text-align: center;
+}
+.fps p{
+    font-size: 16px;
+}
+
+
+
+
+
+#verif{
+    text-align: center;
+    font-weight: normal;
+}
+#verif h2{
+    font-size: 18px;
+    font-weight: normal;
+}
+#verif h1{
+    font-size: 24px;
+    font-weight: normal;
+    margin-bottom: 1rem;
+}
+#verif h3{
+    font-size: 14px;
+    font-weight: normal;
+}
+#verif .grid-num1{
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    width: 70%;
+    margin: auto;
+}
+#verif .grid-num1 h1{
+    font-weight: normal;
+    font-size: 16px;
+}
+#verif .grid-num1 p{
+    font-weight: bold;
+    font-size: 24px;
+    color: var(--color-blue-light);
+}
+#verif .link{
+    color: var(--color-text-white);
+    text-decoration: underline;
+}
+#verif .grid-num2{
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: repeat(2, 1fr);
+    width: 70%;
+    margin: auto;
+}
+#verif .grid-num2 div{
+    height: 50px;
+    display:flex;
+    flex-direction: column;
+    justify-content: center;
+    margin: 1rem;
+    background-color: var(--color-blue-normal);
+    border-radius: 5px;
+    cursor: pointer;
+    transition: 0.7s;
+}
+#verif .grid-num2 div:hover{
+    background-color: var(--color-blue-light);
+    transition: 0.2s;
+}
+#verif .ou{
+    margin: 1rem 0;
+}
+#verif .input-text{
+    background-color: var(--color-gray8);
+    border: 0;
+    padding: 1rem 2rem;
+    border-radius: 5px;
+    width: 70%;
+    margin: 1rem 0;
+    color: var(--color-text-white);
+    font-size: 16px;
+}
+#verif .btn_submit{
+    padding: 1rem 2rem;
+    margin: 3rem 0 0 0;
+    border: 2px solid var(--color-blue-light);
+    border-radius: 50px;
+    background-color: transparent;
+    color: var(--color-text-white);
+    width: 50%;
+    cursor: pointer;
+    transition: 0.7s;
+}
+#verif .btn_submit:hover{
+    border: 2px solid var(--color-blue-light);
+    background-color: var(--color-blue-light);
+    color: var(--color-text-white);
+    cursor: pointer;
+    transition: 0.2s;
+}

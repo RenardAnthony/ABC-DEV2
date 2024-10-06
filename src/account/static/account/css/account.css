@@ -1,0 +1,249 @@
+body{
+    background-color: var(--color-gray9);
+    align-items: center;
+    justify-content: center;
+    height: 90vh;
+    color: var(--color-text-white);
+}
+
+.choix_avatar{
+    margin: 30px;
+    border: 1px solid var(--color-gray6);
+    border-radius: 10px;
+    padding: 1rem;
+}
+.choix_avatar a{
+    color: var(--color-text-white);
+}
+
+#content-general {
+    margin: 64px auto;
+    width: 90%;
+    padding-top: 20px; /* Ajoute un peu d'espace au-dessus du contenu */
+}
+#content-general h1{
+    text-align: center;
+    font-size: 32px;
+    display: flex;
+    flex-direction: column;
+}
+.input-box{
+    position: relative;
+    width: 90%;
+    height: 75px;
+    margin: 30px auto;
+
+}
+.input-box input{
+    width: 100%;
+    height: 100%;
+    background: var(--color-gray8);
+    border: none;
+    outline: none;
+    border: 2px solid rgba(255,255,255,.2);
+    border-radius: 40px;
+    font-size: 16px;
+    color: var(--color-text-white);
+    padding: 20px 50px 20px 20px;
+}
+.input-box input::placeholder{
+    color: var(--color-text-white);
+
+}
+.input-box i{
+    position: absolute;
+    right: 20px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 20px;
+}
+.input-box a{
+    right: 25px;
+    position: absolute;
+    bottom: -28px;
+    color: var(--color-gray6);
+}
+
+.input-bio {
+    position: relative;
+    width: 90%;
+    margin: 30px auto;
+    display: flex;
+    flex-direction: column;
+}
+
+.input-bio textarea {
+    width: 100%;
+    background: var(--color-gray8);
+    color: var(--color-text-white);
+    border-radius: 10px;
+    border: none;
+    padding: 20px;
+    font-size: 16px;
+    resize: none; /* Désactive le redimensionnement manuel */
+    overflow: hidden; /* Cache la barre de défilement */
+    line-height: 1.2; /* Ajuste l'espacement des lignes */
+    min-height: 100px; /* Hauteur minimale du textarea */
+    height: 210px;
+    box-sizing: border-box;
+    outline: none;
+}
+.input-bio label {
+    font-weight: bold;
+    margin-bottom: 8px;
+    display: block;
+}
+.input-bio small{
+    text-align: right;
+    margin: 6px;
+}
+.userprofilform button{
+    width: 200px;
+    font-size: 14px;
+    margin: 5rem auto;
+}
+.userprofilform img{
+    border-radius: 100%;
+    width: 280px;
+    border: 2px solid var(--color-gray1);
+    margin: auto;
+}
+.userprofilform {
+    min-height: 100%; /* Permet au formulaire de s'étendre verticalement */
+    padding-bottom: 20px; /* Ajouter un peu d'espace en bas du formulaire */
+}
+.input-box2 input::placeholder{
+    color: var(--color-text-white);
+}
+.input-box2{
+    position: relative;
+    width: 90%;
+    height: 50px;
+    margin: 30px auto;
+}
+
+
+.input-box2 input{
+    width: 100%;
+    height: 100%;
+    background: var(--color-gray8);
+    border: none;
+    outline: none;
+    border-radius: 10px;
+    font-size: 16px;
+    color: var(--color-text-white);
+    padding: 20px 50px 20px 20px;
+    margin-top: 8px;
+}
+.input-box2 label{
+    font-weight: bold;
+}
+.input-box2-choice {
+    position: relative;
+    width: 90%;
+    height: 50px;
+    margin: 30px auto;
+}
+
+.input-box2-choice select {
+    width: 100%;
+    height: 100%;
+    background: var(--color-gray8);
+    border: none;
+    outline: none;
+    border-radius: 10px;
+    font-size: 16px;
+    color: var(--color-text-white);
+    padding: 15px 50px 15px 20px; /* Ajusté pour laisser plus de place */
+    margin-top: 8px;
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    cursor: pointer; /* Ajoute un curseur 'pointer' */
+}
+
+/* Ajouter un style pour l'icône de flèche personnalisée */
+.input-box2-choice::after {
+    content: '\25BC'; /* Unicode pour la flèche */
+    position: absolute;
+    right: 20px;
+    top: 85%;
+    font-size: 20px; /* Taille de la flèche ajustée */
+    color: var(--color-text-white);
+    pointer-events: none; /* Empêche l'interaction avec la flèche */
+}
+
+.link-editprofil{
+    width: 90%;
+    margin: auto;
+    height: 124px;
+    justify-content: space-between;
+}
+.link-editprofil .inclass{
+    justify-content: space-between;
+    margin-top: 1rem;
+}
+.link-editprofil a{
+    color: var(--color-text-white);
+    text-decoration: underline;
+}
+.link-editprofil a:hover{
+    color: var(--color-blue-light);
+}
+a.button-gray{
+    color: var(--color-gray7);
+    text-decoration: none;
+}
+a.button-gray:hover{
+    color: var(--color-red);
+}
+.register-link{
+    display: flex;
+    flex-direction: column;
+    align-items:center;
+}
+.register-link .btn-light{
+    width: 200px;
+    font-size: 16px;
+    margin: 2rem auto;
+}
+.register-link a{
+    color: var(--color-text-white);
+    text-decoration-line: underline;
+}
+
+.submit-logout{
+    text-align: center;
+    width: 50%;
+    margin: 5rem auto auto auto;
+}
+
+.mobilsize {
+    width: 90%;
+    margin: auto;
+    padding-bottom: 100px; /* Ajouter l'espace pour éviter que le menu couvre */
+    position: relative;
+
+}
+.spacer-bar{
+    background-color: var(--color-gray1);
+    min-height: 2px;
+    width: 70%;
+    margin: 5rem auto;
+}
+.avertisement{
+    padding: 1rem;
+    margin: 1rem auto 0 auto;
+    color: var(--color-gray6);
+}
+.required-field select{
+    border: 2px solid var(--color-blue-normal);
+}
+
+
+@media screen and (max-width: 700px) {
+    #content-general {
+        /*width: 600px; retirer pour la page edition profil*/
+        padding-top: 20px; /* Espacement pour éviter que le contenu soit coupé sur mobile */
+    }
+}

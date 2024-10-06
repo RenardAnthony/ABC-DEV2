@@ -1,0 +1,40 @@
+{% load static %}
+
+<!DOCTYPE html>
+
+<html lang="fr">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Suppression compte</title>
+        <link rel="stylesheet" href="{% static 'account/css/style.css' %}">
+        <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    </head>
+    <body class="delete">
+        <div class="wrapper_delete">
+            <form method="post">
+                {% csrf_token %}
+                <h1>Suppression compte</h1>
+                <p class="description">Pour supprimer votre compte, veuillez suivre les instructions suivantes :</p>
+
+                    <label>
+                        <input type="checkbox" name="confirmation">
+                        En cochant cette case je comprends que cette action est irréversible.
+                    </label>
+
+
+                        <p class="tps">Tapez votre pseudo pour confirmer la supression:</p>
+                        <div class="input-box_delete">
+                            <input type="text" name="username" placeholder="Votre pseudo" required>
+                        </div>
+
+                    <button type="submit" class="btn">Supprimer Mon Compte</button>
+            </form>
+            {% if messages %}
+                {% for message in messages %}
+                    <div class="message {{ message.tags }}">{{ message }}</div>
+                {% endfor %}
+            {% endif %}
+        </div>
+    </body>
+</html>

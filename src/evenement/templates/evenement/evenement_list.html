@@ -1,0 +1,56 @@
+{% extends 'base.html' %}
+{% load static %}
+
+
+
+{% block title %} <title>Calendrier</title> {% endblock %}
+{% block Css %}
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link rel="stylesheet" href="{% static 'evenement/css/evenement2.css' %}">
+{% endblock %}
+
+{% block content %}
+
+
+<div id="evemenent-liste">
+  <div id="legende" class="pc">
+    <h2>Legende</h2>
+    <div>
+      <div class="legende_1"></div>
+      <p>Vous êtes inscrit</p>
+    </div>
+    <div>
+      <div class="legende_2"></div>
+      <p>Partie</p>
+    </div>
+    <div>
+      <div class="legende_3"></div>
+      <p>Événement</p>
+    </div>
+  </div>
+  <div class="list-element">
+    {% for detail in evenements_details %}
+      <a href="{% url 'evenement_detail' detail.evenement.pk %}" class="element">
+        <div {% if detail.evenement.type_evenement == "Partie" %}class="bookmark-partie"{% else %}class="bookmark-evenement"{% endif %}></div>
+        <div class="info">
+          <p class="nom">{{ detail.evenement.nom }}</p>
+          <p class="date">{{ detail.evenement.date_heure|date:"d/m/Y" }}</p>
+          <p class="pc desc">{{ detail.evenement.description }}</p>
+          <p class="mobil participant">{{ detail.nombre_participants }}/{{ detail.evenement.nb_joueurs_max }} Participant(s)</p>
+        </div>
+        {% if detail.utilisateur_inscrit %}
+        <div class="join_pin"></div>
+        {% endif %}
+      </a>
+    {% endfor %}
+  </div>
+</div>
+
+{% if user.is_staff %}
+<div class="staff_button_liste_evenement">
+    <a href="{% url 'evenement_create' %}" class="btn_2">Créer une partie</a>
+</div>
+{% endif %}
+
+
+{% endblock %}

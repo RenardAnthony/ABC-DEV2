@@ -1,0 +1,351 @@
+body{
+    background: var(--color-gray9);
+}
+#content-general{
+    width: 90%;
+    margin: auto;
+    background-color: transparent;
+    color: white;
+}
+
+.titre-evenement{
+    color: var(--color-text-white);
+    text-align: center;
+    margin: 32px auto;
+}
+
+.bannier{
+    width: 100%;
+    height: 97px;
+    object-fit: cover;
+    border-radius: 10px;
+}
+
+.nom-date{
+    background-color: var(--color-gray8);
+    border-radius: 10px;
+    height: 50px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 32px;
+    margin: 16px 0;
+    font-size: 16px;
+}
+
+.terrain-desc{
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    padding: 16px;
+    margin: 32px 0;
+}
+
+.terrain-desc .title-desc{
+    width: 50%;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    margin: 0 5rem;
+}
+.terrain-desc h1{
+    font-size: 16px;
+    font-weight: bold;
+}
+.terrain-desc p{
+    font-size: 14px;
+}
+
+
+
+.options{
+}
+.options article{
+    margin-bottom: 32px;
+}
+.options h1{
+    text-align: center;
+    background-color: var(--color-blue-light);
+    padding: 8px 0;
+    font-size: 16px;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+}
+.options p{
+    background-color: var(--color-gray8);
+    padding: 32px 16px 16px 16px;
+    font-size: 14px;
+}
+.options h2{
+    text-align: center;
+    font-size: 18px;
+    background-color: var(--color-gray8);
+    border-bottom-right-radius: 5px;
+    border-bottom-left-radius: 5px;
+    padding: 0 0 16px 0;
+}
+
+
+.liste_joueurs .bloque_1{
+    text-align: center;
+}
+.liste_joueurs .bloque_1 h2{
+    font-size: 16px;
+}
+.liste_joueurs .bloque_1 p{
+    font-size: 14px;
+}
+.liste_joueurs .bloque_2{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between; /* Pour espacer les colonnes */
+    margin: 32px 0;
+}
+.liste_joueurs .bloque_2 p{
+    width: 48%; /* Ajuste la largeur pour chaque colonne */
+    text-align: center;
+    margin-bottom: 10px;
+}
+.liste_joueurs .bloque_2 a{
+    color: white;
+}
+.liste_joueurs .bloque_3{
+    margin: 16px 10%;
+    color: var(--color-gray5);
+    font-size: 14px;
+}
+
+
+.inscription{
+    width: 75%;
+    margin: 32px auto 0;
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+}
+.inscription a{
+    width: 100%;
+    padding: 16px 0;
+    border-radius: 100px;
+    margin: 16px 0;
+}
+.inscription a.btn_1{
+    border: 2px solid var(--color-blue-normal);
+    color: var(--color-text-white);
+    background-color: var(--color-blue-normal);
+}
+.inscription a.btn_1:hover{
+    background-color: var(--color-blue-light);
+    border: 2px solid var(--color-blue-light);
+}
+.inscription a.btn_2{
+    border: 2px solid var(--color-blue-normal);
+    color: var(--color-blue-normal);
+    background-color: transparent;
+}
+.inscription a.btn_2:hover{
+    color: var(--color-text-white);
+    border: 2px solid var(--color-text-white);
+}
+.inscription a.btn_3{
+    border: 2px solid var(--color-red);
+    color: var(--color-red);
+    background-color: transparent;
+}
+.inscription a.btn_3:hover{
+    color: var(--color-orange);
+    border: 2px solid var(--color-orange);
+}
+.inscription a.btn_4{
+    border: 2px solid var(--color-green);
+    color: var(--color-green);
+    background-color: transparent;
+}
+.inscription a.btn_4:hover{
+    background-color: var(--color-green);
+    border: 2px solid var(--color-green);
+    color: var(--color-text-black);
+}
+.inscription a.btn_5{
+    border: 2px solid var(--color-orange);
+    color: var(--color-orange);
+    background-color: transparent;
+}
+.inscription a.btn_5:hover{
+    background-color: var(--color-orange);
+    border: 2px solid var(--color-orange);
+    color: var(--color-text-black);
+}
+.inscription a.btn_6{
+    border: 2px solid var(--color-red);
+    color: var(--color-text-white);
+    background-color: var(--color-red);
+}
+.inscription a.btn_6:hover{
+    border: 2px solid var(--color-text-black);
+    color: var(--color-text-black);
+    background-color: var(--color-red);
+}
+
+#comptabilite {
+  font-family: Arial, Helvetica, sans-serif;
+  border-collapse: collapse;
+  width: 100%;
+}
+#comptabilite td, #comptabilite th {
+  border: 1px solid #ddd;
+  padding: 8px;
+}
+#customers tr:hover {
+    background-color: #ddd;
+}
+#comptabilite th {
+  padding-top: 12px;
+  padding-bottom: 12px;
+  text-align: left;
+  background-color: var(--color-blue-light);
+  color: white;
+}
+.validated-row {
+    background-color: var(--color-green); /* Vert clair */
+}
+
+#evemenent-liste{
+    display: flex;
+    flex-direction: row;
+    width: 90%;
+    margin: auto;
+    margin-top: 5rem;
+}
+#legende{
+    width: 250px;
+}
+.list-element{
+    width: 100%;
+}
+.element{
+    height: 80px;
+    margin:0 0 2rem 1rem;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    padding-right: 2rem;
+    text-align: left;
+    background-color: var(--color-gray8);
+    border-radius: 5px;
+}
+.element:hover{
+    box-shadow: 5px 5px 10px black;
+}
+a.element{
+    color: var(--color-test-white);
+}
+.element p{
+    width: 30%;
+    cursor: pointer;
+}
+.bookmark-partie{
+    background-color: var(--color-green);
+    border-radius: 5px;
+    min-width: 16px;
+    margin-right: 1rem;
+    height: 80px;
+}
+.bookmark-evenement{
+    background-color: var(--color-orange);
+    border-radius: 5px;
+    min-width: 16px;
+    margin-right: 1rem;
+    height: 80px;
+}
+
+/*Inscription*/
+.mobilsize{
+    margin: 32px auto;
+    width: 80%;
+}
+.mobilsize h2{
+    text-align: center;
+    margin: 16px auto;
+    font-size: 19.3px;
+}
+.mobilsize h3{
+    text-align: left;
+    margin: 16px auto;
+    font-size: 16px;
+    font-weight: normal;
+}
+.mobilsize form{
+    display: flex;
+    flex-direction: column;
+}
+.mobilsize .prix_total{
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+}
+.mobilsize .prix_total span{
+    font-size: 19.3px;
+    font-weight: bold;
+}
+.mobilsize table{
+    color: var(--color-text-white);
+    text-align: center;
+    font-size: 14px;
+}
+.mobilsize form div{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+.mobilsize input[type="checkbox"] {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    width: 30px;
+    height: 30px;
+    border: 2px solid var(--color-gray8); /* Couleur de la bordure */
+    background-color: var(--color-gray8); /* Couleur de fond quand non sélectionnée */
+    border-radius: 10px; /* Pour donner des bords arrondis */
+    position: relative;
+    cursor: pointer;
+    margin-right: 1rem;
+}
+.mobilsize input[type="checkbox"]:checked {
+    background-color: var(--color-gray7); /* Garder la même couleur de fond */
+    border: none;
+}
+.mobilsize input[type="checkbox"]:checked::after {
+    content: "";
+    position: absolute;
+    width: 8px;
+    height: 15px;
+    border: solid var(--color-text-white);
+    border-width: 0 3px 3px 0;
+    transform: rotate(45deg);
+    left: 10px;
+    top: 4px;
+}
+.mobilsize .label-text {
+    font-size: 16px;
+    color: var(--color-text-white); /* Couleur du texte */
+    margin-left: 10px;
+}
+
+.mobilsize .checkbox-container {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+}
+.mobilsize input[type="text"]{
+    background: var(--color-gray7);
+    color: var(--color-text-white);
+    border:0;
+    padding: 16px;
+    border-radius: 10px;
+}
+.mobilsize input[type="text"]::placeholder{
+    color: var(--color-gray3);
+}

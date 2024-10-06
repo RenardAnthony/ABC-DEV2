@@ -1,0 +1,165 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}
+<title>Inscription à {{ evenement.nom }}</title>
+{% endblock %}
+
+{% block Css %}
+    <link rel="stylesheet" href="{% static 'evenement/css/evenement.css' %}">
+{% endblock %}
+
+{% block js %}
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        function updateMontantTotal() {
+            let montantTotal = 0;  // Initialiser à zéro pour tous les utilisateurs
+
+            // Prix pour le freelance (si applicable)
+            const prixFreelance = parseFloat("{{ evenement.prix_freelance|floatformat:2|default:'0.00' }}");
+            if (document.getElementById('freelance') && document.getElementById('freelance').value === 'freelance') {
+                montantTotal += prixFreelance;
+            }
+
+            // Calcul basé sur les checkboxes (repas, location)
+            const checkboxes = document.querySelectorAll('input[type="checkbox"][data-prix]');
+            checkboxes.forEach(function(checkbox) {
+                if (checkbox.checked) {
+                    montantTotal += parseFloat(checkbox.getAttribute('data-prix'));
+                }
+            });
+
+            // Mettre à jour l'affichage du montant total
+            document.getElementById('montant-total').textContent = montantTotal.toFixed(2) + ' €';
+        }
+
+        // Ajouter des événements sur les checkboxes et le rôle freelance
+        const checkboxes = document.querySelectorAll('input[type="checkbox"][data-prix]');
+        checkboxes.forEach(function(checkbox) {
+            checkbox.addEventListener('click', updateMontantTotal);
+        });
+
+        if (document.getElementById('freelance')) {
+            document.getElementById('freelance').addEventListener('change', updateMontantTotal);
+        }
+
+        // Appel initial pour calculer le montant au chargement de la page
+        updateMontantTotal();
+    });
+</script>
+{% endblock %}
+
+{% block content %}
+<div class="mobilsize">
+    <h2>Inscription à {{ evenement.nom }}</h2>
+
+    <form method="post" id="inscription-form">
+        {% csrf_token %}
+
+        <!-- Options pour le freelance et le repas -->
+        {% if request.user.userprofile.role == 'freelance' %}
+        <input type="hidden" id="freelance" value="freelance">
+        {% endif %}
+
+        <h3>Les options :</h3>
+        {% if evenement.repas %}
+        <div>
+            <input type="checkbox" name="repas" id="repas" data-prix="{{ evenement.prix_repas }}">
+            <label for="repas">Option repas</label>
+        </div>
+        {% endif %}
+
+        {% if evenement.locations %}
+        <div>
+            <input type="checkbox" name="location" id="location" data-prix="{{ evenement.prix_location }}">
+            <label for="location">Option pack de location</label>
+        </div>
+        {% endif %}
+
+        <div class="spacer_50"></div>
+
+        <div>
+            <input type="checkbox" name="besoin_covoiturage" id="besoin_covoiturage">
+            <label for="besoin_covoiturage">Besoin de covoiturage</label>
+        </div>
+        <div>
+            <input type="checkbox" name="offre_covoiturage" id="offre_covoiturage">
+            <label for="offre_covoiturage">Offre de covoiturage</label>
+        </div>
+
+        <div class="spacer_50"></div>
+
+        <div>
+            <input type="checkbox" name="accepte_regles" id="accepte_regles" required>
+            <label for="accepte_regles">J'ai lu les <a href="#">règles</a> et je m'engage à les respecter</label>
+        </div>
+
+        <div class="spacer_100"></div>
+
+        <!-- Affichage du montant total -->
+        <div class="prix_total">
+            <p>Montant total à payer</p>
+            <span id="montant-total">{{ montant_total }} €</span>
+        </div>
+
+        <div class="spacer_100"></div>
+
+        <!-- Inscription des répliques -->
+        <h3>Inscrire vos répliques :</h3>
+        <table>
+            <thead>
+                <tr>
+                    <th>Nom</th>
+                    <th>Type</th>
+                    <th>Joule</th>
+                    <th>Compatibilité</th>
+                    <th>Places (prises/total)</th>
+                    <th>Selectionner</th>
+                </tr>
+            </thead>
+            <tbody>
+            {% if replique_utilisateur %}
+                {% for replique in replique_utilisateur %}
+                <tr>
+                    <td>{{ replique.name }}</td>
+                    <td>{{ replique.replica_type }}</td>
+                    <td>{{ replique.joule }}</td>
+                    <td>
+                        {% if replique.replica_type in evenement.get_type_replique_autorisee %}
+                            <span style="color: green;">Oui</span>
+                        {% else %}
+                            <span style="color: red;">Non compatible</span>
+                        {% endif %}
+                    </td>
+                    <td>
+                        {% with slots_info|get_slots:replique.replica_type as slot %}
+                            {% if slot.pris >= slot.total %}
+                                <span style="color: red; font-weight: bold;" title="Le nombre maximum de {{ replique.replica_type }} est déjà atteint. Vous pourriez ne pas pouvoir utiliser cette réplique.">
+                                    Maximum atteint
+                                </span>
+                            {% else %}
+                                {{ slot.pris }}/{{ slot.total }} places
+                            {% endif %}
+                        {% endwith %}
+                    </td>
+                    <td>
+                        <input type="checkbox" name="replique_ids" value="{{ replique.id }}">
+                    </td>
+                </tr>
+                {% endfor %}
+            {% else %}
+                <tr>
+                    <td colspan="6">Vous n'avez aucune réplique associée à votre profil.</td>
+                </tr>
+            {% endif %}
+            </tbody>
+        </table>
+
+        <div class="spacer_50"></div>
+
+        <button class="btn-light" type="submit">S'inscrire</button>
+    </form>
+
+    <div class="spacer_200"></div>
+</div>
+{% endblock %}

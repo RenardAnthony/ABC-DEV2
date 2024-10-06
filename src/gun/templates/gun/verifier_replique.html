@@ -1,0 +1,60 @@
+ {% extends 'base.html' %}
+{% load static %}
+
+{% block title %}<title>Vérification de {{ replique.name }}</title>{% endblock %}
+{% block Css %}
+    <link rel="stylesheet" href="{% static 'gun/css/replique.css' %}">
+{% endblock %}
+
+{% block content %}
+    <div id="verif">
+        <h2>Calcule puissance</h2>
+        <h1>{{ replique.name }}</h1>
+        <h3>{{ proprietaire.pseudo }}</h3>
+
+        <div class="spacer_50"></div>
+
+        <div class="grid-num1">
+            <div>
+                <h1>Puissance (Joule)</h1>
+                <p>{{ replique.joule }}</p>
+            </div>
+            <div>
+                <h1>Dernière maj</h1>
+                <p>{{ replique.last_joule_update|date:"d/m/Y" }}</p>
+            </div>
+        </div>
+
+        <div class="spacer_50"></div>
+
+
+        <form method="post">
+            {% csrf_token %}
+
+
+
+            <div class="grid-num2">
+                <div onclick="document.getElementById('grammage_bille').value = '0.20'">0.20</div>
+                <div onclick="document.getElementById('grammage_bille').value = '0.22'">0.22</div>
+                <div onclick="document.getElementById('grammage_bille').value = '0.24'">0.24</div>
+                <div onclick="document.getElementById('grammage_bille').value = '0.26'">0.26</div>
+                <div onclick="document.getElementById('grammage_bille').value = '0.28'">0.28</div>
+                <div onclick="document.getElementById('grammage_bille').value = '0.30'">0.30</div>
+            </div>
+
+            <p class="ou">où</p>
+
+            <input class="input-text" name="grammage_bille" id="grammage_bille" type="text" placeholder="Grammage de la bille utilisée" value="{{ gram }}"> <br>
+
+            <input class="input-text" type="number" name="fps" id="fps" placeholder="FPS" required>
+
+            <br>
+
+            <button class="btn_submit" type="submit">Mettre à jour</button>
+        </form>
+
+        <a class="link" href="{% url 'gestion_participant' evenement_id inscription_id %}">Retour à la gestion du participant</a>
+
+        <div class="spacer_200"></div>
+    </div>
+{% endblock %}

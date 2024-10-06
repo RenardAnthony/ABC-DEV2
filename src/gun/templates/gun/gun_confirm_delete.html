@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}<title>Supprimer Réplique</title>{% endblock %}
+{% block Css %}
+    <link rel="stylesheet" href="{% static 'gun/css/replique.css' %}">
+{% endblock %}
+
+{% block content %}
+<div id="content-general">
+    <h2>Confirmation de suppression</h2>
+    <p>Êtes-vous sûr de vouloir supprimer cette réplique ?</p>
+
+    <form method="post" style="text-align:center;">
+        {% csrf_token %}
+        <div class="end_button">
+            <button type="submit" class="btn_ender style1">Oui, supprimer</button>
+            <a href="{% url 'profile' %}" class="btn_ender style2">Annuler</a>
+        </div>
+    </form>
+</div>
+{% endblock %}

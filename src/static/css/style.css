@@ -1,0 +1,319 @@
+header.pc{
+    background-color: var(--color-gray9);
+    height: 143px;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+
+    color: var(--color-text-white);
+    font-size: 12px;
+}
+header.pc nav{
+    background: var(--color-gray8);
+    height: 63px;
+    width: 100%;
+    margin: 0 10%;
+    border-radius: 100px;
+
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+}
+header.pc nav ul{
+    list-style: none;
+    display: flex;
+    flex-direction: row;
+}
+header.pc a{
+    padding: 0.5rem;
+    margin: 0 5px;
+    color: var(--color-text-white);
+    font-size: 12px;
+}
+header.pc nav img{
+    height: 53px;
+    width: 53px;
+    object-fit: cover;
+    margin: 0 6px;
+}
+header.pc nav a.logo{
+    margin: 0;
+    padding: 0;
+}
+header.pc nav div{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+header.pc nav a#pseudo{
+    text-transform: uppercase;
+}
+
+
+
+
+
+
+
+footer{
+    background: var(--color-gray9);
+    color: var(--color-text-white);
+    bottom: 0;
+    width: 100%;
+}
+footer a{
+    color: var(--color-text-white);
+    font-size: 12px;
+}
+footer h2{
+    font-size: 16px;
+}
+footer .footer-all-section{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    width: auto;
+    margin: 0 10%;
+}
+footer .footer-section{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    padding: 3rem 2rem;
+}
+footer .footer-section h2{
+    margin-bottom: 1rem;
+}
+footer .footer-section a{
+    margin-left: 1rem ;
+    margin-bottom: 0.2rem;
+}
+footer .reserved{
+    text-align: center;
+    padding: 15px 0;
+}
+
+
+#app{
+
+    min-height: 70vh;
+    border: 1px solid #ececec;
+    width: auto;
+    margin: 0 10%;
+    background-color: #4d4d4d;
+}
+.pdp_de_profiles{
+    border-radius:50%;
+    object-fit:cover;
+}
+
+
+/////////////MyFrameWork
+
+
+
+
+
+
+/*Notification bar*/
+#notification-container {
+    position: fixed;
+    top: 120px;
+    left: 50%;
+    width: 90%;
+    transform: translateX(-50%);
+    z-index: 1000;
+    cursor: pointer;
+}
+#notification {
+    position: fixed;
+    top: 10px;
+    left: -100%;  /* Change right to left */
+    width: 80%;
+    margin: auto;
+    padding: 8px;
+    border-radius: 50px;
+    background-color: var(--color-gray8);
+    color: var(--color-text-white);
+    font-size: 14px;
+    opacity: 0; /* Transparent initialement */
+    transition: left 0.5s ease-out, opacity 0.5s ease-out; /* Transition pour l'animation */
+    z-index: 1000; /* Assurez-vous que la notification est visible au-dessus de tout */
+}
+#notification.show {
+    left: 10%;  /* La notification se déplace de gauche à droite */
+    opacity: 1; /* Rendre la notification visible */
+}
+#notification p {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: left; /* Pour séparer le message et le texte "cliquer pour cacher" */
+    margin: 0; /* Supprimer la marge par défaut */
+}
+#notification p span {
+    margin-left: auto; /* Assure que le texte "cliquer pour cacher" se place à droite */
+
+}
+#notification p::before {
+    content: '';
+    width: 20px;
+    height: 20px;
+    display: block;
+    margin-right: 8px;
+    border-radius: 50px;
+    min-height: 20px;
+    min-width: 20px;
+}
+
+#notification.alert {
+    border: 2px solid var(--color-red);
+
+}
+#notification.success {
+    border: 2px solid var(--color-green);
+
+}
+#notification.warning {
+    border: 2px solid var(--color-orange);
+
+}
+#notification.notif {
+    border: 2px solid var(--color-blue-light);
+
+}
+#notification.alert p::before {
+    background-color: var(--color-red);
+
+}
+#notification.success p::before {
+    background-color: var(--color-green);
+
+}
+#notification.warning p::before {
+    background-color: var(--color-orange);
+
+}
+#notification.notif p::before {
+    background-color: var(--color-blue-light);
+
+}
+
+
+
+header.mobil{
+    position: fixed;
+    bottom: 0; /* Fixe le header mobile en bas de l'écran */
+    width: 100%;
+    background-color: var(--color-gray8);
+    color: var(--color-text-white);
+    z-index: 1000; /* Assure que le header reste au-dessus des autres éléments */
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    padding: 10px 0;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 1);
+    height: 70px;
+    font-size: 14px;
+}
+header.mobil nav{
+    display:flex;
+    flex-direction: row;
+    justify-content: space-around;
+    width: 100%;
+}
+header.mobil i{
+    font-size:32px;
+
+}
+header.mobil a{
+    color: var(--color-text-white);
+    text-align: center;
+    width: 120px;
+}
+header.mobil .logo{
+    position: fixed;
+    bottom: 35px;
+    padding: 10px;
+    background-color: var(--color-gray8);
+    border-radius: 50px;
+}
+header.mobil img.logo{
+    width: 70px;
+    height 70px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 1);
+}
+header.mobil #button_aditionnel{
+    display: flex;
+    position: fixed;
+    width:100%;
+    justify-content: space-around;
+    bottom: 140px;
+    z-index: 999;
+}
+header.mobil #button_aditionnel a{
+    background-color:var(--color-gray8);
+    width: 95px;
+    height: 95px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 1);
+    border-radius: 50px;
+    display: flex;
+    flex-direction: row;
+    text-align: center;
+    align-items: center;
+    justify-content: center;
+}
+
+
+
+
+.mobil{
+    display: none;
+}
+.pc{
+    display:block;
+}
+
+
+
+
+@media screen and (max-width: 700px){
+
+    .pc{
+        display:none;
+    }
+    .mobil{
+        display: block;
+    }
+
+
+
+    header.mobil{
+        display: flex;
+    }
+
+
+    body {
+        overflow-y: scroll; /* Activer le défilement vertical */
+        font-size: 18px;
+    }
+    body::-webkit-scrollbar {
+        width: 2px; /* Largeur de la barre de défilement */
+        opacity: 0; /* Rendre la barre de défilement invisible */
+        transition: opacity 0.2s ease; /* Ajouter une transition pour l'animation */
+    }
+    body:hover::-webkit-scrollbar {
+        opacity: 1; /* Rendre la barre de défilement visible au survol */
+    }
+    body::-webkit-scrollbar-thumb {
+        background-color: var(--color-gray8); /* Couleur noire */
+        border-radius: 5px; /* Arrondir les coins de la barre de défilement */
+    }
+
+    body::-webkit-scrollbar-track {
+        background: transparent; /* Couleur de la piste (le fond de la barre de défilement) */
+    }
+
+}

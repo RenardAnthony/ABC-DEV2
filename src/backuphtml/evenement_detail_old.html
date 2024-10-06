@@ -1,0 +1,107 @@
+{% extends 'base.html' %}
+{% load static %}
+
+
+
+{% block title %} <title>Index</title> {% endblock %}
+{% block Css %}
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link rel="stylesheet" href="{% static 'evenement/css/evenement.css' %}">
+{% endblock %}
+
+
+
+
+{% block content %}
+
+  {% if evenement.type_evenement == "Partie" %}
+    <img class="bannier" src="{% static 'evenement/images/partie.jpg' %}" alt="Bannière pour les partie">
+  {% else %}
+    <img class="bannier" src="{% static 'evenement/images/evenement.png' %}" alt="Bannière pour les evenement">
+  {% endif %}
+
+
+
+  <div class="nom-date">
+    <h1>{{ evenement.nom }}</h1>
+    <p>{{ evenement.date_heure }}</p>
+  </div>
+
+<div class="terrain-desc">
+
+  <div class="title-desc">
+    <h1>{{ evenement.lieu }}</h1>
+    <p>{{ evenement.description }}</p>
+  </div>
+
+
+  <div class="img-map">
+    {% if evenement.lieu == 'Cezac' %}
+      <img src="{% static 'images/Cezac.png' %}" alt="terrain de Cezac">
+    {% endif %}
+    {% if evenement.lieu == 'Reignac1' %}
+      <img src="{% static 'images/Regnac1.png' %}" alt="terrain de Reignac 1">
+    {% endif %}
+    {% if evenement.lieu == 'Reignac2' %}
+      <img src="{% static 'images/Regnac2.png' %}" alt="terrain de Reignac 2">
+    {% endif %}
+    {% if evenement.lieu != 'Cezac' and evenement.lieu != 'Reignac1' and evenement.lieu != 'Reignac2' %}
+      <i>MAP</i>
+    {% endif%}
+  </div>
+
+</div>
+
+
+
+  <p>----------------------------------</p>
+  <p>Nombre de joueurs minimum : {{ evenement.nb_joueurs_min }}</p>
+  <p>Nombre de joueurs maximum : {{ evenement.nb_joueurs_max }}</p>
+  <p>Freelance : {{ evenement.freelance }}</p>
+  <p>Locations : {{ evenement.locations }}</p>
+  <p>Repas : {{ evenement.repas }}</p>
+  <p>Prix freelance : {{ evenement.prix_freelance }}</p>
+  <p>Prix location : {{ evenement.prix_location }}</p>
+  <p>Prix repas : {{ evenement.prix_repas }}</p>
+  <p>Type de réplique autorisée : {{ evenement.type_replique_autorisee }}</p>
+  <p>Puissance max (joule) : {{ evenement.puissance_max_joule }}</p>
+  <br><br><br><p>____________________________</p><br><br><br>
+
+    <h3>Participants inscrits</h3>
+    <div>
+        {% for inscription in evenement.inscription_set.all %}
+            <p>
+                {% if inscription.utilisateur %}
+                    <a href="{% url 'user_profile' inscription.utilisateur.id %}">
+                        {{ inscription.utilisateur.pseudo }}
+                    </a>
+                {% else %}
+                    {{ inscription.nom_ami }} (inscrit par {{ inscription.inscrit_par.pseudo }})
+                {% endif %}
+            </p>
+        {% empty %}
+            <p>Aucun participant inscrit pour le moment.</p>
+        {% endfor %}
+    </div>
+    <div>
+        {% if user.is_authenticated %}
+            {% if not is_inscrit %}
+                <a href="{% url 'inscription_evenement' evenement.id %}">S'inscrire</a>
+            {% else %}
+                <a href="{% url 'inscription_ami' evenement.id %}">Inscrire un ami</a>
+                <a href="{% url 'desinscription_evenement' evenement.id %}">Se désinscrire</a>
+            {% endif %}
+        {% else %}
+            <p>Vous devez être connecté pour vous inscrire.</p>
+        {% endif %}
+    </div>
+
+
+
+  <br><br><br><p>____________________________</p><br><br><br>
+    {% if user.is_staff %}
+      <a href="{% url 'evenement_update' evenement.pk %}">Modifier</a>
+      <a href="{% url 'evenement_delete' evenement.pk %}">Supprimer</a>
+      <a href="{% url 'comptabilite_evenement' evenement.pk %}">Comptabilité</a>
+    {% endif %}
+{% endblock %}

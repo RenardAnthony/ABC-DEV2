@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %} <title>Edition profil</title> {% endblock %}
+
+{% block Css %}
+    <link rel="stylesheet" href="{% static 'account/css/style.css' %}">
+    <link rel="stylesheet" href="{% static 'account/css/account.css' %}">
+{% endblock %}
+
+{% block content %}
+
+    <form method="post" class="col">
+        {% csrf_token %}
+
+        <div class="input-box2">
+            <label for="id_pseudo">Pseudo</label>
+            {{ form.pseudo }}
+        </div>
+
+        <div class="input-box2">
+            <label for="id_date_of_birth">Date de naissance</label>
+            {{ form.date_of_birth }}
+            {% if user.date_of_birth %}
+                <span> (Actuelle : {{ user.date_of_birth|date:"d/m/Y" }})</span>
+            {% endif %}
+        </div>
+
+        <div class="link-editprofil col">
+            <div class="inclass row">Email actuel : {{ user.email }}</p> <a href="{% url 'change_email' %}">Modifier</a></div>
+            <div><a href="{% url 'password_reset' %}">Modifier mon mot de passe</a></div>
+            <div><a class="button-gray" href="{% url 'delete_user' %}">Supprimer mon compte</a></div>
+        </div>
+
+        <div class="submit-logout col">
+            <button class="btn-light" type="submit">Mettre à jour</button>
+            <br>
+            <a class="btn-borderwhite" href="{% url 'logout' %}">Logout</a>
+        </div>
+
+    </form>
+
+
+{% endblock %}

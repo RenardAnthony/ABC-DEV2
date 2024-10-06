@@ -1,0 +1,104 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %} <title>Edition profil</title> {% endblock %}
+
+{% block Css %}
+    <link rel="stylesheet" href="{% static 'account/css/style.css' %}">
+    <link rel="stylesheet" href="{% static 'account/css/account.css' %}">
+{% endblock %}
+
+{% block content %}
+    <div class="mobilsize">
+
+        <form class="userprofilform col" method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+
+            <img class="" src="{{ user.userprofile.avatar.url }}" alt="Avatar de {{ user.username }}">
+            <!-- Avatar -->
+            <div class="choix_avatar">
+                <label for="{{ form.avatar.id_for_label }}">Avatar</label>
+                {{ form.avatar }}
+            </div>
+
+            <!-- Bio -->
+            <div class="input-bio">
+                <label for="{{ form.bio.id_for_label }}">Bio</label>
+                {{ form.bio }}
+                <small id="bio-char-count">255 caractères restants</small>
+            </div>
+
+            <!-- Nom -->
+            <div class="input-box2">
+                <label for="{{ form.nom.id_for_label }}">Nom</label>
+                {{ form.nom }}
+            </div>
+
+            <!-- Prénom -->
+            <div class="input-box2">
+                <label for="{{ form.prenom.id_for_label }}">Prénom</label>
+                {{ form.prenom }}
+            </div>
+
+
+
+            <!-- Groupe sanguin -->
+            <div class="input-box2-choice required-field">
+                <label for="{{ form.blood_group.id_for_label }}">Groupe sanguin</label>
+                {{ form.blood_group }}
+            </div>
+
+            <div class="spacer-bar"></div>
+
+            <!-- Bio Gender -->
+            <div class="input-box2-choice required-field">
+                <label for="{{ form.bio_gender.id_for_label }}">Sexe biologique *</label>
+                {{ form.bio_gender }}
+            </div>
+
+            <!-- Choices Gender -->
+            <div class="input-box2-choice required-field">
+                <label for="{{ form.choices_gender.id_for_label }}">Identité de genre **</label>
+                {{ form.choices_gender }}
+            </div>
+
+            <p class="avertisement">
+                * Le sexe biologique est requis pour des raisons de sécurité, notamment en cas d'accident ou d'urgence médicale, afin que les secouristes puissent prodiguer les soins les plus appropriés.<br><br>
+                ** Seule votre identité de genre sera visible sur votre profil et sera respectée dans toutes nos interactions et communications.
+            </p>
+
+
+            <div class="spacer-bar"></div>
+            <p class="avertisement">
+                Champs obligatoire pour les membres abc. <br> Pour les freelances ce champs est facultatif
+            </p>
+            <!-- Téléphone -->
+            <div class="input-box2">
+                <label for="{{ form.tel.id_for_label }}">Téléphone*</label>
+                {{ form.tel }}
+            </div>
+
+            <!-- Adresse -->
+            <div class="input-box2">
+                <label for="{{ form.adresse.id_for_label }}">Adresse (ville uniquement)**</label>
+                {{ form.adresse }}
+            </div>
+
+
+
+
+            <button type="submit" class="btn-light">Mettre à jour</button>
+        </form>
+
+    </div>
+
+    <script>
+        var bioField = document.getElementById('{{ form.bio.id_for_label }}');
+        var charCount = document.getElementById('bio-char-count');
+
+        bioField.addEventListener('input', function() {
+            var remaining = 255 - bioField.value.length;
+            charCount.textContent = remaining + " caractères restants";
+        });
+    </script>
+{% endblock %}

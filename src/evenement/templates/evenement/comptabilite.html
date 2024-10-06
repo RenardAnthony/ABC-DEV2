@@ -1,0 +1,76 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}<title>Comptabilité pour {{ evenement.nom }}</title>{% endblock %}
+{% block Css %}
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link rel="stylesheet" href="{% static 'evenement/css/evenement2.css' %}">
+{% endblock %}
+
+{% block content %}
+<div id="compta">
+    <h2>{{ evenement.nom }}</h2>
+
+    <div id="liste">
+        {% for participant in participants %}
+        <article onclick="window.location.href='{% url 'gestion_participant' evenement.id participant.inscription_id %}';" class="{% if participant.paiement_valide and participant.chrony_valide %}validated-row{% endif %}">
+            <div>
+                <p>
+                {% if participant.paiement_valide and participant.chrony_valide %}
+               (Valider)
+                {% endif %}
+                {{ participant.pseudo }}</p>
+            </div>
+            <div>
+                {% if participant.chrony_valide %}
+                    <i class="Chrony valide"><p>C</p></i>
+                {% else %}
+                    <i class="Chrony"><p>C</p></i>
+                {% endif %}
+
+                {% if participant.paiement_valide %}
+                    <i class="Payment valide"><p>P</p></i>
+                {% else %}
+                    <i class="Payment"><p>P</p></i>
+                {% endif %}
+
+            </div>
+        </article>
+        {% endfor %}
+    </div>
+
+    <div class="spacer_50"></div>
+
+    <a href="{% url 'evenement_detail' evenement.pk %}">Retour à l'événement</a>
+
+    <div class="spacer_50"></div>
+
+    <!-- Récapitulatif final -->
+    <div class="recapitulatif">
+
+        <p>Total de l'argent attendu : {{ total_depenses }} €</p>
+
+        {% if total_repas > 0 %}
+        <p>Participants au repas : {{ total_repas }}</p>
+        {% endif %}
+
+        {% if total_locations > 0 %}
+        <p>Packs de location demandés : {{ total_locations }}</p>
+        {% endif %}
+
+        <p>Freelances : {{ total_freelance }}</p>
+
+        <p>Membres : {{ total_membre }}</p>
+
+        <p>Répliques par catégorie :</p>
+
+        <ul>
+            {% for categorie, nombre in repliques_par_categorie.items %}
+                <li>{{ categorie }} : {{ nombre }}</li>
+            {% endfor %}
+        </ul>
+    </div>
+
+    <div class="spacer_150"></div>
+</div>
+{% endblock %}

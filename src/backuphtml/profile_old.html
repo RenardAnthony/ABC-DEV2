@@ -1,0 +1,71 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %} <title>Profile</title> {% endblock %}
+{% block Css %}
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link rel="stylesheet" href="{% static 'account/css/profiles.css' %}">
+{% endblock %}
+{% block content %}
+
+    <div id="border_margin">
+        <div id="top_profiles">
+            <div id="badge_zone">
+            </div>
+            <div class="bottom">
+                <div id="vag">
+                    <img src="{{ user.userprofile.avatar.url }}" alt="Photo de profil de {{user.pseudo}}">
+                    <div class="text-left gray-text">
+                        <p>{{ user.userprofile.adresse }}</p>
+                        <p>{{ user.date_of_birth }}</p>
+                        <p>{{ user.userprofile.blood_group }}</p>
+                        <p>{{ user.userprofile.choices_gender }}</p>
+                    </div>
+                    {% if user.id == request.user.id %}
+                    <div id="edit_profil">
+                        <a href="{% url 'update_user' %}" class="btn-blue">Mes informations</a>
+                        <a href="{% url 'update_user_profile' %}" class="btn-blue">Modifier mon profil</a>
+                    </div>
+                    {% else %}
+                        <a href="{% url 'profile' %}" class="btn-blue">Retour à mon profil</a>
+                    {% endif %}
+
+                </div>
+                <div class="pnpb">
+                    <h1>{{ user.pseudo }}</h1>
+                    <h2>( {{ user.userprofile.nom }} {{ user.userprofile.prenom }} )</h2>
+                    <h2>{{ user.userprofile.role }}</h2>
+                    <p>"{{ user.userprofile.bio }}"</p>
+                </div>
+            </div>
+        </div>
+
+
+                <br><br><br><br><br><br><br>
+
+
+
+        <div id="content-replique">
+            <div id="liste-repliques">
+                {% for gun in user.guns.all %}
+                <a href="{% url 'update_gun' gun.pk %}">
+                    <div class="replique_unique">
+                        <div class="box-top">
+                            <img src="{{ gun.photo.url }}" alt="Photo de la réplique" width="200">
+                            <p>{{ gun.replica_type }}</p>
+                        </div>
+                        <div class="box-bottom">
+                            <p>{{ gun.name }}</p>
+                            <p>{{ gun.joule }} joule</p>
+                        </div>
+                    </div>
+                    <a href="{% url 'delete_gun' gun.pk %}">Supprimer</a>
+                </a>
+                {% endfor %}
+
+            </div>
+
+            <a href="{% url 'create_gun' %}">Ajouter une réplique</a>
+        </div>
+
+    </div>
+{% endblock %}

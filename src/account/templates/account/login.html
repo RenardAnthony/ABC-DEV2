@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %} <title>Login</title> {% endblock %}
+{% block Css %}
+    <link rel="stylesheet" href="{% static 'account/css/style.css' %}">
+    <link rel="stylesheet" href="{% static 'account/css/account.css' %}">
+{% endblock %}
+
+{% block content %}
+
+    <form method="post" class="col">
+        {% csrf_token %}
+        <h1>Connexion</h1>
+
+        <div class="input-box">
+            <input type="email" name="email" id="email" placeholder="Email" required>
+            <i class='bx bxs-envelope' ></i>
+        </div>
+
+        <div class="input-box">
+            <input type="password" name="password" id="password" placeholder="Password" required>
+            <i class='bx bxs-lock-alt' ></i>
+            <a  class="islink" href="{% url 'password_reset' %}">Mot de passe oublié ?</a>
+        </div>
+
+
+        <div class="register-link">
+            <button type="submit" class="btn-light">Se connecter</button>
+            <p>Pas encore inscrit ? <a class="islink" href="{% url 'signup' %}">S'inscrire</a></p>
+         </div>
+    </form>
+
+    {% if error %}
+        <div class="error">
+            <p>{{ error }}</p>
+        </div>
+    {% endif %}
+{% endblock %}

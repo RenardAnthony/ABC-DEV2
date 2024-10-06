@@ -1,0 +1,113 @@
+{% load static %}
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+
+    {% block title %}{% endblock %}
+        <link rel="stylesheet" href="{% static 'css/freamwork.css' %}">
+        <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    {% block Css %}{% endblock %}
+    {% block js %}{% endblock %}
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+    <link rel="shortcut icon" type="image/png" href="{% static 'images/favicon.png' %}" >
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+</head>
+<body>
+
+    <!-- Notification Container -->
+    <div id="notification-container">
+        <div id="notification" class="alert"><p>En vrai ta rien à regarder ici tkt</p></div>
+    </div>
+
+    <!--Suite de la page-->
+    <header class="pc">
+        <nav>
+            <div>
+                <a href="{% url 'index' %}" class="logo"><img src="{% static 'images/logo.png'%}" alt="Logo airsoft Bordeaux Concept"></a>
+                <ul>
+                    <li><a href="{% url 'evenement_list' %}">CALENDRIER</a></li>
+                    <li><a href="https://airsoftbordeauxforum.forum-pro.fr" target="_blank">FORUM</a></li>
+                    <li><a href="#">CONTACT</a></li>
+                </ul>
+            </div>
+
+
+
+            <div>
+                {% if user.is_authenticated %}
+                    <a id="pseudo" href="{% url 'profile' %}">{{ request.user.pseudo }}</a>
+                {%  else %}
+                    <a href="{% url 'profile' %}">CONNEXION</a>
+                {% endif %}
+
+                {% if user.is_authenticated %}
+                    <img class="pdp_de_profiles" src="{{ request.user.userprofile.avatar.url }}" alt="Photo de profil de {{user.pseudo}}">
+                {%  else %}
+                    <img class="pdp_de_profiles" src="{% static 'images/profil_default.png' %}" alt="Photo de profil">
+                {% endif %}
+
+            </div>
+        </nav>
+    </header>
+    <header class="mobil" style="display:none;">
+        <nav>
+            <a href="{% url 'evenement_list' %}"><i class='bx bxs-calendar'></i><p>CALENDRIER</p></a>
+            {% if user.is_authenticated %}
+                <a id="pseudo" href="{% url 'profile' %}"><i class='bx bxs-user'></i><p>{{ request.user.pseudo }}</p></a>
+            {%  else %}
+                <a href="{% url 'profile' %}"><i class='bx bxs-user'></i><p>CONNEXION</p></a>
+            {% endif %}
+        </nav>
+        <div id="button_aditionnel">
+            <a href="https://airsoftbordeauxforum.forum-pro.fr/login" target="_blank">FORUM</a>
+            <a href="{% url 'index' %}">ACCUEIL</a>
+            <a href="">CONTACT</a>
+        </div>
+        <img class="logo" src="{% static 'images/logo.png'%}" alt="Logo airsoft Bordeaux Concept" onclick="btn_adi_toggle()">
+    </header>
+
+    <section id="content-general">
+        {% block content %}{% endblock %}
+    </section>
+
+    <footer class="pc">
+        <div class="footer-all-section">
+            <div class="footer-section">
+                <h2>Débuter</h2>
+                    <a href="#">Réglement intérieur</a>
+                    <a href="#">Présentation des membres</a>
+                    <a href="#">Présentation de votre équipement</a>
+                    <a href="#">FAQ</a>
+            </div>
+            <div class="footer-section">
+                <h2>Resources</h2>
+                    <a href="#">Dossiers techinques</a>
+                    <a href="#">Les techniques en airsoft</a>
+                    <a href="#">Partenaires</a>
+            </div>
+            <div class="footer-section">
+                <h2>Policy</h2>
+                    <a href="#">Condition général d'utilisation</a>
+                    <a href="#">Protections des données</a>
+                    <a href="#">Politique de confidentialité</a>
+            </div>
+            <div class="footer-section">
+                <h2>Social</h2>
+                    <a href="#">Facebook</a>
+                    <a href="#">Instagram</a>
+                    <a href="#">Discord</a>
+            </div>
+        </div>
+
+        <div class="reserved">
+            <p>©2024 - Airsoft Bordeaux Concept</p>
+        </div>
+    </footer>
+
+
+    <script id="notification-messages" type="application/json">{% if messages %}[{% for message in messages %}{"level": "{{ message.tags }}", "text": "{{ message|escapejs }}"}{% if not forloop.last %},{% endif %}{% endfor %}]{% else %}[] {% endif %}</script>
+    <script src="{% static 'js/notification.js' %}"></script>
+    <script src="{% static 'js/btn_aditionel_mobil.js' %}"></script>
+
+</body>
+</html>

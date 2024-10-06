@@ -1,0 +1,199 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}
+    <title>Inscrire un(e) ami(e) à {{ evenement.nom }}</title>
+{% endblock %}
+
+{% block Css %}
+    <link rel="stylesheet" href="{% static 'evenement/css/evenement.css' %}">
+{% endblock %}
+
+{% block js %}
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        function updateMontantTotal() {
+            let montantTotal = parseFloat("{{ montant_total|floatformat:2|default:'0.00' }}".replace(',', '.'));
+
+            // Calcul basé sur les checkboxes (repas, covoiturage, etc.)
+            const checkboxes = document.querySelectorAll('input[type="checkbox"][data-prix]');
+            checkboxes.forEach(function(checkbox) {
+                if (checkbox.checked) {
+                    montantTotal += parseFloat(checkbox.getAttribute('data-prix'));
+                }
+            });
+
+            // Calcul basé sur le choix de la réplique
+            const choiceSelect = document.getElementById('replique_choice');
+            if (choiceSelect.value === 'pack_location') {
+                const packLocationPrice = parseFloat("{{ evenement.prix_location|floatformat:2|default:'0.00' }}".replace(',', '.'));
+                montantTotal += packLocationPrice;
+            }
+
+            // Mettre à jour l'affichage du montant total
+            document.getElementById('montant-total').textContent = montantTotal.toFixed(2) + ' €';
+        }
+
+        // Ajouter des événements sur les checkboxes
+        const checkboxes = document.querySelectorAll('input[type="checkbox"][data-prix]');
+        checkboxes.forEach(function(checkbox) {
+            checkbox.addEventListener('click', updateMontantTotal);
+        });
+
+        // Ajouter un événement sur le menu déroulant pour le choix de réplique
+        const choiceSelect = document.getElementById('replique_choice');
+        choiceSelect.addEventListener('change', updateMontantTotal);
+
+        // Appel initial pour calculer le montant au chargement de la page
+        updateMontantTotal();
+
+        // Gestion des options de répliques pour l'ami
+        const repliquesSection = document.getElementById('repliques_section');
+        const amisRepliquesSection = document.getElementById('amis_repliques_section');
+
+        function toggleRepliqueSections() {
+            if (choiceSelect.value === 'pack_location') {
+                // Si l'option "Pack Location" est sélectionnée, cacher les autres sections
+                repliquesSection.style.display = 'none';
+                amisRepliquesSection.style.display = 'none';
+                clearPretReplique();  // Réinitialiser le champ de réplique prêtée
+                clearAmisRepliques();  // Réinitialiser les cases cochées
+            } else if (choiceSelect.value === 'pret_replique') {
+                repliquesSection.style.display = 'block';
+                amisRepliquesSection.style.display = 'none';
+                clearAmisRepliques();  // Réinitialiser les cases cochées
+            } else if (choiceSelect.value === 'ami_replique') {
+                repliquesSection.style.display = 'none';
+                amisRepliquesSection.style.display = 'block';
+                clearPretReplique();  // Réinitialiser le champ de réplique prêtée
+            } else {
+                repliquesSection.style.display = 'none';
+                amisRepliquesSection.style.display = 'none';
+                clearPretReplique();  // Réinitialiser tous les champs
+                clearAmisRepliques();
+            }
+        }
+
+        // Réinitialiser le choix de la réplique prêtée
+        function clearPretReplique() {
+            const repliqueSelect = document.getElementById('replique_ami');
+            repliqueSelect.value = '';  // Désélectionner toute réplique
+        }
+
+        // Réinitialiser les cases cochées pour les répliques de l'ami
+        function clearAmisRepliques() {
+            document.querySelectorAll('input[name="amis_repliques"]').forEach(function(checkbox) {
+                checkbox.checked = false;  // Désélectionner toutes les cases
+            });
+        }
+
+        // Gérer le changement de section
+        choiceSelect.addEventListener('change', toggleRepliqueSections);
+        toggleRepliqueSections();  // Initialiser l'état des sections au chargement
+    });
+</script>
+
+{% endblock %}
+
+{% block content %}
+<div class="mobilsize">
+    <h2>Inscrire un(e) ami(e)</h2>
+
+    <form method="post">
+        {% csrf_token %}
+
+        <!-- Nom de l'ami -->
+        <input type="text" name="nom_ami" id="nom_ami" placeholder="Pseudo de l'ami" required><br>
+
+        <!-- Option repas -->
+        {% if evenement.repas %}
+        <div>
+            <input type="checkbox" name="repas" id="repas" data-prix="{{ evenement.prix_repas }}">
+            <label for="repas">Option repas</label>
+        </div>
+        {% endif %}
+
+        <div class="spacer_50"></div>
+
+        <!-- Menu pour choisir le type de réplique ou pack de location -->
+        <h3>Choix de la réplique :</h3>
+        <select id="replique_choice" name="replique_choice">
+            <option value="">Sélectionner une option</option>
+            {% if evenement.locations %}
+            <option value="pack_location">Pack Location</option>
+            {% endif %}
+            <option value="pret_replique">Je prête une de mes répliques</option>
+            <option value="ami_replique">L'ami vient avec sa propre réplique</option>
+        </select>
+
+        <div class="spacer_50"></div>
+
+        <!-- Choix des répliques si l'ami utilise une réplique appartenant à l'utilisateur -->
+        <div id="repliques_section" style="display: none;">
+            <h3>Choisir une réplique à prêter à l'ami :</h3>
+            <select name="replique_ami" id="replique_ami">
+                <option value="">Sélectionner une réplique</option>
+                {% for replique in replique_utilisateur %}
+                <option value="{{ replique.id }}">{{ replique.name }} ({{ replique.replica_type }})</option>
+                {% endfor %}
+            </select>
+        </div>
+
+        <div class="spacer_50"></div>
+
+        <!-- Choix des types de répliques si l'ami utilise ses propres répliques -->
+        <div id="amis_repliques_section" style="display: none;">
+            <h3>Types de répliques que l'ami apportera :</h3>
+
+            {% for slot in slots_info %}
+                {% if slot.pris >= slot.total %}
+                    <!-- Si la limite de répliques est atteinte, afficher en rouge avec un avertissement -->
+                    <label style="color:red;">
+                        <input type="checkbox" name="amis_repliques" value="{{ slot.type }}" disabled>
+                        {{ slot.type }} (Limite atteinte ou réplique interdi)
+                    </label>
+                {% else %}
+                    <!-- Sinon, afficher normalement -->
+                    <label>
+                        <input type="checkbox" name="amis_repliques" value="{{ slot.type }}">
+                        {{ slot.type }}
+                    </label>
+                {% endif %}
+            <br>
+            {% endfor %}
+        </div>
+
+        <div class="spacer_50"></div>
+
+        <!-- Covoiturage -->
+        <div>
+            <input type="checkbox" name="besoin_covoiturage" id="besoin_covoiturage">
+            <label for="besoin_covoiturage">Besoin de covoiturage</label>
+        </div>
+        <div>
+            <input type="checkbox" name="offre_covoiturage" id="offre_covoiturage">
+            <label for="offre_covoiturage">Offre de covoiturage</label>
+        </div>
+
+        <div class="spacer_50"></div>
+
+        <!-- Acceptation des règles -->
+        <div>
+            <input type="checkbox" name="accepte_regles" id="accepte_regles" required>
+            <label for="accepte_regles">Je suis responsable de l'ami que j'inscris.</label>
+        </div>
+
+        <div class="spacer_100"></div>
+
+        <!-- Montant total -->
+        <div class="prix_total">
+            <p>Montant total à payer</p>
+            <span id="montant-total">{{ montant_total }} €</span>
+        </div>
+
+        <div class="spacer_100"></div>
+
+        <button class="btn-light" type="submit">Inscrire l'ami</button>
+    </form>
+</div>
+{% endblock %}

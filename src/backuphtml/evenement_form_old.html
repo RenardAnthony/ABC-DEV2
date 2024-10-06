@@ -1,0 +1,141 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}
+  <title>{% if evenement %}Modifier l'événement/partie{% else %}Créer un nouvel événement/partie{% endif %}</title>
+{% endblock %}
+
+{% block Css %}
+  <link rel="stylesheet" href="{% static 'css/style.css' %}">
+  <link rel="stylesheet" href="{% static 'css/index.css' %}">
+{% endblock %}
+
+{% block content %}
+  <h2>{% if evenement %}Modifier l'événement/partie{% else %}Créer un nouvel événement/partie{% endif %}</h2>
+  <form method="post">
+    {% csrf_token %}
+
+    <label for="type_evenement">Type d'événement:</label>
+    <select name="type_evenement" id="type_evenement" required>
+      <option value="Partie" {% if evenement and evenement.type_evenement == 'Partie' %}selected{% endif %}>Partie</option>
+      <option value="Evenement" {% if evenement and evenement.type_evenement == 'Evenement' %}selected{% endif %}>Événement</option>
+    </select><br>
+
+    <label for="nom">Nom:</label>
+    <input type="text" id="nom" name="nom" value="{% if evenement %}{{ evenement.nom }}{% endif %}" required><br>
+
+    <label for="description">Description:</label>
+    <textarea id="description" name="description" required>{% if evenement %}{{ evenement.description }}{% endif %}</textarea><br>
+
+    <label for="date_heure">Date et Heure:</label>
+    <input type="datetime-local" id="date_heure" name="date_heure" value="{% if evenement %}{{ evenement.date_heure|date:'Y-m-d\TH:i' }}{% endif %}" required><br>
+
+    <label for="lieu">Lieu:</label><br>
+    <input type="checkbox" id="is_terrain" name="is_terrain"
+           {% if evenement %} {% if evenement.lieu == 'Cezac' or evenement.lieu == 'Reignac1' or evenement.lieu == 'Reignac2'%} checked {% endif %}{% endif %} onchange="toggleLieu()">
+    <label for="is_terrain">Sélectionner un terrain</label><br>
+
+    <select name="lieu_terrain" id="lieu_terrain"
+            {% if evenement %} {% if evenement.lieu == 'Cezac' or evenement.lieu == 'Reignac' or evenement.lieu == 'Reignac2'%} style="display:inline"{% else %}style="display:none"{% endif %}{% endif %}>
+      <option value="Cezac" {% if evenement and evenement.lieu == 'Cezac' %}selected{% endif %}>Cezac</option>
+      <option value="Reignac1" {% if evenement and evenement.lieu == 'Reignac1' %}selected{% endif %}>Reignac1</option>
+      <option value="Reignac2"> {% if evenement and evenet.lieu == 'Reignac2'%}selected{% endif%}Reignac2</option>
+    </select><br>
+
+    <input type="text" id="lieu_adresse" name="lieu_adresse" placeholder="Adresse" value="{% if evenement %} {% if evenement.lieu != 'Cezac' and evenement.lieu != 'Reignac' %}{{ evenement.lieu }}{% endif %}{% endif %}"
+           {% if evenement %} {% if evenement.lieu == 'Cezac' or evenement.lieu == 'Reignac' %} style="display:none"{% else %}style="display:inline"{% endif %}{% endif %}><br>
+
+    <label for="nb_joueurs_max">Nombre de joueurs maximum:</label>
+    <input type="number" id="nb_joueurs_max" name="nb_joueurs_max" value="{% if evenement %}{{ evenement.nb_joueurs_max }}{% endif %}" required><br>
+
+    <label for="nb_joueurs_min">Nombre de joueurs minimum:</label>
+    <input type="number" id="nb_joueurs_min" name="nb_joueurs_min" value="{% if evenement %}{{ evenement.nb_joueurs_min }}{% endif %}" required><br>
+
+    <label for="freelance">Freelance:</label>
+    <input type="checkbox" id="freelance" name="freelance" {% if evenement and evenement.freelance %}checked{% endif %} onchange="toggleFreelance()"><br>
+    <div id="freelance_details" {% if evenement and not evenement.freelance %}style="display:none"{% endif %}>
+      <label for="prix_freelance">Prix Freelance:</label>
+      <input type="number" step="0.01" id="prix_freelance" name="prix_freelance" value="{% if evenement %}{{ evenement.prix_freelance }}{% endif %}"><br>
+    </div>
+
+    <label for="locations">Locations:</label>
+    <input type="checkbox" id="locations" name="locations" {% if evenement and evenement.locations %}checked{% endif %} onchange="toggleLocations()"><br>
+    <div id="locations_details" {% if evenement and not evenement.locations %}style="display:none"{% endif %}>
+      <label for="prix_location">Prix Location:</label>
+      <input type="number" step="0.01" id="prix_location" name="prix_location" value="{% if evenement %}{{ evenement.prix_location }}{% endif %}"><br>
+    </div>
+
+    <label for="repas">Repas:</label>
+    <input type="checkbox" id="repas" name="repas" {% if evenement and evenement.repas %}checked{% endif %} onchange="toggleRepas()"><br>
+    <div id="repas_details" {% if evenement and not evenement.repas %}style="display:none"{% endif %}>
+      <label for="prix_repas">Prix Repas:</label>
+      <input type="number" step="0.01" id="prix_repas" name="prix_repas" value="{% if evenement %}{{ evenement.prix_repas }}{% endif %}"><br>
+    </div>
+
+    <div id="repliques" {% if evenement and evenement.type_evenement == 'Evenement' %}style="display:none"{% endif %}>
+      <label for="type_replique_autorisee">Types de répliques autorisées:</label><br>
+      {% for choice in evenement.REPLIQUE_CHOICES %}
+        <input type="checkbox" id="replique_{{ forloop.counter }}" name="type_replique_autorisee" value="{{ choice.0 }}" {% if evenement and choice.0 in evenement.get_type_replique_autorisee %}checked{% endif %}>
+        <label for="replique_{{ forloop.counter }}">{{ choice.1 }}</label><br>
+      {% endfor %}
+      <label for="puissance_max_joule">Puissance maximale (joule):</label>
+      <input type="number" id="puissance_max_joule" name="puissance_max_joule" value="{% if evenement %}{{ evenement.puissance_max_joule }}{% endif %}"><br>
+    </div>
+
+    <label for="limite_dmr">Limite de DMR:</label>
+    <input type="number" id="limite_dmr" name="limite_dmr" value="{% if evenement %}{{ evenement.limite_dmr }}{% endif %}"><br>
+
+    <label for="limite_aeg">Limite d'AEG:</label>
+    <input type="number" id="limite_aeg" name="limite_aeg" value="{% if evenement %}{{ evenement.limite_aeg }}{% endif %}"><br>
+
+    <label for="limite_smg">Limite de SMG:</label>
+    <input type="number" id="limite_smg" name="limite_smg" value="{% if evenement %}{{ evenement.limite_smg }}{% endif %}"><br>
+
+    <label for="limite_pa">Limite de PA:</label>
+    <input type="number" id="limite_pa" name="limite_pa" value="{% if evenement %}{{ evenement.limite_pa }}{% endif %}"><br>
+
+    <label for="limite_pompe">Limite de Pompe:</label>
+    <input type="number" id="limite_pompe" name="limite_pompe" value="{% if evenement %}{{ evenement.limite_pompe }}{% endif %}"><br>
+
+    <label for="limite_mg">Limite de MG:</label>
+    <input type="number" id="limite_mg" name="limite_mg" value="{% if evenement %}{{ evenement.limite_mg }}{% endif %}"><br>
+
+    <label for="limite_autre">Limite d'autres types:</label>
+    <input type="number" id="limite_autre" name="limite_autre" value="{% if evenement %}{{ evenement.limite_autre }}{% endif %}"><br>
+
+
+    <button type="submit">{% if evenement %}Mettre à jour{% else %}Créer{% endif %}</button>
+  </form>
+
+  <script>
+    function toggleLieu() {
+      const isTerrain = document.getElementById('is_terrain').checked;
+      document.getElementById('lieu_terrain').style.display = isTerrain ? 'inline' : 'none';
+      document.getElementById('lieu_adresse').style.display = isTerrain ? 'none' : 'inline';
+      document.getElementById('lieu_terrain').value = null;
+      document.getElementById('lieu_adresse').value = null;
+    }
+
+    function toggleFreelance() {
+      const freelanceChecked = document.getElementById('freelance').checked;
+      document.getElementById('freelance_details').style.display = freelanceChecked ? 'block' : 'none';
+    }
+
+    function toggleLocations() {
+      const locationsChecked = document.getElementById('locations').checked;
+      document.getElementById('locations_details').style.display = locationsChecked ? 'block' : 'none';
+    }
+
+    function toggleRepas() {
+      const repasChecked = document.getElementById('repas').checked;
+      document.getElementById('repas_details').style.display = repasChecked ? 'block' : 'none';
+    }
+
+    document.addEventListener('DOMContentLoaded', function () {
+      toggleLieu();
+      toggleFreelance();
+      toggleLocations();
+      toggleRepas();
+    });
+  </script>
+{% endblock %}

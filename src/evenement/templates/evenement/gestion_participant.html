@@ -1,0 +1,169 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}<title>Gestion de {{ inscription.utilisateur.pseudo }}</title>{% endblock %}
+{% block Css %}
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link rel="stylesheet" href="{% static 'evenement/css/evenement2.css' %}">
+{% endblock %}
+
+{% block content %}
+<div id="participant">
+    <h2 class="nom_utilisateur">
+        {% if inscription.utilisateur %}
+            {{ inscription.utilisateur.pseudo }}
+        {% else %}
+            {{ inscription.nom_ami }} invité par : {{ inscription.inscrit_par.pseudo }}
+        {% endif %}
+    </h2>
+
+    <!-- Détail du prix et explications -->
+    <div class="detail_prix">
+
+        <p>
+            {% if inscription.utilisateur %}
+                {{ inscription.utilisateur.userprofile.role }}
+            {% else %}
+                Freelance (Invité)
+            {% endif %}
+        </p>
+        <ul>
+            {% for detail in depense_details %}
+                <li><p>{{ detail }}</p></li>
+            {% endfor %}
+        </ul>
+        <p class="text-center">Total à payer : {{ depense }} €</p>
+
+    </div>
+
+    <form method="post">
+        {% csrf_token %}
+        <button class="btn_4" type="submit" name="valider_paiement"
+            {% if inscription.paiement_valide %}class="btn-disabled" disabled{% endif %}>
+            {% if inscription.paiement_valide %}Paiement Validé{% else %}Valider le paiement{% endif %}
+        </button>
+
+        <div class="replique">
+            <h4>Répliques sélectionnées</h4>
+
+            {% if inscription.location %}
+                <!-- Cas où l'invité a pris un pack de location -->
+                <p><strong>Location</strong></p>
+
+            {% elif repliques_selectionnees %}
+                <!-- Cas où l'utilisateur/ami a une réplique prêtée -->
+                {% for replique in repliques_selectionnees %}
+                <article>
+                    <div class="clomns">
+                        <p>Nom : {{ replique.nom }}</p>
+                        <p>Type : {{ replique.type }}</p>
+
+                    </div>
+                    <div class="clomns">
+                        <p>Puissance : {{ replique.joule }} joules</p>
+                        <div>
+                            <h3>Status :</h3>
+                            <p>
+                                {% if replique.status == "OK" %}
+                                    <span style="color: var(--color-green);">OK</span>
+                                {% elif replique.status == "Non compatible" %}
+                                    <span style="color: var(--color-red);">Non compatible</span>
+                                {% elif replique.status == "Trop de répliques de ce type" %}
+                                    <span style="color: var(--color-red);">Trop de répliques de ce type</span>
+                                {% elif replique.status == "Puissance trop élevé" %}
+                                    <span style="color: var(--color-orange);">Puissance trop élevée</span>
+                                {% elif replique.status == "Vérification Obligatoire" %}
+                                    <span style="color: var(--color-red);">Vérification Obligatoire</span>
+                                {% endif %}
+                            </p>
+                        </div>
+                    </div>
+                    <div class="clomns">
+                        <p>
+                            <a href="{% url 'verifier_replique' replique.id %}?evenement_id={{ evenement.id }}&inscription_id={{ inscription.id }}">
+                                <button class="btn_1" type="button">Vérifier</button>
+                            </a>
+                        </p>
+                    </div>
+
+                </article>
+                {% endfor %}
+
+            {% elif amis_repliques %}
+                <!-- Cas où l'invité a ses propres répliques, afficher seulement les types -->
+                <ul>
+                    {% for replique_type in amis_repliques %}
+                        <li>
+                            <p>Type : {{ replique_type }}</p>
+                            <a href="#">
+                                <button type="button">Calculer</button>
+                            </a>
+                        </li>
+                    {% endfor %}
+                </ul>
+            {% else %}
+                <p>Aucune réplique sélectionnée.</p>
+            {% endif %}
+        </div>
+
+        <button class="btn_4" type="submit" name="valider_chrony"
+            {% if inscription.chrony_valide %}disabled{% endif %}>
+            {% if inscription.chrony_valide %}Chrony Validé{% else %}Valider le chrony{% endif %}
+        </button>
+
+        <div class="replique">
+            <h4>Autres répliques</h4>
+            {% for replique in repliques_non_selectionnees %}
+            <article>
+                <div class="clomns">
+                    <p>Nom : {{ replique.nom }}</p>
+                    <p>Type : {{ replique.type }}</p>
+
+                </div>
+                <div class="clomns">
+                    <p>Puissance : {{ replique.joule }} joules</p>
+                    <div>
+                        <h3>Status :</h3>
+                        <p>
+                            {% if replique.status == "OK" %}
+                                <span style="color: var(--color-green);">OK</span>
+                            {% elif replique.status == "Non compatible" %}
+                                <span style="color: var(--color-red);">Non compatible</span>
+                            {% elif replique.status == "Trop de répliques de ce type" %}
+                                <span style="color: var(--color-red);">Trop de répliques de ce type</span>
+                            {% elif replique.status == "Puissance trop élevé" %}
+                                <span style="color: var(--color-orange);">Puissance trop élevée</span>
+                            {% elif replique.status == "Vérification Obligatoire" %}
+                                <span style="color: var(--color-red);">Vérification Obligatoire</span>
+                            {% endif %}
+                        </p>
+                    </div>
+                </div>
+                <div class="clomns">
+                    <p>
+                        <a href="{% url 'verifier_replique' replique.id %}?evenement_id={{ evenement.id }}&inscription_id={{ inscription.id }}">
+                            <button class="btn_1" type="button">Vérifier</button>
+                        </a>
+                    </p>
+                </div>
+
+            </article>
+        </div>
+        {% endfor %}
+    </form>
+
+    <a href="{% url 'comptabilite_evenement' evenement.id %}">Retour à la comptabilité</a>
+    <div class="spacer_200"></div>
+</div>
+
+<!-- JavaScript pour afficher un popup en cas de succès après vérification -->
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        {% if messages %}
+            {% for message in messages %}
+                alert("{{ message }}");
+            {% endfor %}
+        {% endif %}
+    });
+</script>
+{% endblock %}

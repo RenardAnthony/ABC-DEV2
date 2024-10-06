@@ -1,0 +1,103 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %} <title>Profile</title> {% endblock %}
+{% block Css %}
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link rel="stylesheet" href="{% static 'account/css/profilesnew.css' %}">
+{% endblock %}
+{% block content %}
+
+
+<div id="profil_general">
+    <img id="photo_de_profil" src="{{ user.userprofile.avatar.url }}" alt="Photo de profil de {{user.pseudo}}">
+
+    <div class="text-left gray-text">
+        <p class="pc">{{ user.userprofile.adresse }}</p>
+        <p class="pc">{{ user.date_of_birth }}</p>
+        <p class="pc">{{ user.userprofile.blood_group }}</p>
+        <p class="pc">{{ user.userprofile.choices_gender }}</p>
+    </div>
+
+
+    <h1>{{ user.pseudo }}</h1>
+    <h2 class="pc">( {{ user.userprofile.nom }} {{ user.userprofile.prenom }} )</h2>
+    <h2 class="pc">{{ user.userprofile.role }}</h2>
+    <p id="user_description">"{{ user.userprofile.bio }}"</p>
+
+    {% if user.id == request.user.id %}
+        <div id="edit_profil">
+            <a href="{% url 'update_user' %}" class="btn-2">Mes informations</a>
+            <a href="{% url 'update_user_profile' %}" class="btn-2">Modifier mon profil</a>
+        </div>
+    {% endif %}
+
+
+    <div class="test">
+        <div id="replique">
+
+            {% for gun in user.guns.all %}
+            <div class="replique_block">
+                <a href="{% url 'update_gun' gun.pk %}">
+                <div class="replique_unique">
+                    <div class="box-top">
+                        <img src="{{ gun.photo.url }}" alt="Photo de la réplique" width="200">
+                        <p class="bsw1">{{ gun.replica_type }}</p>
+                    </div>
+                    <div class="box-bottom">
+                        <p>{{ gun.name }}</p>
+                        <p>{{ gun.joule }} joule</p>
+                    </div>
+                </div>
+
+                </a>
+            </div>
+            {% endfor %}
+
+        </div>
+        {% if user.id == request.user.id %}
+            <a class="btn-2 add_replique" href="{% url 'create_gun' %}">Ajouter une réplique</a>
+        {% endif %}
+    </div>
+
+
+
+
+    <div id="section_commentaire">
+        <article>
+            <img class="br100" src="https://picsum.photos/200" alt="">
+            <p>"Un super joueur, toujours fair-play et surement notre meilleur sniper !"</p>
+            <i></i>
+            <a href="#">delete</a>
+        </article>
+        <article>
+            <img class="br100" src="https://picsum.photos/id/200/200" alt="">
+            <p>“Un super joueur”</p>
+            <i></i>
+            <a href="#">delete</a>
+        </article>
+        <article>
+            <img class="br100" src="https://thispersondoesnotexist.com" alt="">
+            <p>“Un super joueur, toujours fair-play et surement notre meilleur sniper !”</p>
+            <i></i>
+            <a href="#">delete</a>
+        </article>
+        {% if user.id != request.user.id %}
+            <a class="btn-2 add-commentaire" href="">Ajouter un commentaire</a>
+        {% endif %}
+    </div>
+
+
+</div>
+
+
+
+{% endblock %}
+
+
+
+
+
+
+
+

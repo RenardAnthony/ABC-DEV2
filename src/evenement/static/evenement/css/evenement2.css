@@ -1,0 +1,651 @@
+body{
+    background: var(--color-gray9);
+
+}
+#content-general{
+    width: 90%;
+    margin: auto;
+    background-color: transparent;
+    color: white;
+}
+
+/* Liste evenement */
+#evemenent-liste{
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    margin: auto;
+    margin-top: 5rem;
+}
+#evemenent-liste .list-element{
+    width: 100%;
+
+}
+#evemenent-liste .list-element .element{
+    height: 88px;
+    margin-bottom: 2rem;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    padding-right: 2rem;
+    text-align: left;
+    background-color: var(--color-gray8);
+    border-radius: 5px;
+    position: relative;
+}
+#evemenent-liste .list-element .element .info{
+    display:flex;
+    flex-direction: column;
+    width: 100%;
+    text-align: center;
+}
+#evemenent-liste .list-element a.element:hover{
+    box-shadow: 5px 5px 10px black;
+
+}
+#evemenent-liste .list-element a.element{
+    color: var(--color-test-white);
+
+}
+#evemenent-liste .list-element a.element .join_pin{
+    background: var(--color-green);
+    width: 15px;
+    height: 15px;
+    border-radius: 50px;
+    position: absolute;
+    top: 10px;
+    right: 10px;
+}
+#evemenent-liste .list-element a.element .info p{
+    width: 100%;
+    cursor: pointer;
+
+}
+#evemenent-liste .list-element a.element .info p.nom{
+    font-size: 16px;
+    font-weight: bold;
+    text-align: center;
+}
+#evemenent-liste .list-element a.element .info p.date{
+    font-size: 16px;
+
+}
+#evemenent-liste .list-element a.element .info p.participant{
+    font-size: 12px;
+
+}
+#evemenent-liste .list-element a.element .info p.desc{
+    overflow: hidden;
+    max-height: var(--size-xxl);
+    color: var(--color-gray4);
+}
+#evemenent-liste .list-element a.element .bookmark-partie{
+    background-color: var(--color-green);
+    border-radius: 2px;
+    min-width: 8px;
+    margin-right: 1rem;
+    height: 88px;
+}
+#evemenent-liste .list-element a.element .bookmark-evenement{
+    background-color: var(--color-orange);
+    border-radius: 2px;
+    min-width: 8px;
+    margin-right: 1rem;
+    height: 88px;
+}
+
+#evemenent-liste #legende{
+    width: 300px;
+    margin-right: 5rem;
+}
+#evemenent-liste #legende h2{
+    color: var(--color-text-white);
+    font-size: var(--size-l);
+    margin-bottom: var(--size-xxl);
+}
+#evemenent-liste #legende div{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+#evemenent-liste #legende .legende_1{
+    width: 21px;
+    height: 21px;
+    background-color: var(--color-green);
+    border-radius: 50%;
+    margin-right: var(--size-s);
+}
+#evemenent-liste #legende .legende_2{
+    width: 6px;
+    height: 43px;
+    background-color: var(--color-green);
+    border-radius: 5px;
+    margin: var(--size-l) var(--size-s) var(--size-l) 7px;
+}
+#evemenent-liste #legende .legende_3{
+    width: 6px;
+    height: 43px;
+    background-color: var(--color-orange);
+    border-radius: 5px;
+    margin: 0 var(--size-s) 0 7px;
+}
+
+.staff_button_liste_evenement{
+    margin: 3rem auto 0 auto;
+    width: 350px;
+    display: flex;
+    flex-direction: column;
+}
+.staff_button_liste_evenement a{
+    margin: 0.25rem 0;
+}
+
+
+
+/* evenement detail */
+.titre-evenement{
+    color: var(--color-text-white);
+    text-align: center;
+    margin: var(--size-xl) auto;
+}
+.bannier{
+    width: 100%;
+    height: 110px;
+    object-fit: cover;
+    border-radius: 10px;
+}
+.nom-date{
+    background-color: var(--color-gray8);
+    border-radius: 10px;
+    height: var(--size-xxl);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 var(--size-xl);
+    margin: var(--size-m) 0;
+    font-size: var(--size-m);
+}
+.terrain-desc{
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    padding: var(--size-m);
+    margin: var(--size-xxl) 0;
+}
+.terrain-desc h1{
+    font-size: var(--size-m);
+    font-weight: bold;
+    margin-bottom: var(--size-xs);
+}
+.terrain-desc p{
+    font-size: var(--size-s);
+}
+.options{
+    display: flex;
+    flex-direction: column;
+}
+.options article{
+    margin-bottom: var(--size-xl);
+}
+.options h1{
+    text-align: center;
+    background-color: var(--color-blue-light);
+    padding: var(--size-s) 0;
+    font-size: var(--size-m);
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+}
+.options p{
+    background-color: var(--color-gray8);
+    padding: var(--size-xxl) var(--size-xl) var(--size-xxl) var(--size-xl);
+    font-size: 14px;
+}
+.options h2{
+    text-align: center;
+    font-size: var(--size-l);
+    background-color: var(--color-gray8);
+    border-bottom-right-radius: 5px;
+    border-bottom-left-radius: 5px;
+    padding: 0 0 var(--size-m) 0;
+}
+.liste_joueurs{
+    background-color: var(--color-gray8);
+    border-radius: 5px;
+    padding: var(--size-xxl) 0;
+    background: linear-gradient(50deg, var(--color-gray9) 20%, var(--color-gray8) 150%);
+}
+.liste_joueurs .bloque_1{
+    text-align: center;
+
+}
+.liste_joueurs .bloque_1 h2{
+    font-size: var(--size-m);
+}
+.liste_joueurs .bloque_1 p{
+    font-size: var(--size-s);
+}
+.liste_joueurs .bloque_2{
+    padding: var(--size-m);
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between; /* Pour espacer les colonnes */
+    margin: var(--size-xl) 0;
+}
+.liste_joueurs .bloque_2 p{
+    width: 40%; /* Ajuste la largeur pour chaque colonne */
+    text-align: center;
+    margin: var(--size-s) 0;
+    font-size: var(--size-m);
+    border: 1px solid var(--color-text-white);
+    min-height: 50px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    text-align: left;
+    padding: 0 var(--size-m);
+    border-radius: 50px;
+}
+.liste_joueurs .bloque_2 p.noplayer{
+    width: 100%; /* Ajuste la largeur pour chaque colonne */
+    text-align: center;
+    margin-bottom: 10px;
+    color:var(--color-gray6);
+}
+.liste_joueurs .bloque_2 a{
+    color: red;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.liste_joueurs .bloque_2 i{
+    color: var(--color-text-white);
+    font-style: normal;
+}
+.liste_joueurs .bloque_2 i.desc{
+    color: var(--color-gray4);
+    font-size: var(--size-s);
+}
+.bloque_3{
+    color: var(--color-gray5);
+    font-size: var(--size-m);
+    border: 1px dashed var(--color-sand-dark);
+    border-radius: 5px;
+    margin: 4rem 0;
+    padding: var(--size-xxl) 0;
+    display: flex;
+    flex-direction: column;
+}
+.bloque_3 p{
+    font-size: var(--size-m);
+    margin-bottom: var(--size-l);
+    color: var(--color-sand-light);
+    text-align: center;
+}
+.bloque_3 a{
+    font-size: var(--size-m);
+    margin: 0 var(--size-xxl);
+}
+
+
+
+.inscription{
+    width: 300px;
+    margin: 32px auto 0;
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+}
+.inscription a{
+    padding: 16px 0;
+    border-radius: 100px;
+    margin: 16px 0;
+}
+.inscription .pasmodifiable{
+    font-size: var(--size-m);
+    color: var(--color-green);
+    text-align: left;
+}
+
+
+/*
+.inscription a.btn_1{
+    border: 2px solid var(--color-blue-normal);
+    color: var(--color-text-white);
+    background-color: var(--color-blue-normal);
+}
+.inscription a.btn_1:hover{
+    background-color: var(--color-blue-light);
+    border: 2px solid var(--color-blue-light);
+}
+.inscription a.btn_2{
+    border: 2px solid var(--color-blue-normal);
+    color: var(--color-blue-normal);
+    background-color: transparent;
+}
+.inscription a.btn_2:hover{
+    color: var(--color-text-white);
+    border: 2px solid var(--color-text-white);
+}
+.inscription a.btn_3{
+    border: 2px solid var(--color-red);
+    color: var(--color-red);
+    background-color: transparent;
+}
+.inscription a.btn_3:hover{
+    color: var(--color-orange);
+    border: 2px solid var(--color-orange);
+}
+.inscription a.btn_4{
+    border: 2px solid var(--color-green);
+    color: var(--color-green);
+    background-color: transparent;
+}
+.inscription a.btn_4:hover{
+    background-color: var(--color-green);
+    border: 2px solid var(--color-green);
+    color: var(--color-text-black);
+}
+.inscription a.btn_5{
+    border: 2px solid var(--color-orange);
+    color: var(--color-orange);
+    background-color: transparent;
+}
+.inscription a.btn_5:hover{
+    background-color: var(--color-orange);
+    border: 2px solid var(--color-orange);
+    color: var(--color-text-black);
+}
+.inscription a.btn_6{
+    border: 2px solid var(--color-red);
+    color: var(--color-text-white);
+    background-color: var(--color-red);
+}
+.inscription a.btn_6:hover{
+    border: 2px solid var(--color-text-black);
+    color: var(--color-text-black);
+    background-color: var(--color-red);
+}
+*/
+
+
+
+
+
+/*Inscription*/
+.mobilsize{
+    margin: 32px auto;
+    width: 80%;
+}
+.mobilsize h2{
+    text-align: center;
+    margin: 16px auto;
+    font-size: 19.3px;
+}
+.mobilsize h3{
+    text-align: left;
+    margin: 16px auto;
+    font-size: 16px;
+    font-weight: normal;
+}
+.mobilsize form{
+    display: flex;
+    flex-direction: column;
+}
+.mobilsize .prix_total{
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+}
+.mobilsize .prix_total span{
+    font-size: 19.3px;
+    font-weight: bold;
+}
+.mobilsize table{
+    color: var(--color-text-white);
+    text-align: center;
+    font-size: 14px;
+}
+.mobilsize form div{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+.mobilsize input[type="checkbox"] {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    width: 30px;
+    height: 30px;
+    border: 2px solid var(--color-gray8); /* Couleur de la bordure */
+    background-color: var(--color-gray8); /* Couleur de fond quand non sélectionnée */
+    border-radius: 10px; /* Pour donner des bords arrondis */
+    position: relative;
+    cursor: pointer;
+    margin-right: 1rem;
+}
+.mobilsize input[type="checkbox"]:checked {
+    background-color: var(--color-gray7); /* Garder la même couleur de fond */
+    border: none;
+}
+.mobilsize input[type="checkbox"]:checked::after {
+    content: "";
+    position: absolute;
+    width: 8px;
+    height: 15px;
+    border: solid var(--color-text-white);
+    border-width: 0 3px 3px 0;
+    transform: rotate(45deg);
+    left: 10px;
+    top: 4px;
+}
+.mobilsize .label-text {
+    font-size: 16px;
+    color: var(--color-text-white); /* Couleur du texte */
+    margin-left: 10px;
+}
+
+.mobilsize .checkbox-container {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+}
+.mobilsize input[type="text"]{
+    background: var(--color-gray7);
+    color: var(--color-text-white);
+    border:0;
+    padding: 16px;
+    border-radius: 10px;
+}
+.mobilsize input[type="text"]::placeholder{
+    color: var(--color-gray3);
+}
+
+
+
+
+/* Comptabilitée */
+#compta {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+#compta h2{
+    font-size: var(--size-xl);
+    margin: var(--size-xl) 0 var(--size-m) 0;
+}
+#compta a{
+    color: var(--color-text-white);
+    text-decoration: underline;
+    margin: 0;
+    margin-bottom: var(--size-xxl);
+    font-size: var(--size-m);
+    color: var(--color-gray6);
+}
+#compta #liste{
+    width: 100%;
+
+}
+#compta article{
+    margin-bottom: var(--size-m);
+    padding: var(--size-m);
+    border-bottom: 1px solid var(--color-text-white);
+    font-size: var(--size-m);
+
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+#compta article div{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+#compta article i{
+    border: 1px solid var(--color-text-white);
+    height: 16px;
+    width: 16px;
+    display: block;
+    font-style: normal;
+    margin-left: var(--size-xs);
+    border-radius: 50%;
+    padding: 3px;
+}
+#compta article i p{
+    padding: 0;
+    margin: 0;
+    font-size: var(--size-s);
+    text-align: center;
+}
+#compta #liste .validated-row p{
+    color: var(--color-gray7);
+
+}
+#compta #liste article.validated-row  i{
+    border: 1px solid var(--color-gray7);
+    background-color: var(--color-gray6);
+}
+#compta #liste article i.valide{
+    background-color: var(--color-gray3);
+}
+#compta p{
+    color: var(--color-text-white);
+}
+form{
+    text-align:center;
+}
+
+.recapitulatif{
+    width: 100%;
+}
+.recapitulatif p{
+    margin-top: var(--size-xs);
+    padding: var(--size-xxs);
+}
+
+
+
+
+
+
+
+#participant h2.nom_utilisateur{
+    font-size: var(--size-xl);
+    text-align: center;
+    margin: var(--size-xl) auto;
+}
+/*Detail prix*/
+#participant .detail_prix{
+    border: 1px dashed var(--color-sand-dark);
+    background-color: var(--color-gray10);
+    padding: var(--size-m);
+    width: 90%;
+}
+#participant .detail_prix ul li p{
+    font-size: var(--size-m);
+}
+#participant .detail_prix .text-center{
+    margin: auto;
+    text-align: center;
+    font-size: var(--size-m);
+}
+
+
+
+/* Liste réplique */
+
+#participant form .replique h4{
+    font-size: var(--size-l);
+    margin-bottom: var(--size-m);
+}
+
+#participant form .replique{
+    display: flex;
+    flex-direction: column;
+}
+#participant form .replique article{
+    border: 1px solid var(--color-sand-dark);
+    display: flex;
+    flex-direction: column;
+    margin-bottom: var(--size-xl);
+}
+#participant form .replique article .clomns h3{
+    font-weight: normal;
+    font-size: var(--size-m);
+}
+#participant form .replique article .clomns{
+
+    align-items: center;
+    padding: 1rem;
+}
+#participant form .replique article .clomns button{
+    width: 200px;
+    margin: auto;
+    align-items:center;
+    cursor: pointer;
+}
+
+
+
+@media screen and (min-width: 700px){
+    #evemenent-liste .list-element .element .info{
+        display:flex;
+        flex-direction: row;
+        width: 100%;
+        text-align: center;
+        align-items: center;
+    }
+    #evemenent-liste .list-element a.element .info p.nom{
+        text-align: left;
+        margin-left: var(--size-xl);
+        width: 200px;
+    }
+    #evemenent-liste .list-element a.element .info p.desc{
+        text-align: left;
+    }
+
+
+    /*Box des options dans event detail*/
+    .options{
+        display: flex;
+        flex-direction: row;
+        justify-content: space-evenly;
+        min-width: 100%;
+    }
+    .options article{
+        width: 30%;
+    }
+    .options p{
+        height: 25%;
+    }
+    .options h2{
+    padding-top: var(--size-l);
+    }
+    .liste_joueurs {
+        background-color: var(--color-gray8);
+        border-radius: 5px;
+        padding: var(--size-xxl) 0;
+        width: 62%;
+        margin: auto;
+    }
+}

@@ -1,0 +1,53 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %} <title>Register</title> {% endblock %}
+{% block Css %}
+    <link rel="stylesheet" href="{% static 'account/css/style.css' %}">
+    <link rel="stylesheet" href="{% static 'account/css/account.css' %}">
+{% endblock %}
+
+{% block content %}
+    <form method="post" class="col">
+        {% csrf_token %}
+        <h1>Inscription</h1>
+
+        <div class="input-box">
+            <input type="text" id="pseudo" name="pseudo" placeholder="Pseudo" value="MrFoxit" required>
+            <i class='bx bxs-user'></i>
+        </div>
+        <div class="input-box">
+            <input type="email" id="email" name="email" placeholder="Email" value="spammoi14@gmail.com" required>
+            <i class='bx bxs-envelope' ></i>
+        </div>
+        <div class="input-box">
+            <input type="password" id="password1" name="password1" placeholder="mots de passe" value="vaporub" required>
+            <i class='bx bxs-lock-alt' ></i>
+        </div>
+        <div class="input-box">
+            <input type="password" id="password2" name="password2" placeholder="Confirmer le mots de passe" value="vaporub" required>
+            <i class='bx bxs-lock-alt' ></i>
+        </div>
+
+
+
+        <div class="register-link">
+            <button type="submit" class="btn-light">S'inscrire</button>
+            <p>Déjà inscrit ? <a class="islink" href="{% url 'login' %}">Connectez-vous</a></p>
+        </div>
+
+    </form>
+
+        {% for message in messages %}
+            <div class="error">
+                <p>{{ message }}</p>
+            </div>
+        {% endfor %}
+
+        {% if error %}
+            <div class="error">
+                <p>{{ error }}</p>
+            </div>
+        {% endif %}
+</div>
+{% endblock %}

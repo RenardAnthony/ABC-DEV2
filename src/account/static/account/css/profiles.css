@@ -1,0 +1,146 @@
+body{
+    background-color: var(--color-gray9);
+    color: var(--color-text-white);
+}
+#border_margin{
+    width: 80%;
+    margin: auto;
+}
+
+.debug{
+    border: 1px solid green;
+}
+a {
+    color: var(--color-text-white);
+}
+
+
+
+#top_profiles #badge_zone{
+    background-color: var(--color-blue-light);
+    height: 120px;
+    border-top-right-radius: 10px;
+    border-top-left-radius: 10px;
+}
+#top_profiles .bottom{
+    background-color: var(--color-gray7);
+    border-bottom-right-radius: 10px;
+    border-bottom-left-radius: 10px;
+    position: relative;
+    display: flex;
+    flex-direction: row;
+    padding: 1rem 0;
+}
+
+#top_profiles .bottom img{
+    width: 160px;
+    height: 160px;
+    object-fit: cover;
+    aspect-ratio: 1/1;
+    border-radius: 50%;
+    border: 4px solid white;
+    margin-bottom: 16px;
+}
+#vag{
+    /*position: absolute;
+    top: -80px;*/
+    width: 300px;
+    height: 350px;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    margin-right: 32px;
+}
+
+#vag .gray-text{
+    color: var(--color-gray2);
+}
+#edit_profil{
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: end;
+}
+
+.btn-blue{
+    padding: 5px 10px;
+    margin: 5px;
+    background-color: var(--color-blue-normal);
+    border-radius: 5px;
+    width: 200px;
+    text-align: center;
+}
+.btn-blue:hover{
+    background-color: var(--color-blue-light);
+    color: var(--color-text-black);
+}
+.pnpb{
+    width: 80%;
+}
+.pnpb h1{
+    font-size: 31px;
+}
+.pnpb h2{
+    font-size: 19.3px;
+    color: var(--color-gray2);
+}
+.pnpb p{
+    font-size: 19.3px;
+    margin-top: 32px;
+    color: var(--color-gray2);
+}
+
+
+
+.text-right{
+    text-align: left;
+}
+
+#content-replique{
+    background-color: var(--color-gray7);
+    border-radius: 10px;
+    padding: 16px;
+}
+#liste-repliques{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+}
+#liste-repliques .replique_unique{
+    width: 300px;
+    border-radius: 10px;
+}
+#liste-repliques .replique_unique img{
+    border-top-right-radius: 10px;
+    border-top-left-radius: 10px;
+    width: 300px;
+    height: 180px;
+    object-fit: cover;
+}
+.replique_unique .box-top{
+    position: relative;
+}
+.replique_unique .box-top p{
+    position: relative;
+    top: -42px;
+    background-color: var(--color-gray1);
+    color: var(--color-text-black);
+    width: 50px;
+    margin-left: 12px;
+    padding: 2px 5px;
+    border-radius: 5px;
+    text-align: center;
+}
+.replique_unique .box-bottom{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    padding: 8px 10px;
+    position: relative;
+    top: -32px;
+    background-color: var(--color-blue-light);
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
+}

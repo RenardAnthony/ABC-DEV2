@@ -1,0 +1,226 @@
+#content-general{
+    background-color: var(--color-gray9);
+}
+#profil_general{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 90%;
+    margin: auto;
+    color: var(--color-text-white);
+}
+.profilmobil{
+    flex-direction: column;
+    text-align: center;
+    width: 100%;
+}
+.profilpc{
+    display: none;
+    flex-direction: column;
+    width: 90%;
+}
+
+
+
+
+
+
+
+.photo_de_profil{
+    width: 150px;
+    height: 150px;
+    object-fit: cover;
+    border-radius: 500px;
+    border: 4px solid var(--color-text-white);
+    margin: var(--size-xxl) auto var(--size-xxl);
+}
+.user_description{
+    color: var(--color-gray5);
+    font-style: italic;
+    width: 80%;
+    margin: var(--size-m) auto;
+}
+.edit_profil{
+    width: 90%;
+    margin: var(--size-m) auto;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+}
+.edit_profil .btn_2 {
+    padding: var(--size-xs) var(--size-xs);
+    width: 40%;
+}
+#replique{
+    margin: 5rem auto var(--size-xl);
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+}
+#replique .replique_unique{
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+#replique .replique_unique .box-top img{
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+}
+#replique .replique_unique .box-top p{
+    position: relative;
+    bottom: 25px;
+    width: 50px;
+    text-align:center;
+    left: 5px;
+    background-color: var(--color-gray2);
+    border-radius: 5px;
+    font-size: 14px;
+    color: var(--color-text-black);
+}
+#replique .replique_unique .box-bottom{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    background-color: var(--color-blue-light);
+    position: relative;
+    bottom: 20px;
+    padding: 0.5rem;
+    color: var(--color-text-white);
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
+    font-size: 14px;
+}
+.test{
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+    margin-bottom: 5rem;
+}
+#replique .replique_block{
+    display: flex;
+    flex-direction: column;
+    text-align:center;
+    margin: auto 0.5rem;
+
+}
+#replique a{
+    color: var(--color-text-white);
+}
+#replique .add_replique{
+    margin: 2rem auto;
+}
+
+#content-general{
+    min-height: 100vh ;
+}
+
+
+
+
+#section_commentaire{
+    width: 90%;
+    margin: 2rem auto 20rem auto;
+    display: flex;
+    flex-direction: column;
+}
+#section_commentaire article{
+    background-color: var(--color-gray8);
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    position: relative;
+    padding: 0.5rem;
+    border-radius: 10px;
+    margin-bottom: 12px;
+}
+#section_commentaire p{
+    font-style: italic;
+    color: var(--color-gray2);
+}
+#section_commentaire i{
+    width: 5rem;
+}
+#section_commentaire img{
+    width: 64px;
+    margin-right: 1rem;
+}
+#section_commentaire article a{
+    position: absolute;
+    bottom: 7px;
+    right: 7px;
+    color: var(--color-gray2);
+}
+#section_commentaire article a:hover{
+    color: var(--color-gray7);
+}
+#section_commentaire a.add-commentaire{
+    width: 300px;
+    margin: 2rem auto;
+}
+
+.profilpc table{
+    width: 100%;
+}
+.profilpc .role{
+    color: var(--color-gray7);
+    font-size: var(--size-l);
+    font-weight: normal;
+}
+.profilpc .pseudo{
+    color: var(--color-text-white);
+    font-size: var(--size-xxl);
+    font-weight: normal;
+}
+.profilpc .user_description{
+    text-align: left;
+    margin: var(--size-m) 0;
+}
+.profilpc .firstrow{
+    text-align:center;
+}
+.profilpc .nomprenom{
+    font-weight: normal;
+    font-size: var(--size-m);
+}
+.profilpc table .firstrow{
+    width: 200px;
+    margin: auto;
+}
+
+.profilpc table .morlarge{
+    width: 40%;
+}
+.profilpc table .tablebtn{
+    text-align: right;
+}
+
+
+.profilpc table, .profilpc tr, .profilpc td{
+    border-collapse: collapse;
+}
+
+@media screen and (min-width: 700px){
+
+    .profilmobil{
+        display: none;
+    }
+    .profilpc{
+        display: block;
+    }
+    .edit_profil{
+        width: 90%;
+        margin: var(--size-m) auto;
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        font-size: var(--size-xs);
+    }
+    .edit_profil a{
+        width: 40%;
+    }
+
+}

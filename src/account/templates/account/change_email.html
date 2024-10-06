@@ -1,0 +1,26 @@
+{% load static %}
+
+<!DOCTYPE html>
+
+<html lang="fr">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Connexion</title>
+        <link rel="stylesheet" href="{% static 'account/css/style.css' %}">
+        <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    </head>
+
+<body>
+    <div class="wrapper w700">
+        <form method="post">
+            <h2 class="text-center sTop64">Changer l'email</h2>
+            {% csrf_token %}
+            <div class="input-box">
+                {{ form.as_p }}
+            </div>
+            <button type="submit" class="btn sTop64">Envoyer</button>
+        </form>
+    </div>
+</body>
+</html>

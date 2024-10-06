@@ -1,0 +1,59 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}<title>Comptabilité pour {{ evenement.nom }}</title>{% endblock %}
+{% block Css %}
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link rel="stylesheet" href="{% static 'evenement/css/evenement.css' %}">
+{% endblock %}
+
+{% block content %}
+<h2>Comptabilité pour {{ evenement.nom }}</h2>
+
+<table id="comptabilite">
+    <thead>
+        <tr>
+            <th>Pseudo</th>
+            <th>Repas ({{ total_repas }})</th>
+            <th>Location ({% if total_locations == 0 %}0{% else %}{{ total_locations }}{% endif %})</th>
+            <th>Rôle</th>
+            <th>Répliques</th>
+            <th>Dépense</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for participant in participants %}
+       <tr onclick="window.location.href='{% url 'gestion_participant' evenement.id participant.inscription_id %}';"
+           style="cursor: pointer;"
+           class="{% if participant.paiement_valide and participant.chrony_valide %}validated-row{% endif %}">
+            <td>{{ participant.pseudo }}</td>
+            <td>{{ participant.repas|yesno:"Oui,Non" }}</td>
+            <td>{{ participant.location|yesno:"Oui,Non" }}</td>
+            <td>{{ participant.role }}</td>
+            <td>
+                <ul>
+                    {% for replique in participant.repliques %}
+                    <li>
+                        {{ replique.nom }} - {{ replique.type }} - {{ replique.joule }} joule
+                        {% if replique.status != "OK" %}
+                            <strong>({{ replique.status }})</strong>
+                        {% endif %}
+                        {% if replique.last_joule_update %}
+                            <br><small>Dernière vérification joule : {{ replique.last_joule_update|date:"d/m/Y" }}</small>
+                        {% endif %}
+                    </li>
+                    {% empty %}
+                    Aucune réplique sélectionnée.
+                    {% endfor %}
+                </ul>
+            </td>
+            <td>{{ participant.depense }} €</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+<h3>Total de l'argent attendu : {{ total_depenses }} €</h3>
+
+<a href="{% url 'evenement_detail' evenement.pk %}">Retour à l'événement</a>
+{% endblock %}

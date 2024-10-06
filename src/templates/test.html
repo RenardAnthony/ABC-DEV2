@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+{% load static %}
+
+
+
+{% block title %} <title>Index</title> {% endblock %}
+{% block Css %}
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link rel="stylesheet" href="{% static 'css/index.css' %}">
+{% endblock %}
+
+
+{% block content %}
+
+
+    <!-- Example Button to Trigger Notification -->
+    <button style="text-align:center;" onclick="showNotification('alert', 'Ceci est une alerte!Ceci est une alerte!Ceci est une alerte!Ceci est une alerte!Ceci est une alerte!')">Clique ici pour une alerte</button>
+    <button style="text-align:center;" onclick="showNotification('success', 'Succès!')">Clique ici pour un succès</button>
+    <button style="text-align:center;" onclick="showNotification('warning', 'Attention!')">Clique ici pour un avertissement</button>
+    <button style="text-align:center;" onclick="showNotification('notif', 'Notification générique!')">Clique ici pour une notification</button>
+
+
+
+
+
+
+
+
+{% endblock %}

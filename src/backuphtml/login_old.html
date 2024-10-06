@@ -1,0 +1,55 @@
+{% load static %}
+
+<!DOCTYPE html>
+
+<html lang="fr">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Connexion</title>
+        <link rel="stylesheet" href="{% static 'account/css/style.css' %}">
+        <link rel="stylesheet" href="{% static 'css/style.css' %}">
+        <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    </head>
+
+    <body>
+
+
+        <div class="wrapper">
+
+            <form method="post">
+                {% csrf_token %}
+                <h1>Connexion</h1>
+
+                <div class="input-box">
+                    <input type="email" name="email" id="email" placeholder="Email" required>
+                    <i class='bx bxs-envelope' ></i>
+                </div>
+
+                <div class="input-box">
+                    <input type="password" name="password" id="password" placeholder="Password" required>
+                    <i class='bx bxs-lock-alt' ></i>
+                </div>
+
+                <div class="remember-forgot">
+                    <label><input type="checkbox">Connexion auto</label>
+                    <a  class="islink" href="{% url 'password_reset' %}">Mot de passe oublié ?</a>
+                </div>
+
+                <button type="submit" class="btn">Se connecter</button>
+
+                <div class="register-link">
+                    <p>Pas encore inscrit ? <a class="islink" href="{% url 'signup' %}">S'inscrire</a></p>
+                </div>
+            </form>
+
+            {% if error %}
+                <div class="error">
+                    <p>{{ error }}</p>
+                </div>
+            {% endif %}
+        </div>
+    <script id="notification-messages" type="application/json">{% if messages %}[{% for message in messages %}{"level": "{{ message.tags }}", "text": "{{ message|escapejs }}"}{% if not forloop.last %},{% endif %}{% endfor %}]{% else %}[] {% endif %}</script>
+    <script src="{% static 'js/notification.js' %}"></script>
+    </body>
+</html>

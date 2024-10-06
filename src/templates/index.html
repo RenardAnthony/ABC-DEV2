@@ -1,0 +1,84 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %} <title>Accueil</title> {% endblock %}
+{% block Css %}
+    <link rel="stylesheet" href="{% static 'css/index2.css' %}">
+{% endblock %}
+
+
+
+{% block content %}
+
+<div class="element_1">
+    <div class="spacer_20"></div>
+    <img src="{% static 'images/logo.png' %}">
+    <div class="spacer_50"></div>
+    <div>
+        <h1>Airsoft Bordeaux Concept</h1>
+        <p>
+           Airsoft Bordeaux Concept, <br> aussi appelé "ABC", est une association d'airsoft
+            sur la région Bordelaise. <br> Nous existons depuis plus de 13 ans, ce qui nous
+            a permis de tester pas mal de choses. <br><br> Aujourd'hui, nous nous spécialisons dans
+            la "simulation militaire amateur". <br><br> Bonne ambiance, fair-play et entraide sont
+            nos maîtres mots. Ici, pas de compétition ou de jugement, on est là pour jouer, <br> pour partager.
+        </p>
+    </div>
+</div>
+
+
+
+<div class="element_3">
+    <div class="content">
+        {% if prochain_evenement %}
+            <img class="bsw1 br5" src="{% static 'images/futue_partie.jpg' %}" alt="">
+            <h1>{{ prochain_evenement.date_heure|date:"d F Y" }}</h1>
+            <p>
+                {{ prochain_evenement.description }}
+                <br><br>
+                Rendez-vous dans le CALENDRIER et inscrit toi !
+            </p>
+            <a href="{% url 'evenement_list' %}" class="btn_1">CALENDRIER</a>
+        {% else %}
+            <p>Aucun événement à venir pour le moment. <br><br>  Mais rendez-vous dans quelques jours ! on reste jamais plus d'un mois sans jouer !</p>
+        {% endif %}
+    </div>
+</div>
+
+
+<div class="element_5">
+    <h1 class="titre">Quellques chiffres</h1>
+
+    <div class="spacer_50 item2"></div>
+
+    <div class="elem1 item">
+        <div class="col">
+            <h1>{{ total_membres }}</h1>
+            <h2>Membres</h2>
+        </div>
+        <p>Parmis eux 23 sont membre actif de l’association et paye une cotisation annul pour en faire partie.</p>
+    </div>
+
+    <div class="elem1 item">
+        <div class="col">
+            <h1>{{ parties_jouees }}</h1>
+            <h2>Parties jouées</h2>
+        </div>
+        <p>Depuis le début d’année ! Et oui si on devais compter toutes les partie depuis 13ans, à raison à minima de 1 partie par mois le chiffre serai bien trop irealiste !</p>
+    </div>
+
+    <div class="elem1 item">
+        <div class="col">
+            <h1>40Ha</h1>
+            <h2>De terrains</h2>
+        </div>
+        <p>Aujourd’hui ABC c’est 3 terrain. On a à coeur de respecter l’environnement.</p>
+    </div>
+
+
+</div>
+
+<div class="element_6 spacer_150"></div>
+
+{% endblock %}
+

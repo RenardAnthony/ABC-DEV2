@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Déconnexion</title>
+</head>
+<body>
+    <h2>Déconnexion</h2>
+    <form method="post">
+        {% csrf_token %}
+        <button type="submit">Se déconnecter</button>
+    </form>
+<script id="notification-messages" type="application/json">{% if messages %}[{% for message in messages %}{"level": "{{ message.tags }}", "text": "{{ message|escapejs }}"}{% if not forloop.last %},{% endif %}{% endfor %}]{% else %}[] {% endif %}</script>
+    <script src="{% static 'js/notification.js' %}"></script>
+</body>
+</html>

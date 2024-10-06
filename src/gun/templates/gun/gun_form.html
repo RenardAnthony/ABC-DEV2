@@ -1,0 +1,57 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %} <title>Replique</title> {% endblock %}
+{% block Css %}
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link rel="stylesheet" href="{% static 'account/css/account.css' %}">
+    <link rel="stylesheet" href="{% static 'gun/css/replique.css' %}">
+
+{% endblock %}
+{% block content %}
+<div class="mobilsize">
+
+  <form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+
+    <div class="input-box2">
+        <label for="{{ form.nome.id_for_label }}">Nom</label>
+        {{form.name}}
+    </div>
+
+
+    <div class="choix_avatar">
+    {% if form.instance.photo %}
+        <img src="{{ form.instance.photo.url }}" alt="Photo de la réplique" class="bsw1">
+    {% else %}
+        <p>Aucune photo disponible</p>
+    {% endif %}
+    <label for="{{ form.photo.id_for_label }}">Photo</label>
+    {{ form.photo }}
+</div>
+
+
+
+    <div class="input-box2-choice">
+        <label for="{{ form.replica_type.id_for_label }}">Type</label>
+        {{ form.replica_type }}
+    </div>
+
+      <div class="fps">
+          <p>{{ gun.joule }} - Joules</p>
+          <p>Calculé le : {% if gun.last_joule_update %}{{ gun.last_joule_update|date:"d/m/Y" }}{% else %}Non calculé{% endif %}</p>
+      </div>
+
+    <div class="spacer_50"></div>
+
+    <div class="end_button">
+        <button class="btn_ender style1" type="submit">{% if form.instance.pk %}Mettre à jour{% else %}Ajouter{% endif %}</button>
+        {% if form.instance.pk %}
+            <a  class="btn_ender style2" href="{% url 'delete_gun' form.instance.pk %}">Supprimer</a>
+        {% endif %}
+    </div>
+  </form>
+</div>
+<div class="spacer_100"></div>
+
+{% endblock %}

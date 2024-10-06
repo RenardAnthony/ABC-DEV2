@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+
+{% block title %}
+  <title>Liste des Terrains</title>
+{% endblock %}
+
+{% block content %}
+  <h2>Liste des Terrains</h2>
+  
+  <table>
+    <thead>
+      <tr>
+        <th>Nom</th>
+        <th>Adresse</th>
+        <th>Coordonnées GPS</th>
+        <th>Actif</th>
+        <th>Note</th>
+        <th>Description publique</th>
+        <th>Taille (m²)</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for lieu in lieux %}
+        <tr>
+          <td>{{ lieu.nom_propre }}</td>
+          <td>{{ lieu.adresse_postale }}</td>
+          <td>{{ lieu.coordonnees_gps }}</td>
+          <td>{{ lieu.actif|yesno:"Oui,Non" }}</td>
+          <td>{{ lieu.note }}</td>
+          <td>{{ lieu.description_publique }}</td>
+          <td>{{ lieu.taille }}</td>
+        </tr>
+      {% empty %}
+        <tr>
+          <td colspan="7">Aucun terrain n'est disponible.</td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+
+{% endblock %}

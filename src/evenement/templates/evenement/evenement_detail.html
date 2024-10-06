@@ -1,0 +1,143 @@
+{% extends 'base.html' %}
+{% load static %}
+
+
+
+{% block title %} <title>Index</title> {% endblock %}
+{% block Css %}
+    <link rel="stylesheet" href="{% static 'evenement/css/evenement2.css' %}">
+{% endblock %}
+
+
+
+
+{% block content %}
+
+    <h1 class="titre-evenement"> {{ evenement.nom }} </h1>
+    {% if evenement.type_evenement == "Partie" %}
+        <img class="bannier" src="{% static 'evenement/images/partie.jpg' %}" alt="Bannière pour les partie">
+    {% else %}
+        <img class="bannier" src="{% static 'evenement/images/evenement.png' %}" alt="Bannière pour les evenement">
+    {% endif %}
+
+
+
+    <div class="nom-date">
+        <p>{{ evenement.date_heure|date:"d F Y" }}</p>
+        <p>{{ evenement.date_heure|time:"H:i" }}</p>
+    </div>
+
+
+    <div class="terrain-desc">
+        <h1>{{ evenement.lieu }}</h1>
+        <p>{{ evenement.description }}</p>
+    </div>
+
+
+
+    <div class="options">
+
+        {% if evenement.freelance %}
+        <article>
+            <h1>Freelance</h1>
+            <p>
+                Vous n'est pas membre de l'association ?
+                pas de problème, vous pouvez nous rejoindre sur cette partie !
+            </p>
+            <h2>{{ evenement.prix_freelance}}€</h2>
+        </article>
+        {% endif %}
+        {% if evenement.locations %}
+        <article>
+            <h1>Location</h1>
+            <p>
+                Tu n'a pas t'on propre équipement ? <br>
+                Pas de souci on peut t'équiper sur place avec notre pack de location.
+            </p>
+            <h2>{{ evenement.prix_location}}€</h2>
+        </article>
+        {% endif %}
+        {% if evenement.repas %}
+        <article>
+            <h1>Repas</h1>
+            <p>
+                Prolonge ce moment avec nous !
+                En fin de partie on organise un barbecue, vien avec nous !
+            </p>
+            <h2>{{ evenement.prix_repas}}€</h2>
+        </article>
+        {% endif %}
+    </div>
+
+    <div class="bloque_3">
+        <p>
+            Pour ne pas te voir interdit de jeu :
+        </p>
+        <a href="#" class="btn_1">Les règles</a>
+    </div>
+
+
+
+    <div class="liste_joueurs">
+        <div class="bloque_1">
+            <h2>Liste des joueurs</h2>
+            <p>Plus que {{ places_restantes }} places disponibles</p>
+        </div>
+
+        <div class="bloque_2">
+            {% for participant in participants %}
+                <p>
+                    {% if participant.inscription.utilisateur %}
+                    <a href="{% url 'user_profile' participant.inscription.utilisateur.id %}">
+                        <i>{{ participant.joueur }}</i>
+                        <i class="desc">{{ participant.repliques }}</i>
+                    </a>
+                    {% else %}
+                    <a href="{% url 'user_profile' participant.inscription.inscrit_par.id %}">
+                        <i>{{ participant.joueur }} <!--({{ participant.inscription.inscrit_par.pseudo }})--></i>
+                        <i class="desc">{{ participant.repliques }}</i>
+                    </a>
+                    {% endif %}
+                </p>
+            {% empty %}
+                <p class="noplayer">"Aucun participant inscrit pour le moment"</p>
+            {% endfor %}
+        </div>
+    </div>
+
+
+
+    <div class="inscription">
+        {% if user.is_authenticated %}
+            {% if user_role != 'new' %}
+                {% if not is_inscrit %}
+                    <a class="btn_2" href="{% url 'inscription_evenement' evenement.id %}">S'inscrire</a>
+                {% else %}
+                    <a class="btn_2" href="{% url 'inscription_ami' evenement.id %}">Inscrire un(e) ami(e)</a>
+                    <a class="btn_3" href="{% url 'desinscription_evenement' evenement.id %}">Se désinscrire</a>
+                {% endif %}
+            {% else %}
+                <p>Votre compte doit être validé pour vous inscrire à une partie.</p>
+            {% endif %}
+        {% else %}
+            <p>Vous devez être connecté pour vous inscrire.</p>
+        {% endif %}
+
+        {% if user.is_staff %}
+        <div class="spacer_100"></div>
+            <a class="btn_5" href="{% url 'comptabilite_evenement' evenement.pk %}">Comptabilité</a>
+            <a class="pc btn_6" href="{% url 'evenement_update' evenement.pk %}">Modifier</a>
+            <a class="pc btn_7" href="{% url 'evenement_delete' evenement.pk %}">Supprimer</a>
+            <p class="mobil pasmodifiable">*Vous ne pouvez pas modifier ou supprimer un evenement depuis un téléphone.</p>
+        {% endif %}
+    </div>
+
+
+
+
+    <div class="spacer_100"></div>
+        <p>Type de réplique autorisée : <br> {{ evenement.type_replique_autorisee }}</p>
+        <p>Puissance max {{ evenement.puissance_max_joule }} joule(s)</p>
+    <div class="spacer_200"></div>
+
+{% endblock %}

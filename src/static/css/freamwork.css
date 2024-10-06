@@ -1,0 +1,326 @@
+@import url('https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&family=Nunito:ital,wght@0,200..1000;1,200..1000&family=Raleway:ital,wght@0,100..900;1,100..900&display=swap');
+/*https://boxicons.com*/
+
+*{
+    font-family: 'Nunito', sans-serif;
+}
+html, body{
+    height: 100%;
+    margin: 0;
+    border: 0;
+
+
+    --color-gray1: #F2F2F2;
+    --color-gray2: #C1C1C1;
+    --color-gray3: #A8A9AB;
+    --color-gray4: #8F9193;
+    --color-gray5: #77787B;
+    --color-gray6: #5E6063;
+    --color-gray7: #45484C;
+    --color-gray8: #2D2F34;
+    --color-gray9: #14171C;
+    --color-gray10: #161616;
+
+    --color-blue-dark: #16204E;
+    --color-blue-normal: #36548B;
+    --color-blue-light: #5688C7;
+
+    --color-sand-dark: #675F49;
+    --color-sand-normal: #BEB08B;
+    --color-sand-light: #DCCCA3;
+
+    --color-red: #a51c2d;
+    --color-red-light: #c53245;
+    --color-green: #95C623;
+    --color-orange: #FE9000;
+    --color-orange-light: #e7952a;
+
+    --color-text-white: #F2F2F2;
+    --color-text-black: #161616;
+
+    --color-blackbg: #080808;
+
+    font-size: 16px;
+    --size-xxs: .25rem;
+    --size-xs: .5rem;
+    --size-s: .75rem;
+    --size-m: 1rem;
+    --size-l: 1.25rem;
+    --size-xl: 1.75rem;
+    --size-xxl: 2.5rem;
+
+}
+#content-general{
+    min-height: 70vh; /*Forcer les page a faire au moins 70vh pour que le footer soit en base*/
+}
+
+h1, h2, h3, h4, h5, h6, p{
+    margin: 0;
+    cursor: default;
+    color: var(--color-text-white);
+}
+a{
+    margin: 0;
+    text-decoration: none;
+    transition: 0.7s;
+    color: var(--color-text-white);
+}
+a:hover{
+    transition: 0.2s;
+}
+
+
+
+/*Border Radius*/
+.br5{
+    border-radius: 5px;
+}
+.br10{
+    border-radius: 10px;
+}
+.br100{
+    border-radius: 100px;
+}
+.bsw1{
+    box-shadow: 0px 0px 10px black;
+}
+
+
+/*Spacer / Espaceur de composant*/
+.spacer_20{
+    height: 20px;
+}
+.spacer_50{
+    height: 50px;
+}
+.spacer_100{
+    height: 100px;
+}
+.spacer_150{
+    height: 150px;
+}
+.spacer_200{
+    height: 200px;
+}
+.spacer_300{
+    height: 300px;
+}
+
+/*button*/
+/*
+.btn-light{
+    background-color: var(--color-blue-light);
+    color: var(--color-text-white);
+    text-align: center;
+    padding: 16px 0;
+    border-radius: 50px;
+    border: 0;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+.btn-2{
+    background-color: var(--color-blue-dark);
+    color: var(--color-text-white);
+    text-align: center;
+    padding: 6px 12px;
+    border-radius: 5px;
+    border: 0;
+    cursor: pointer;
+}
+.btn-borderwhite{
+    border: 2px solid var(--color-text-white);
+    background-color: transparent;
+    color: var(--color-text-white);
+    padding: 12px 0;
+    border-radius: 50px;
+}
+*/
+/*NewButton*/
+
+.btn_1{
+    /* Boutton Transparent, border sand hover sand clair */
+    text-align: center;
+    font-size: var(--size-m);
+    font-weight: bold;
+    padding:var(--size-s);
+    border-radius: 50px;
+    background-color: transparent;
+    border: 2px solid var(--color-sand-dark);
+    color: var(--color-sand-normal);
+}
+.btn_1:hover{
+    color: blue;
+    border: 2px solid var(--color-sand-normal);
+    color: var(--color-sand-light);
+}
+
+
+
+.btn_2{
+    /* Boutton entièrement bleu text blancv. Hover bleu clair*/
+    color: var(--color-text-white);
+    background-color: var(--color-blue-normal);
+    border-radius: 10px;
+    font-weight: bold;
+    width: 100%;
+    padding: 1rem 0;
+    font-size: 16px;
+    text-align: center;
+}
+.btn_2:hover{
+    background-color: var(--color-blue-light);
+
+}
+
+
+
+.btn_3{
+    /* Boutton entièrement rouge text blanc . Hover rouge clair*/
+    color: var(--color-text-white);
+    background-color: var(--color-red);
+    border-radius: 10px;
+    font-weight: bold;
+    width: 100%;
+    padding: 1rem 0;
+    font-size: 16px;
+    text-align: center;
+}
+.btn_3:hover{
+    background-color: var(--color-red-light);
+
+}
+
+
+
+.btn_4{
+    /* Boutton transparent border bleu, text blanc . Hover border bleu clair*/
+    padding: 1rem 2rem;
+    border: 2px solid var(--color-blue-normal);
+    border-radius: 50px;
+    background: transparent;
+    color: var(--color-text-white);
+    cursor: pointer;
+    transition: 0.7s;
+    margin: 2rem 0;
+}
+.btn_4:hover{
+    padding: 1rem 2rem;
+    border: 2px solid var(--color-blue-normal);
+    border-radius: 50px;
+    background: var(--color-blue-normal);
+    color: var(--color-text-white);
+    cursor: pointer;
+    transition: 0.2s;
+}
+.btn_4:disabled{
+    padding: 1rem 2rem;
+    border: 2px solid var(--color-gray7);
+    border-radius: 50px;
+    background: transparent;
+    color: var(--color-gray7);
+    cursor: pointer;
+    transition: 0.7s;
+    cursor: default;
+}
+
+
+
+.btn_5{
+    /* Boutton transparent border vert . Hover border vert clair*/
+    padding: 1rem 2rem;
+    border: 2px solid var(--color-green);
+    border-radius: 50px;
+    background: transparent;
+    color: var(--color-green);
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.7s;
+    margin: 2rem 0;
+}
+.btn_5:hover{
+    padding: 1rem 2rem;
+    border: 2px solid var(--color-green);
+    border-radius: 50px;
+    background: var(--color-green);
+    color: var(--color-text-white);
+    cursor: pointer;
+    transition: 0.2s;
+}
+.btn_5:disabled{
+    padding: 1rem 2rem;
+    border: 2px solid var(--color-gray7);
+    border-radius: 50px;
+    background: transparent;
+    color: var(--color-gray7);
+    cursor: pointer;
+    transition: 0.7s;
+    cursor: default;
+}
+
+
+
+.btn_6{
+    /* Boutton transparent border orange . Hover border orange clair*/
+    padding: 1rem 2rem;
+    border: 2px solid var(--color-orange);
+    border-radius: 50px;
+    background: transparent;
+    color: var(--color-orange);
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.7s;
+    margin: 2rem 0;
+}
+.btn_6:hover{
+    padding: 1rem 2rem;
+    border: 2px solid var(--color-orange-light);
+    border-radius: 50px;
+    background: var(--color-orange-light);
+    color: var(--color-text-white);
+    cursor: pointer;
+    transition: 0.2s;
+}
+.btn_6:disabled{
+    padding: 1rem 2rem;
+    border: 2px solid var(--color-gray7);
+    border-radius: 50px;
+    background: transparent;
+    color: var(--color-gray7);
+    cursor: pointer;
+    transition: 0.7s;
+    cursor: default;
+}
+
+
+.btn_7{
+    /* Boutton transparent border rouge . Hover border rouge clair*/
+    padding: 1rem 2rem;
+    border: 2px solid var(--color-red);
+    border-radius: 50px;
+    background: transparent;
+    color: var(--color-red);
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.7s;
+    margin: 2rem 0;
+}
+.btn_7:hover{
+    padding: 1rem 2rem;
+    border: 2px solid var(--color-red-light);
+    border-radius: 50px;
+    background: var(--color-red-light);
+    color: var(--color-text-white);
+    cursor: pointer;
+    transition: 0.2s;
+}
+.btn_7:disabled{
+    padding: 1rem 2rem;
+    border: 2px solid var(--color-gray7);
+    border-radius: 50px;
+    background: transparent;
+    color: var(--color-gray7);
+    cursor: pointer;
+    transition: 0.7s;
+    cursor: default;
+}

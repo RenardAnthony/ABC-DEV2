@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+{% load static %}
+
+
+
+{% block title %} <title>Index</title> {% endblock %}
+{% block Css %}
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link rel="stylesheet" href="{% static 'css/index.css' %}">
+{% endblock %}
+
+
+
+{% block content %}
+
+<div id="future-partie">
+    <img class="thumbnail_next_event br5" src="{% static 'images/futue_partie.jpg' %}" alt="">
+    <div class="texteright">
+        <h1>10 Févier 2024</h1>
+        <p>Joignez-vous à nous pour la première partie de l'année !</p>
+        <a href="#" class="br100">S'inscrire</a>
+    </div>
+</div>
+
+<div id="presentation">
+    <img src="{% static 'images/logo.png' %}">
+    <div class="text-in-pres">
+        <h1>Airsoft Bordeaux Concept</h1>
+        <p>
+           Airsoft Bordeaux Concept, aussi appelé "ABC", est une association d'airsoft
+            sur la région Bordelaise. Nous existons depuis plus de 13 ans, ce qui nous
+            a permis de tester pas mal de choses. Aujourd'hui, nous nous spécialisons dans
+            la "simulation militaire amateur". Bonne ambiance, fair-play et entraide sont
+            nos maîtres mots. Ici, pas de compétition ou de jugement, on est là pour jouer,
+            pour partager.
+        </p>
+    </div>
+</div>
+
+{% endblock %}
+

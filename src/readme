@@ -1,0 +1,48 @@
+à ajouter dans settings :
+
+AUTH_USER_MODEL = "account.CustomUser"
+LOGIN_URL = '/account/login/'
+
+INSTALLED_APPS = [
+    'account',
+]
+
+
+
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'mail.mrfoxit.com'
+EMAIL_HOST_USER = 'automailsmtpdev@mrfoxit.com'
+EMAIL_HOST_PASSWORD = 'mdpemail'
+EMAIL_PORT = 465
+EMAIL_USE_SSL = True
+EMAIL_USE_TLS = False
+DEFAULT_FROM_EMAIL = 'automailsmtpdev@mrfoxit.com'
+EMAIL_PROFILE_IMAGE_PATH = '../account/templates/account/email_pdp.png'
+
+
+
+# Format de date
+DATE_INPUT_FORMATS = ['%Y-%m-%d']
+
+
+
+
+//Pour avoir le style et les images du l'app account:
+STATIC_URL = '/static/'
+STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
+
+
+
+
+
+
+Todo:
+
+- Supprimer user_list
+- Faire la gestion des images (réplique et avatars) avec cropper
+- Systeme de commentaire a crée (profil/partie)
+- Systeme coovoiturage a imaginer (peuetre ajouter un tag au personne qui demande un coovoiturage et ce qui peuvent fair eun coovoiturage)
+
+
+Bugs :
+- A la suppression des images de profils par les admin (images non utiliser) ca supprime le profil_default.png et il faudrai pas.
