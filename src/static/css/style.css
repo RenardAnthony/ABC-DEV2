@@ -76,6 +76,8 @@ footer .footer-all-section{
     justify-content: center;
     width: auto;
     margin: 0 10%;
+    position: relative;
+    bottom: 0;
 }
 footer .footer-section{
     display: flex;

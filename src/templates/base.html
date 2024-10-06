@@ -53,7 +53,7 @@
         <nav>
             <a href="{% url 'evenement_list' %}"><i class='bx bxs-calendar'></i><p>CALENDRIER</p></a>
             {% if user.is_authenticated %}
-                <a id="pseudo" href="{% url 'profile' %}"><i class='bx bxs-user'></i><p>{{ request.user.pseudo }}</p></a>
+                <a id="pseudo" href="{% url 'profile' %}"><i class='bx bxs-user'></i><p style="text-transform: uppercase;">{{ request.user.pseudo }}</p></a>
             {%  else %}
                 <a href="{% url 'profile' %}"><i class='bx bxs-user'></i><p>CONNEXION</p></a>
             {% endif %}

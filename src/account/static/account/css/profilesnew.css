@@ -20,9 +20,9 @@
     flex-direction: column;
     width: 90%;
 
-    padding: var(--size-xl) var(--size-xxl);
     border-radius: 10px;
     background: var(--grade-1);
+    margin-bottom: var(--size-xxl);
 }
 
 
@@ -56,6 +56,13 @@
     padding: var(--size-xs) var(--size-xs);
     width: 40%;
 }
+
+
+
+
+
+
+
 #replique{
     margin: 5rem auto var(--size-xl);
     display: flex;
@@ -97,13 +104,6 @@
     border-bottom-right-radius: 5px;
     font-size: 14px;
 }
-.test{
-    display: flex;
-    flex-direction: column;
-    flex-wrap: wrap;
-    justify-content: space-evenly;
-    margin-bottom: 5rem;
-}
 #replique .replique_block{
     display: flex;
     flex-direction: column;
@@ -114,9 +114,32 @@
 #replique a{
     color: var(--color-text-white);
 }
-#replique .add_replique{
-    margin: 2rem auto;
+.repliqu{
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+    margin-bottom: 5rem;
+    width: 90%;
+    background: var(--grade-1);
+    border-radius: 10px;
 }
+.repliqu .add_replique{
+    margin: var(--size-m) auto;
+    width: 300px;
+    text-align: center;
+    height: auto;
+    margin-bottom: var(--size-xxl)
+}
+
+
+
+
+
+
+
+
+
 
 #content-general{
     min-height: 100vh ;

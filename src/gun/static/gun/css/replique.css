@@ -20,6 +20,7 @@ body{
 
 .choix_avatar{
     margin: 4rem auto 2rem;
+    width: 300px;
 }
 .choix_avatar img{
     margin-bottom: 1rem;
@@ -163,4 +164,14 @@ form img{
     color: var(--color-text-white);
     cursor: pointer;
     transition: 0.2s;
+}
+
+
+
+
+@media screen and (min-width: 700px){
+
+    .mobilsize{
+        width: 50%;
+    }
 }
