@@ -12,6 +12,7 @@
 <div id="profil_general">
 
     <div class="profilmobil">
+        <div class="spacer_50"></div>
         <img class="photo_de_profil" src="{{ user.userprofile.avatar.url }}" alt="Photo de profil de {{user.pseudo}}">
 
         <h1>{{ user.pseudo }}</h1>
@@ -41,10 +42,13 @@
             </tr>
             <tr>
                 <td class="firstrow">
-                    <p>{{ user.userprofile.adresse }}</p>
-                    <p>{{ user.date_of_birth }}</p>
-                    <p>{{ user.userprofile.blood_group }}</p>
-                    <p>{{ user.userprofile.choices_gender }}</p>
+                    <p>Ville : {{ user.userprofile.adresse }}</p>
+                    <p>{{age}} ans ({{ user.date_of_birth }})</p>
+                    {% if user.userprofile.blood_group != "unknown" %}
+                        <p>{{ user.userprofile.blood_group}}</p>
+                    {% endif %}
+
+                    <p>{{user.userprofile.choices_gender}}</p>
                 </td>
                 <td class="morlarge"></td>
                 <td class="tablebtn">
@@ -57,12 +61,6 @@
                 </td>
             </tr>
         </table>
-
-
-
-
-
-
     </div>
 
 

@@ -49,6 +49,8 @@ html, body{
     --size-xl: 1.75rem;
     --size-xxl: 2.5rem;
 
+    --grade-1: linear-gradient(50deg, var(--color-gray9) 20%, var(--color-gray8) 150%);
+
 }
 #content-general{
     min-height: 70vh; /*Forcer les page a faire au moins 70vh pour que le footer soit en base*/

@@ -213,7 +213,7 @@ body{
     background-color: var(--color-gray8);
     border-radius: 5px;
     padding: var(--size-xxl) 0;
-    background: linear-gradient(50deg, var(--color-gray9) 20%, var(--color-gray8) 150%);
+    background: var(--grade-1);
 }
 .liste_joueurs .bloque_1{
     text-align: center;

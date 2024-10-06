@@ -26,7 +26,7 @@ from django.utils import timezone
 from django.utils.decorators import method_decorator
 from django.urls import reverse
 from django.utils.dateparse import parse_date
-from datetime import datetime
+from datetime import date
 from .forms import CustomUserForm
 
 
@@ -129,6 +129,10 @@ def logout_view(request):
     return redirect('login')  # Rediriger vers la page de connexion après la déconnexion
 
 
+def calculate_age(birthdate):
+    today = date.today()
+    return today.year - birthdate.year - ((today.month, today.day) < (birthdate.month, birthdate.day))
+
 @login_required
 def profile(request, user_id=None):
     if user_id:
@@ -138,7 +142,10 @@ def profile(request, user_id=None):
         # Afficher le profil de l'utilisateur connecté
         user_profile = request.user
 
-    return render(request, 'account/profile.html', {'user': user_profile})
+    # Calculer l'âge si la date de naissance est présente
+    age = calculate_age(user_profile.date_of_birth) if user_profile.date_of_birth else None
+
+    return render(request, 'account/profile.html', {'user': user_profile, 'age': age})
 
 
 @staff_required
