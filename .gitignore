@@ -3,4 +3,6 @@ db.sqlite3
 __pycache__/
 .venv/
 .env
-TestUtilisateur/settings_PUSH.py
+TestUtilisateur/settings_DEV.py
+TestUtilisateur/settings_PUBLIC.py
+TestUtilisateur/settings.py
