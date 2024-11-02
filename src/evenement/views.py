@@ -14,7 +14,6 @@ from django.contrib.admin.views.decorators import staff_member_required
 
 from math import pow
 
-
 from datetime import datetime
 
 @staff_member_required
@@ -105,8 +104,19 @@ def evenement_delete(request, pk):
 
 
 def evenement_list(request):
-    evenements = Evenement.objects.all().prefetch_related('inscription_set')
+
+    today = timezone.now()
+
+    annee_actuelle = today.year
+    debut_annee = datetime(annee_actuelle, 1, 1, tzinfo=timezone.utc)
+    fin_annee = datetime(annee_actuelle, 12, 31, 23, 59, 59, tzinfo=timezone.utc)
+
+    evenements_futurs = Evenement.objects.filter(date_heure__gte=today, date_heure__lte=fin_annee).order_by('date_heure').prefetch_related('inscription_set')
+    evenements_passes = Evenement.objects.filter(date_heure__lt=today, date_heure__gte=debut_annee,date_heure__lte=fin_annee).order_by('-date_heure').prefetch_related('inscription_set')
+    evenements = list(evenements_futurs) + list(evenements_passes)
+
     evenements_details = []
+
 
     for evenement in evenements:
         # Compter le nombre de participants inscrits
@@ -124,6 +134,7 @@ def evenement_list(request):
             'nombre_participants': nombre_participants,
             'places_restantes': places_restantes,
             'utilisateur_inscrit': utilisateur_inscrit,
+            'today': today,
         })
 
     return render(request, 'evenement/evenement_list.html', {

@@ -1,0 +1,105 @@
+{% extends 'gestion_projet/base.html' %}
+{% load custom_tags %}
+
+
+{% block content %}
+<div>
+    <div id="section_1">
+        <!-- Section des Tâches -->
+        <div class="card_contener">
+            <h2>Tâches principales</h2>
+            <ul>
+                {% for task in tasks %}
+                <a href="{% url 'tache_detail' task.id %}">
+                    <li>
+                        <h3>{{ task.title }}</h3>
+
+                        {% if task.priority %}
+                            {% if task.priority == "Basse" %}
+                                <div class="priority-flag flag-low"></div>
+                            {% elif task.priority == "Moyenne" %}
+                                <div class="priority-flag flag-medium"></div>
+                            {% elif task.priority == "Haute" %}
+                                <div class="priority-flag flag-high"></div>
+                            {% endif %}
+                        {% endif %}
+                        <div class="side">
+                            <div class="tags">
+                                {% for tag in task.tags.all %}
+                                    <span class="tag" style="background-color: {{ tag.color }};">{{ tag.name }}</span>
+                                {% endfor %}
+                            </div>
+
+                            <p class="workon">{% if task.assigned_to %}{{task.assigned_to}} Work on {% endif %}</p>
+                        </div>
+                        <div class="progress-bar">
+                            <div class="progress" style="width: {{ task.progress }}%;"></div>
+                        </div>
+                    </li>
+                </a>
+                {% endfor %}
+            </ul>
+        </div>
+
+        <!-- Section des Bugs -->
+        <div class="card_contener">
+            <h2>Bugs à corriger</h2>
+            <ul>
+                {% for bug in bugs %}
+                <a href="{% url 'bug_detail' bug.id %}">
+                    <li>
+                        <h3>{{ bug.title }}</h3>
+
+                        <p>{{ bug.description|truncatewords:20 }}</p>
+
+                        {% if bug.priority %}
+                            {% if bug.priority == "Basse" %}
+                                <div class="priority-flag flag-low"></div>
+                            {% elif bug.priority == "Moyenne" %}
+                                <div class="priority-flag flag-medium"></div>
+                            {% elif bug.priority == "Haute" %}
+                                <div class="priority-flag flag-high"></div>
+                            {% endif %}
+                        {% endif %}
+                        <div class="side">
+                            <div class="tags">
+                                {% for tag in bug.tags.all %}
+                                    <span class="tag" style="background-color: {{ tag.color }};">{{ tag.name }}</span>
+                                {% endfor %}
+                            </div>
+
+                            <p class="workon">{% if bug.assigned_to %}{{bug.assigned_to}} Work on {% endif %}</p>
+                        </div>
+                    </li>
+                </a>
+                {% endfor %}
+            </ul>
+        </div>
+
+        <!-- Progression générale -->
+        <div class="card_contener">
+            <!-- Statistiques -->
+            <div>
+                <p>{{ total_bugs }} Bugs à traiter</p>
+                <p>{{ total_tasks }} Tâches en attente</p>
+            </div>
+        </div>
+    </div>
+
+
+    <div id="section_2" class="general-progress-container">
+        <div class="progress-bar-general">
+            <div class="progress" style="width: {{ project_progress }}%;">
+                <span class="progress-text">Progression Générale : {{ project_progress }}%</span>
+            </div>
+        </div>
+    </div>
+
+
+
+    <!-- Live Chat -->
+    <div id="section_3">
+        {% include 'gestion_projet/chat_component.html' %}
+    </div>
+</div>
+{% endblock %}

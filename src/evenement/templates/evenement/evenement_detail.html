@@ -110,11 +110,15 @@
     <div class="inscription">
         {% if user.is_authenticated %}
             {% if user_role != 'new' %}
-                {% if not is_inscrit %}
-                    <a class="btn_2" href="{% url 'inscription_evenement' evenement.id %}">S'inscrire</a>
+                {% if evenement.date_heure >= today %}
+                    {% if not is_inscrit %}
+                        <a class="btn_2" href="{% url 'inscription_evenement' evenement.id %}">S'inscrire</a>
+                    {% else %}
+                        <a class="btn_2" href="{% url 'inscription_ami' evenement.id %}">Inscrire un(e) ami(e)</a>
+                        <a class="btn_3" href="{% url 'desinscription_evenement' evenement.id %}">Se désinscrire</a>
+                    {% endif %}
                 {% else %}
-                    <a class="btn_2" href="{% url 'inscription_ami' evenement.id %}">Inscrire un(e) ami(e)</a>
-                    <a class="btn_3" href="{% url 'desinscription_evenement' evenement.id %}">Se désinscrire</a>
+                    <p>Cette evenement est fini, vous ne pouvez plus vous inscrir !</p>
                 {% endif %}
             {% else %}
                 <p>Votre compte doit être validé pour vous inscrire à une partie.</p>
@@ -124,11 +128,13 @@
         {% endif %}
 
         {% if user.is_staff %}
-        <div class="spacer_100"></div>
-            <a class="btn_5" href="{% url 'comptabilite_evenement' evenement.pk %}">Comptabilité</a>
-            <a class="pc btn_6" href="{% url 'evenement_update' evenement.pk %}">Modifier</a>
-            <a class="pc btn_7" href="{% url 'evenement_delete' evenement.pk %}">Supprimer</a>
-            <p class="mobil pasmodifiable">*Vous ne pouvez pas modifier ou supprimer un evenement depuis un téléphone.</p>
+            <div class="spacer_100"></div>
+                <a class="btn_5" href="{% url 'comptabilite_evenement' evenement.pk %}">Comptabilité</a>
+            {% if evenement.date_heure >= today %}
+                <a class="pc btn_6" href="{% url 'evenement_update' evenement.pk %}">Modifier</a>
+                <a class="pc btn_7" href="{% url 'evenement_delete' evenement.pk %}">Supprimer</a>
+                <p class="mobil pasmodifiable">*Vous ne pouvez pas modifier ou supprimer un evenement depuis un téléphone.</p>
+            {% endif %}
         {% endif %}
     </div>
 

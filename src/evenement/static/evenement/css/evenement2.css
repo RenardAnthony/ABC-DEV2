@@ -94,6 +94,9 @@ body{
     margin-right: 1rem;
     height: 88px;
 }
+#evemenent-liste .list-element a.evenement-passe{
+    opacity: 0.2;
+}
 
 #evemenent-liste #legende{
     width: 300px;
@@ -130,6 +133,7 @@ body{
     border-radius: 5px;
     margin: 0 var(--size-s) 0 7px;
 }
+
 
 .staff_button_liste_evenement{
     margin: 3rem auto 0 auto;
@@ -647,5 +651,12 @@ form{
         padding: var(--size-xxl) 0;
         width: 62%;
         margin: auto;
+    }
+
+    .bannier{
+        width: 100%;
+        height: 410px;
+        object-fit: cover;
+        border-radius: 10px;
     }
 }

@@ -28,6 +28,7 @@ urlpatterns = [
     path('gun/', include('gun.urls')), # Include les urls de l'application gun (répliques)
     path('evenement/', include('evenement.urls')), # Include les urls de l'application evenement
     path('todo/', include('todo.urls')), # Application todoliste
+    path('gestion_projet/', include('gestion_projet.urls')), # Application gestion projet
 
     path('test/', views.test, name="test"), #Page vierge juste pour les test
 

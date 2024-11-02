@@ -1,0 +1,74 @@
+{% extends 'gestion_projet/base.html' %}
+{% load custom_tags custom_filters %}
+
+{% block content %}
+
+
+<div id="DeHautEnBas">
+
+    <div class="side">
+        <div class="gauche">
+            <h2>{{ task.title }}</h2>
+            <p class="desc">{{ task.description }}</p>
+        </div>
+        <div class="droit progre">
+            <div class="progress-container">
+                <div class="progress-fill" style="height: {{ task.progress }}%;"></div>
+                <span class="progress-textx">{{ task.progress }}%</span>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="side seconde">
+        <div class="gauche">
+            <div class="tags"><!-- Affichage des tags -->
+                {% for tag in task.tags.all %}
+                    <span class="tag" style="background-color: {{ tag.color }};">{{ tag.name }}</span>
+                {% endfor %}
+            </div>
+
+            <div class="task-actions">
+                <a href="{% url 'edit_item' 'task' task.id %}" class="button-edit">Éditer</a>
+                <a href="{% url 'delete_item' 'task' task.id %}" class="button-delete">Supprimer</a>
+            </div>
+        </div>
+        <div class="droit">
+            <div id="qui">
+                <p>Créé par : {{ created_by }}</p>
+                <p>Le {{ created_at|date:"d/m/Y" }} à {{ created_at|time:"H:i" }}</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="side chat">
+        <div id="Live_Chat_Box">
+            <h2>Chat</h2>
+            <ul>
+                {% for message in chat_messages %}
+                <li>
+                    <div class="side">
+                        <h2>{{ message.user.pseudo }}</h2>
+                        <span>{{ message.timestamp|format_timestamp }}</span>
+                    </div>
+                    <p>{{ message.message|mention_links|safe }}</p>
+                </li>
+                {% endfor %}
+            </ul>
+            <form method="POST" action="">
+                {% csrf_token %}
+                <input type="text" name="message" placeholder="Tapez votre message ici" required>
+                <button type="submit">Envoyer</button>
+            </form>
+        </div>
+    </div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const chatBox = document.querySelector('#Live_Chat_Box ul');
+        chatBox.scrollTop = chatBox.scrollHeight;
+    });
+</script>
+
+</div>
+{% endblock %}

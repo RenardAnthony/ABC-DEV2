@@ -29,8 +29,9 @@
     </div>
   </div>
   <div class="list-element">
+
     {% for detail in evenements_details %}
-      <a href="{% url 'evenement_detail' detail.evenement.pk %}" class="element">
+      <a href="{% url 'evenement_detail' detail.evenement.pk %}" class="element {% if detail.evenement.date_heure < detail.today %} evenement-passe {% endif %}">
         <div {% if detail.evenement.type_evenement == "Partie" %}class="bookmark-partie"{% else %}class="bookmark-evenement"{% endif %}></div>
         <div class="info">
           <p class="nom">{{ detail.evenement.nom }}</p>
@@ -43,6 +44,7 @@
         {% endif %}
       </a>
     {% endfor %}
+
   </div>
 </div>
 

@@ -3,7 +3,7 @@
 
 {% block title %} <title>Accueil</title> {% endblock %}
 {% block Css %}
-    <link rel="stylesheet" href="{% static 'css/index2.css' %}">
+    <link rel="stylesheet" href="{% static 'css/index.css' %}">
 {% endblock %}
 
 
@@ -40,7 +40,10 @@
             </p>
             <a href="{% url 'evenement_list' %}" class="btn_1">CALENDRIER</a>
         {% else %}
-            <p>Aucun événement à venir pour le moment. <br><br>  Mais rendez-vous dans quelques jours ! on reste jamais plus d'un mois sans jouer !</p>
+            <div class="pas_devenement">
+                <h1>Aucun événement à venir pour le moment...</h1>
+                <p>"Mais rendez-vous dans quelques jours, on reste jamais plus d'un mois sans jouer !"</p>
+            </div>
         {% endif %}
     </div>
 </div>

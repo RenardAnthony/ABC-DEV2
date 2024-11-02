@@ -1,3 +1,4 @@
+
 """
 Django settings for TestUtilisateur project.
 
@@ -48,6 +49,7 @@ INSTALLED_APPS = [
     'gun',
     'evenement',
     'todo',
+    'gestion_projet',
 ]
 
 MIDDLEWARE = [

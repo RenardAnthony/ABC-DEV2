@@ -53,7 +53,7 @@ html, body{
 
 }
 #content-general{
-    min-height: 100vh; /*Forcer les page a faire au moins 70vh pour que le footer soit en base*/
+    min-height: 90vh; /*Forcer les page a faire au moins 70vh pour que le footer soit en base*/
 }
 
 h1, h2, h3, h4, h5, h6, p{

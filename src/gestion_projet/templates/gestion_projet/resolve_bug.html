@@ -1,0 +1,11 @@
+<!-- resolve_bug.html -->
+{% extends 'gestion_projet/base.html' %}
+
+{% block content %}
+<h2>Résoudre le bug : {{ bug.title }}</h2>
+<form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Valider et archiver</button>
+</form>
+{% endblock %}

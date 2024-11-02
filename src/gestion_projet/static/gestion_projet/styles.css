@@ -1,0 +1,537 @@
+/* Reset de base pour une meilleure compatibilité */
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+html, body {
+
+
+    /* Palette couleur */
+    --color-text-white: #F2F2F2;
+    --color-text-black: #333;
+    --bg-color: #f4f4f9;
+
+    --color-0: #fff;
+    --color-1: #76A5EA;
+    --color-2: #1144EB;
+    --color-3: #0026C0;
+    --color-4: #95BBF4;
+    --color-5: #D9D9D9;
+
+    --color-flag-low: #3DDD2E;
+    --color-flag-medium: #DDC32E;
+    --color-flag-high: #DD2E2E;
+
+
+
+
+    font-family: Arial, sans-serif; /* Choisis une police de base simple */
+    background-color: var(--color-0); /* Couleur de fond neutre */
+    line-height: 1.6;
+    padding: 0;
+    margin: 0;
+    color: var(--color-text-black);
+
+
+
+    font-size: 16px;
+    --size-xxs: .25rem;
+    --size-xs: .5rem;
+    --size-s: .75rem;
+    --size-m: 1rem;
+    --size-l: 1.25rem;
+    --size-xl: 1.75rem;
+    --size-xxl: 2.5rem;
+}
+ul{
+    list-style-type: none;
+}
+h1, h2, h3, h4, h5, h6, p{
+    margin: 0;
+    cursor: default;
+}
+a{
+    margin: 0;
+    text-decoration: none;
+    transition: 0.7s;
+}
+a:hover{
+    transition: 0.2s;
+}
+
+
+
+/* Base.html */
+body{
+    display: flex;
+    flex-direction: row;
+    min-height: 100vh;
+}
+nav{
+    width: 400px;
+    background-color: var(--color-1);
+}
+nav #logo{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    color: var(--color-text-white);
+    padding: var(--size-xxl) 0;
+}
+nav #logo h2{
+    font-size: var(--size-m);
+}
+nav #logo img{
+    width: 60px;
+    fill: var(--color-text-white);
+    stroke: var(--color-text-white);
+    margin: 0 var(--size-m) 0 0;
+    padding: 0;
+}
+nav a{
+    color: var(--color-text-white);
+}
+
+nav #navigation{
+   margin-top: 20vh;
+}
+nav #navigation ul li{
+    padding: var(--size-s) var(--size-l);
+    margin: 0 0 var(--size-xxs) var(--size-xl);
+    border-top-left-radius: 50px;
+    border-bottom-left-radius: 50px;
+    transition: 0.7s;
+    font-weight: bold;
+}
+nav #navigation ul li:hover{
+    background-color: var(--color-4);
+    cursor: pointer;
+    transition: 0.2s;
+}
+nav #navigation ul li.active {
+    background-color: var(--color-4); /* Couleur différente pour indiquer la page active */
+    color: var(--color-text-white);
+}
+
+
+
+main{
+    width: 100%;
+    margin: 50px;
+}
+
+
+/* Trois tables de tâches, bugs et stats */
+#section_1{
+     height: 40vh;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+.card_contener{
+    width: 32%;
+    background-color: var(--color-5);
+    border-radius: 5px;
+    padding: var(--size-m);
+    overflow: auto;
+}
+.card_contener ul li{
+    margin-bottom: var(--size-m);
+    background-color: var(--color-0);
+    border-radius: 5px;
+    position: relative;
+    padding: var(--size-s) var(--size-m);
+    cursor: pointer;
+    transition: 0.7s;
+}
+.card_contener ul li:hover{
+    box-shadow: 3px 3px 5px grey;
+    transition: 0.2s;
+}
+
+.card_contener ul li h3{
+    cursor: pointer;
+}
+.card_contener ul li .side{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+}
+.card_contener ul li .workon{
+    color: grey;
+    cursor: pointer;
+}
+.card_contener a{
+    color: var(--color-text-black);
+    cursor: pointer;
+}
+.priority-flag{
+    width: 16px;
+    height: 16px;
+    border-radius: 50px;
+    position: absolute;
+    top: 8px;
+    right: 8px;
+}
+.flag-low{
+    background-color: var(--color-flag-low);
+}
+.flag-medium{
+    background-color: var(--color-flag-medium);
+}
+.flag-high{
+    background-color: var(--color-flag-high)
+}
+
+.tag {
+    display: inline-block;
+    padding: 4px 8px;
+    margin: 2px;
+    border-radius: 4px;
+    color: #fff;
+    font-size: 0.85em;
+}
+
+
+/* Barre de progression */
+.progress-bar {
+    width: 100%;
+    height: 8px;
+    background-color: #e0e0e0; /* Couleur de fond de la barre */
+    border-radius: 4px;
+    margin-top: 8px;
+}
+
+.progress {
+    height: 100%;
+    background-color: #007bff; /* Couleur de la progression */
+    border-radius: 4px;
+    transition: width 0.4s ease; /* Transition douce pour l'animation */
+}
+
+
+
+/*Progresse bar général*/
+.general-progress-container {
+    margin: var(--size-xxl) 0;
+    width: 100%;
+    text-align: center;
+}
+.progress-bar-general {
+    background-color: var(--color-5); /* Couleur de fond de la barre */
+    width: 100%;
+    height: 30px; /* Hauteur ajustée pour mieux contenir le texte */
+    border-radius: 30px;
+    overflow: hidden;
+    position: relative;
+}
+.progress-bar-general .progress {
+    height: 100%;
+    background-color: #007bff; /* Couleur de la progression */
+    border-radius: 30px;
+    transition: width 0.4s ease; /* Animation de progression */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white; /* Couleur du texte dans la barre de progression */
+    font-weight: bold;
+}
+.progress-text {
+    position: absolute;
+    width: 100%;
+    color: var(--color-text-white); /* Couleur du texte */
+    text-align: left;
+    margin-left: var(--size-xxl);
+    position: absolute;
+    bottom: 2px;
+    left: 0;
+}
+
+
+/*Live Chat*/
+#section_3 {
+    height: 40vh;
+}
+#Live_Chat_Box {
+    width: 100%;
+    height: 90vh;
+    background-color: var(--color-5);
+    border-radius: 5px;
+    padding: var(--size-m);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+#section_3 #Live_Chat_Box {
+    height: 100%;
+}
+#Live_Chat_Box ul {
+    max-height: 80%; /* Limiter la hauteur de la liste de messages */
+    overflow-y: auto;
+    margin-bottom: var(--size-m);
+    flex-direction: column-reverse; /* Inverse l'ordre d'affichage des éléments */
+}
+#Live_Chat_Box ul li {
+    background-color: white;
+    padding: var(--size-m);
+    border-radius: 10px;
+    margin-bottom: var(--size-xs);
+}
+#Live_Chat_Box ul li h2 {
+    font-size: var(--size-m);
+    font-weight: bold;
+    color: var(--color-2);
+}
+#Live_Chat_Box ul li .side {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+#Live_Chat_Box form {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin-top: var(--size-m);
+}
+#Live_Chat_Box form input {
+    width: 90%;
+    padding: var(--size-m);
+    height: 60px;
+    border-radius: 5px;
+    border: 0;
+}
+#Live_Chat_Box form button {
+    width: 9%;
+    padding: var(--size-m);
+    cursor: pointer;
+    border-radius: 5px;
+    background-color: var(--color-1);
+    border: 0;
+    color: var(--color-text-white);
+    font-weight: bold;
+}
+
+/* Liste'taches et bug */
+.pagination {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+.pagination .step-links {
+    display: flex;
+    gap: 10px;
+}
+
+.pagination a {
+    padding: 8px 12px;
+    background-color: #007bff;
+    color: #fff;
+    border-radius: 4px;
+    text-decoration: none;
+}
+
+.pagination a:hover {
+    background-color: #0056b3;
+}
+
+.pagination .current {
+    padding: 8px 12px;
+    background-color: #6c757d;
+    color: #fff;
+    border-radius: 4px;
+}
+.task-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+}
+
+.card {
+    width: 250px;
+    background-color: #f4f4f9;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+    position: relative;
+}
+
+.card h3 {
+    font-size: 1.2em;
+    margin-bottom: 10px;
+}
+
+.card .tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5px;
+    margin-bottom: 10px;
+}
+
+.card .tag {
+    padding: 4px 8px;
+    color: #fff;
+    border-radius: 4px;
+    font-size: 0.9em;
+}
+
+.card .assigned-to {
+    color: #666;
+    font-size: 0.9em;
+    margin-bottom: 15px;
+}
+
+.card .priority-flag {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    position: absolute;
+    top: 10px;
+    right: 10px;
+}
+
+.card .priority-flag.basse {
+    background-color: #3DDD2E;
+}
+
+.card .priority-flag.moyenne {
+    background-color: #DDC32E;
+}
+
+.card .priority-flag.haute {
+    background-color: #DD2E2E;
+}
+
+.progress-bar {
+    background-color: #e0e0e0;
+    height: 8px;
+    border-radius: 4px;
+    overflow: hidden;
+    margin-top: 15px;
+}
+
+.progress-bar .progress {
+    height: 100%;
+    background-color: #007bff;
+    transition: width 0.4s ease;
+}
+
+.edit-link {
+    display: inline-block;
+    margin-top: 10px;
+    text-decoration: none;
+    color: #007bff;
+    font-weight: bold;
+}
+.task-filters {
+    display: flex;
+    gap: 10px;
+    margin: 30px 0 60px 0;
+    font-weight: bold;
+}
+
+.task-filters a {
+    color: #007bff;
+    text-decoration: none;
+    padding: 5px 10px;
+    background-color: #f0f0f5;
+    border-radius: 5px;
+}
+
+.task-filters a:hover {
+    background-color: #e0e0e5;
+}
+.bug-filters {
+    display: flex;
+    gap: 10px;
+    margin: 30px 0 60px 0;
+    font-weight: bold;
+}
+
+.bug-filters a {
+    color: #007bff;
+    text-decoration: none;
+    padding: 5px 10px;
+    background-color: #f0f0f5;
+    border-radius: 5px;
+}
+
+.bug-filters a:hover {
+    background-color: #e0e0e5;
+}
+
+
+/*Tache et bug detail*/
+#DeHautEnBas{
+    display: flex;
+    flex-direction: column;
+}
+#DeHautEnBas .side{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+#DeHautEnBas .side .gauche{
+    width: 75%;
+}
+#DeHautEnBas .side .droit{
+    width: 25%;
+}
+#DeHautEnBas #qui{
+    background-color: var(--color-5);
+    padding: var(--size-xs) var(--size-m);
+    margin: var(--size-xxl);
+}
+#DeHautEnBas .chat #Live_Chat_Box{
+    height: 30vh;
+}
+#DeHautEnBas .seconde{
+    align-items: center;
+}
+#DeHautEnBas .side .gauche h2{
+    margin-bottom: var(--size-m);
+}
+#DeHautEnBas .side .gauche .desc{
+    border: 1px solid var(--color-5);
+    min-height: 40vh;
+    padding: var(--size-m);
+    border-radius: 5px;
+}
+#DeHautEnBas .side .droit.progre{
+    margin: var(--size-xxl);
+    margin: auto;
+}
+#DeHautEnBas .side .progress-container {
+    width: 50%;
+    aspect-ratio: 1 / 1;
+    border-radius: 50%;
+    background-color: #e0e0e0; /* Couleur de fond du cercle */
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: auto;
+}
+
+#DeHautEnBas .side .progress-fill {
+    width: 100%;
+    background-color: #007bff; /* Couleur du remplissage */
+    position: absolute;
+    bottom: 0;
+    transition: height 0.4s ease; /* Animation de remplissage */
+}
+
+#DeHautEnBas .side .progress-textx {
+    position: absolute;
+    font-size: var(--size-xxl);
+    color: var(--color-text-black); /* Couleur du texte */
+    font-weight: bold;
+    z-index: 1; /* Place le texte au-dessus du remplissage */
+}

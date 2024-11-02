@@ -1,0 +1,25 @@
+{% extends 'gestion_projet/base.html' %}
+{% block content %}
+    <h2>Statistiques du Projet</h2>
+    <p>Total des Tâches : {{ total_tasks }}</p>
+    <p>Total des Bugs : {{ total_bugs }}</p>
+    <p>Tâches Complétées : {{ completed_tasks }}</p>
+    <p>Progression Générale : {{ project_progress }}%</p>
+
+    <canvas id="taskChart"></canvas>
+{% endblock %}
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+    var ctx = document.getElementById('taskChart').getContext('2d');
+    var taskChart = new Chart(ctx, {
+        type: 'pie',
+        data: {
+            labels: [{% for item in task_priorities %}'{{ item.priority }}'{% if not forloop.last %}, {% endif %}{% endfor %}],
+            datasets: [{
+                data: [{% for item in task_priorities %}{{ item.count }}{% if not forloop.last %}, {% endif %}{% endfor %}],
+                backgroundColor: ['#FF6384', '#36A2EB', '#FFCE56']
+            }]
+        }
+    });
+</script>

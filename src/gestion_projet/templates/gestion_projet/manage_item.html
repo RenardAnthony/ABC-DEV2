@@ -1,0 +1,103 @@
+{% extends 'gestion_projet/base.html' %}
+
+{% block content %}
+<h2>{% if item_type == 'task' %}Modifier la tâche{% else %}Modifier le bug{% endif %}</h2>
+
+<form method="post">
+    {% csrf_token %}
+    {{ form.title }}
+    {{ form.description }}
+    {% if item_type == 'task' %}
+        {{ form.progress }}
+    {% endif %}
+    {{ form.priority }}
+    {{ form.assigned_to }}
+
+    <div class="tag-container">
+        <div class="selected-tags"></div>
+        <input type="text" id="tag-search" placeholder="Rechercher ou créer un tag">
+        <div class="tag-list">
+            {% for tag in form.tags.field.queryset %}
+                <span class="tag-item" data-tag-id="{{ tag.id }}" style="background-color: {{ tag.color }};">{{ tag.name }}</span>
+            {% endfor %}
+        </div>
+
+        {% if form.instance.id %}
+            <input type="hidden" name="selected_tags" id="selected-tags-input" value="{% for tag in form.instance.tags.all %}{{ tag.id }},{% endfor %}">
+        {% else %}
+            <input type="hidden" name="selected_tags" id="selected-tags-input" value="">
+        {% endif %}
+    </div>
+
+    <button type="submit">{{ title }}</button>
+
+    {% if form.instance.id %}
+        {% if item_type == 'task' %}
+            <form method="post" action="{% url 'archive_item' item_type form.instance.id %}" style="display:inline;">
+                {% csrf_token %}
+                <button type="submit" class="archive-button">Archiver</button>
+            </form>
+        {% else %}
+            <form method="post" action="{% url 'resolve_bug' form.instance.id %}" style="display:inline;">
+                {% csrf_token %}
+                <button type="submit" class="resolve-button">Résoudre le bug</button>
+            </form>
+        {% endif %}
+    {% endif %}
+
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const selectedTagsContainer = document.querySelector('.selected-tags');
+        const tagItems = document.querySelectorAll('.tag-item');
+        const tagInput = document.getElementById('selected-tags-input');
+
+        // Ajouter un événement au clic sur chaque tag
+        tagItems.forEach(tagItem => {
+            tagItem.addEventListener('click', () => {
+                const tagId = tagItem.getAttribute('data-tag-id');
+                const isSelected = Array.from(selectedTagsContainer.children).some(selectedTag =>
+                    selectedTag.getAttribute('data-tag-id') === tagId
+                );
+
+                if (!isSelected) {
+                    const tagClone = tagItem.cloneNode(true);
+                    tagClone.classList.add('selected');
+                    tagClone.addEventListener('click', () => {
+                        tagClone.remove();
+                        tagItem.classList.remove('hidden');
+                        updateTagSelect();
+                    });
+                    selectedTagsContainer.appendChild(tagClone);
+                    tagItem.classList.add('hidden');
+                }
+                updateTagSelect();
+            });
+        });
+
+        // Fonction pour mettre à jour le sélecteur masqué
+        function updateTagSelect() {
+            const selectedTagIds = Array.from(selectedTagsContainer.children).map(tag =>
+                tag.getAttribute('data-tag-id')
+            );
+            tagInput.value = selectedTagIds.join(',');
+        }
+
+        // Pré-sélectionner les tags existants
+        const preSelectedTagIds = tagInput.value.split(',').filter(id => id);
+        tagItems.forEach(tagItem => {
+            if (preSelectedTagIds.includes(tagItem.getAttribute('data-tag-id'))) {
+                const tagClone = tagItem.cloneNode(true);
+                tagClone.classList.add('selected');
+                tagClone.addEventListener('click', () => {
+                    tagClone.remove();
+                    tagItem.classList.remove('hidden');
+                    updateTagSelect();
+                });
+                selectedTagsContainer.appendChild(tagClone);
+                tagItem.classList.add('hidden');
+            }
+        });
+    });
+</script>
+
+{% endblock %}

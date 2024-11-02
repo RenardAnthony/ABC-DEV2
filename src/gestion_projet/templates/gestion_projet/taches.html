@@ -1,0 +1,50 @@
+{% extends 'gestion_projet/base.html' %}
+{% block content %}
+<h2>Liste des Tâches</h2>
+<a href="{% url 'create_item' 'task' %}" class="create-link edit-link">+ Créer une tâche</a>
+
+<div class="task-filters">
+    <a href="?priority=Haute">Haute</a>
+    <a href="?priority=Moyenne">Moyenne</a>
+    <a href="?priority=Basse">Basse</a>
+</div>
+
+<p>{{ tasks.paginator.count }} tâches en attente</p>
+
+<div class="task-list">
+    {% for task in tasks %}
+    <div class="card">
+        <h3>{{ task.title }}</h3>
+        <div class="tags">
+            {% for tag in task.tags.all %}
+            <span class="tag" style="background-color: {{ tag.color }};">{{ tag.name }}</span>
+            {% endfor %}
+        </div>
+        <p class="assigned-to">
+            {% if task.assigned_to %}Assigné à : {{ task.assigned_to }}{% else %}Non assigné{% endif %}
+        </p>
+        <div class="priority-flag {{ task.priority|lower }}"></div>
+        <div class="progress-bar">
+            <div class="progress" style="width: {{ task.progress }}%;"></div>
+        </div>
+        <a href="{% url 'tache_detail' task.id %}" class="edit-link">Afficher</a>
+    </div>
+    {% endfor %}
+</div>
+
+<div class="pagination">
+    <span class="step-links">
+        {% if tasks.has_previous %}
+            <a href="?page=1">&laquo; première</a>
+            <a href="?page={{ tasks.previous_page_number }}">précédente</a>
+        {% endif %}
+        <span class="current">
+            Page {{ tasks.number }} de {{ tasks.paginator.num_pages }}
+        </span>
+        {% if tasks.has_next %}
+            <a href="?page={{ tasks.next_page_number }}">suivante</a>
+            <a href="?page={{ tasks.paginator.num_pages }}">dernière &raquo;</a>
+        {% endif %}
+    </span>
+</div>
+{% endblock %}

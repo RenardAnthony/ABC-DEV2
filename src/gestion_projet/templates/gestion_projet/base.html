@@ -1,0 +1,51 @@
+{% load static %}
+{% load custom_tags %}
+
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Gestion de Projet</title>
+    <link rel="stylesheet" href="{% static 'gestion_projet/styles.css' %}">
+</head>
+<body>
+    <nav>
+    <a href="#">
+        <div id="logo">
+            <img src="{% static 'gestion_projet/CherryStackStudio.svg' %}">
+            <h2>CherryStackStudio</h2>
+        </div>
+    </a>
+    <div id="navigation">
+        <ul>
+            <a href="{% url 'vue_d_ensemble' %}">
+                <li class="{% if request.resolver_match.url_name == 'vue_d_ensemble' %}active{% endif %}">Vue d'ensemble</li>
+            </a>
+            <a href="{% url 'taches' %}">
+                <li class="{% if request.resolver_match.url_name == 'taches' %}active{% endif %}">Tâches</li>
+            </a>
+            <a href="{% url 'bugs' %}">
+                <li class="{% if request.resolver_match.url_name == 'bugs' %}active{% endif %}">Bugs</li>
+            </a>
+            <a href="{% url 'live_chat' %}">
+                <li class="{% if request.resolver_match.url_name == 'live_chat' %}active{% endif %}">Live Chat</li>
+            </a>
+            <a href="{% url 'statistiques' %}">
+                <li class="{% if request.resolver_match.url_name == 'statistiques' %}active{% endif %}">Statistiques</li>
+            </a>
+
+            {% if user.notifications_unread.count > 0 %}
+                <li>
+                    <span{{ user.notifications_unread.count }}</span>
+                </li>
+            {% endif %}
+        </ul>
+    </div>
+</nav>
+
+
+    <main>
+        {% block content %}{% endblock %}
+    </main>
+</body>
+</html>

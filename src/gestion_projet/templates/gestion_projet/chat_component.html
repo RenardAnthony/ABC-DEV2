@@ -1,0 +1,29 @@
+{% load custom_tags %}  <!-- Charger le filtre personnalisé -->
+{% load custom_filters %}
+
+<div id="Live_Chat_Box">
+    <h2>Live Chat</h2>
+    <ul>
+        {% for message in chat_messages %}
+        <li>
+            <div class="side">
+                <h2>{{ message.user.pseudo }}</h2>
+                <span>{{ message.timestamp|format_timestamp }}</span>
+            </div>
+            <p>{{ message.message|mention_links|safe }}</p>  <!-- Appliquer le filtre `mention_links` -->
+        </li>
+        {% endfor %}
+    </ul>
+    <form method="POST" action="{% url 'live_chat' %}">
+        {% csrf_token %}
+        <input type="text" name="message" placeholder="Tapez votre message ici" required>
+        <button type="submit">Envoyer</button>
+    </form>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const chatBox = document.querySelector('#Live_Chat_Box ul');
+        chatBox.scrollTop = chatBox.scrollHeight;
+    });
+</script>
