@@ -31,19 +31,19 @@
   <div class="list-element">
 
     {% for detail in evenements_details %}
-      <a href="{% url 'evenement_detail' detail.evenement.pk %}" class="element {% if detail.evenement.date_heure < detail.today %} evenement-passe {% endif %}">
-        <div {% if detail.evenement.type_evenement == "Partie" %}class="bookmark-partie"{% else %}class="bookmark-evenement"{% endif %}></div>
-        <div class="info">
-          <p class="nom">{{ detail.evenement.nom }}</p>
-          <p class="date">{{ detail.evenement.date_heure|date:"d/m/Y" }}</p>
-          <p class="pc desc">{{ detail.evenement.description }}</p>
-          <p class="mobil participant">{{ detail.nombre_participants }}/{{ detail.evenement.nb_joueurs_max }} Participant(s)</p>
-        </div>
-        {% if detail.utilisateur_inscrit %}
-        <div class="join_pin"></div>
-        {% endif %}
-      </a>
-    {% endfor %}
+            <a href="{% url 'evenement_detail' detail.evenement.pk %}" class="element {% if not detail.is_event_in_future %} evenement-passe {% endif %}">
+                <div {% if detail.evenement.type_evenement == "Partie" %}class="bookmark-partie"{% else %}class="bookmark-evenement"{% endif %}></div>
+                <div class="info">
+                    <p class="nom">{{ detail.evenement.nom }}</p>
+                    <p class="date">{{ detail.evenement.date_heure|date:"d/m/Y" }}</p>
+                    <p class="pc desc">{{ detail.evenement.description }}</p>
+                    <p class="mobil participant">{{ detail.nombre_participants }}/{{ detail.evenement.nb_joueurs_max }} Participant(s)</p>
+                </div>
+                {% if detail.utilisateur_inscrit %}
+                    <div class="join_pin"></div>
+                {% endif %}
+            </a>
+        {% endfor %}
 
   </div>
 </div>

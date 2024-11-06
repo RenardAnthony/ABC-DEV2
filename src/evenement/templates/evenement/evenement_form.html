@@ -6,97 +6,219 @@
 {% endblock %}
 
 {% block Css %}
-  <link rel="stylesheet" href="{% static 'css/style.css' %}">
-  <link rel="stylesheet" href="{% static 'css/index.css' %}">
-  <style>
-    input[readonly] {
-      background-color: #494b4d;
-      pointer-events: none;
-    }
-    .replique-section {
-      margin-bottom: 10px;
-    }
-  </style>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link rel="stylesheet" href="{% static 'evenement/css/evenement2.css' %}">
 {% endblock %}
 
 {% block content %}
-  <h2>{% if form.instance.pk %}Modifier l'événement/partie{% else %}Créer un nouvel événement/partie{% endif %}</h2>
+    <div id="content-creation">
 
-  <form method="post">
-    {% csrf_token %}
+        <form method="post" >
+            {% csrf_token %}
 
-    <!-- Affichage des autres champs du formulaire -->
-    {{ form.non_field_errors }} <br>
+            <div class="parte">
+                <h2>{% if form.instance.pk %}Modifier l'événement/partie{% else %}Créer un nouvel événement/partie{% endif %}</h2>
+            </div>
 
-    {{ form.type_evenement }}<br>
-    Nom : {{ form.nom }}<br>
-    Description : {{ form.description }}<br>
-    <label for="id_date_heure">Date et Heure :</label>
-    <input type="datetime-local" id="id_date_heure" name="date_heure" value="{{ form.date_heure.value }}">
-    <br>
-
-    <!-- Sélection du lieu -->
-    <select id="id_lieu" name="lieu">
-    {% for lieu in form.fields.lieu.queryset %}
-        <option value="{{ lieu.id }}" data-adresse="{{ lieu.adresse_postale|default:lieu.coordonnees_gps }}">
-            {{ lieu.nom_propre }}
-        </option>
-    {% endfor %}
-    <option value="autre">Autre</option>
-</select>
+            <div class="parte">
+                <!-- Affichage des autres champs du formulaire -->
+                {{ form.non_field_errors }}
+            </div>
 
 
+            <div class="parte">
+                <label>Type d'événement :</label>
+                <div class="slider-container">
+                    <span>Partie</span>
+                    <div class="slider-switch" onclick="toggleSlider()">
+                        <input type="checkbox" id="type_evenement_toggle" name="type_evenement_toggle"
+                            {% if type_evenement == 'Evenement' %}checked{% endif %}>
+                        <div class="slider"><div class="toggle"></div></div>
+                    </div>
+                    <span>Événement</span>
+                </div>
+                <input type="hidden" id="type_evenement" name="type_evenement" value="{{ type_evenement }}">
+            </div>
 
-    <!-- Champ Adresse -->
-    <label for="adresse">Adresse :</label>
-    <input type="text" id="adresse" name="adresse" value="{{ form.instance.adresse }}" readonly>
-    <br>
 
 
-    Joueurs max : {{ form.nb_joueurs_max }}<br>
-    Joueurs min : {{ form.nb_joueurs_min }}<br>
-    Puissance max (joules) : {{ form.puissance_max_joule }}<br>
 
-    <!-- Gestion des freelance, locations et repas avec les prix -->
-    <label for="freelance">Freelance :</label>
-    <input type="checkbox" id="freelance" name="freelance" {% if freelance %}checked{% endif %}>
-    <input type="number" id="prix_freelance" name="prix_freelance" value="{{ prix_freelance|floatformat:0 }}" min="0" {% if not freelance %}readonly{% endif %}>
-    <br>
+            <div class="parte titre">
+                <p>Nom :</p> {{ form.nom }}
+                <div class="spacer_20"></div>
+                <p>Description :</p>{{ form.description }}
+            </div>
 
-    <label for="locations">Locations :</label>
-    <input type="checkbox" id="locations" name="locations" {% if locations %}checked{% endif %}>
-    <input type="number" id="prix_location" name="prix_location" value="{{ prix_location|floatformat:0 }}" min="0" {% if not locations %}readonly{% endif %}>
-    <br>
 
-    <label for="repas">Repas :</label>
-    <input type="checkbox" id="repas" name="repas" {% if repas %}checked{% endif %}>
-    <input type="number" id="prix_repas" name="prix_repas" value="{{ prix_repas|floatformat:0 }}" min="0" {% if not repas %}readonly{% endif %}>
-    <br>
 
-    <!-- Gestion des répliques -->
-    <div id="limite_repliques">
-      {% for replique, label in form.fields.type_replique_autorisee.choices %}
-        <div class="replique-section">
-          <input type="checkbox" id="id_{{ replique }}" name="type_replique_autorisee" value="{{ replique }}"
-                 {% if replique in form.instance.get_type_replique_autorisee %}checked{% endif %}>
-          <label for="id_{{ replique }}">{{ label }}</label>
 
-          <!-- Champ de limite lié à la réplique -->
-          <input type="number" id="limite_{{ replique }}" name="limite_{{ replique }}"
-                 value="{% if replique == 'DMR' %}{{ limite_dmr }}{% elif replique == 'AEG' %}{{ limite_aeg }}{% elif replique == 'SMG' %}{{ limite_smg }}{% elif replique == 'PA' %}{{ limite_pa }}{% elif replique == 'POMPE' %}{{ limite_pompe }}{% elif replique == 'MG' %}{{ limite_mg }}{% elif replique == 'AUTRE' %}{{ limite_autre }}{% else %}0{% endif %}"
-                 min="0"
-                 {% if not replique in form.instance.get_type_replique_autorisee %}readonly{% endif %}>
-          <br>
-        </div>
-      {% endfor %}
+
+            <div class="parte date">
+                <label for="id_date_heure">Date et heure de rendez-vous : </label>
+                <input type="datetime-local" id="id_date_heure" name="date_heure" value="{{ form.date_heure.value }}">
+            </div>
+
+
+
+
+            <div class="parte lieu">
+                <div class="col">
+                    <label for="lieu">Terrain :</label>
+                    <select id="id_lieu" name="lieu">
+                        {% for lieu in form.fields.lieu.queryset %}
+                            <option value="{{ lieu.id }}" {% if form.instance.lieu and form.instance.lieu.id == lieu.id %}selected{% endif %}>
+                                {{ lieu.nom_propre }}
+                            </option>
+                        {% endfor %}
+                    </select>
+                    <a href="{% url 'lieu_create' %}" class="btn btn-secondary">Ajouter un Nouveau Lieu</a>
+                </div>
+            </div>
+
+
+
+
+
+
+
+            <div class="parte nbre_joueur">
+                <div class="slider-range-container">
+                    <label for="joueurs_min_max">Nombre de joueurs :</label>
+                    <div id="range-slider">
+                        <input type="range" id="joueurs_min" name="nb_joueurs_min" min="0" max="50" value="{% if form.nb_joueurs_min.value %}{{ form.nb_joueurs_min.value }}{% else %}20{% endif %}" oninput="updateRangeLabels()">
+                        <input type="range" id="joueurs_max" name="nb_joueurs_max" min="0" max="50" value="{% if form.nb_joueurs_max.value %}{{ form.nb_joueurs_max.value }}{% else %}40{% endif %}" oninput="updateRangeLabels()">
+                    </div>
+                    <div class="range-labels">
+                        <span>Minimum : <span id="label_min">10</span></span>
+                        <span>Maximum : <span id="label_max">50</span></span>
+                    </div>
+                </div>
+                <input type="hidden" id="nb_joueurs_min_hidden" name="nb_joueurs_min_hidden" value="{{ form.nb_joueurs_min.value|default_if_none:'20' }}">
+                <input type="hidden" id="nb_joueurs_max_hidden" name="nb_joueurs_max_hidden" value="{{ form.nb_joueurs_max.value|default_if_none:'50' }}">
+            </div>
+
+
+
+            <div class="parte puissance">
+                Puissance max (joules) : {{ form.puissance_max_joule }}
+            </div>
+
+            <div class="spacer_150"></div>
+
+
+            <div class="parte option_choix">
+                <div class="element">
+                    <h1>Freelance</h1>
+                    <input class="checkbox_1" type="checkbox" id="freelance" name="freelance" {% if freelance %}checked{% endif %}>
+                    <input type="number" id="prix_freelance" name="prix_freelance" value="{{ prix_freelance|floatformat:0 }}" min="0" {% if not freelance %}readonly{% endif %}>
+                </div>
+                <div class="element">
+                    <h1>Locations</h1>
+                    <input class="checkbox_1" type="checkbox" id="locations" name="locations" {% if locations %}checked{% endif %}>
+                    <input type="number" id="prix_location" name="prix_location" value="{{ prix_location|floatformat:0 }}" min="0" {% if not locations %}readonly{% endif %}>
+                </div>
+                <div class="element">
+                    <h1>Repas</h1>
+                    <div class="lesoptions">
+                        <div>
+                            <input type="radio" id="repas_aucun" name="repas" value="Aucun" {% if form.instance.repas == 'Aucun' %}checked{% endif %}>
+                            <label for="repas_aucun">Aucun repas fourni</label>
+                        </div>
+                        <div>
+                            <input type="radio" id="repas_apporter" name="repas" value="Apporter" {% if form.instance.repas == 'Apporter' %}checked{% endif %}>
+                            <label for="repas_apporter">Apportez votre propre repas</label>
+                        </div>
+                        <div>
+                            <input type="radio" id="repas_inclus" name="repas" value="Inclus" {% if form.instance.repas == 'Inclus' %}checked{% endif %}>
+                            <label for="repas_inclus">Repas inclus</label>
+                        </div>
+                    </div>
+                    <input type="number" id="prix_repas" name="prix_repas" value="{{ prix_repas|floatformat:0 }}" min="0" placeholder="Prix" readonly>
+                </div>
+            </div>
+
+            <div class="spacer_150"></div>
+
+            <div class="parte" id="repliques_listes">
+                {% for replique, label in form.fields.type_replique_autorisee.choices %}
+                    {% if replique != 'Pas de réplique' %}
+                        <article class="replique-section {% if replique in form.instance.get_type_replique_autorisee %}active{% endif %}" data-replique-id="{{ replique }}" style="opacity: {% if replique in form.instance.get_type_replique_autorisee %}1{% else %}0.2{% endif %};">
+                            <img src="{% static 'gun/images/' %}{{ replique|lower }}.png" alt="{{ replique }}">
+                            <h1>{{ label }}</h1>
+
+                            <div class="limite-container">
+                                <label for="limite_{{ replique }}">Nombre maximum autorisé</label>
+                                <input type="number" id="limite_{{ replique }}" name="limite_{{ replique }}" value="{% if replique == 'DMR' %}{{ limite_dmr }}{% elif replique == 'AEG' %}{{ limite_aeg }}{% elif replique == 'SMG' %}{{ limite_smg }}{% elif replique == 'PA' %}{{ limite_pa }}{% elif replique == 'POMPE' %}{{ limite_pompe }}{% elif replique == 'MG' %}{{ limite_mg }}{% elif replique == 'AUTRE' %}{{ limite_autre }}{% else %}0{% endif %}" min="0" {% if not replique in form.instance.get_type_replique_autorisee %}readonly{% endif %}>
+                            </div>
+                        </article>
+                    {% endif %}
+                {% endfor %}
+                <input type="hidden" id="type_replique_autorisee_hidden" name="type_replique_autorisee_hidden" value="{% for replique in form.instance.get_type_replique_autorisee %}{{ replique }}{% if not forloop.last %},{% endif %}{% endfor %}">
+            </div>
+
+
+            <div class="parte">
+                <button class="btn_2" type="submit">{% if form.instance.pk %}Mettre à jour{% else %}Créer{% endif %}</button>
+            </div>
+
+        </form>
+
+        <div class="spacer_200"></div>
+
+        <script src="{% static 'evenement/js/AutoComplet.js' %}"></script>
+        <script>
+            function toggleSlider() {
+                var checkbox = document.getElementById("type_evenement_toggle");
+                checkbox.checked = !checkbox.checked;
+                updateSliderAppearance();
+            }
+
+            document.addEventListener("DOMContentLoaded", function() {
+                updateSliderAppearance();
+            });
+
+            function updateSliderAppearance() {
+                var checkbox = document.getElementById("type_evenement_toggle");
+                var slider = document.querySelector(".slider-switch");
+
+                if (checkbox.checked) {
+                    slider.classList.add("active");
+                } else {
+                    slider.classList.remove("active");
+                }
+            }
+        </script>
+        <script>
+            function updateRangeLabels() {
+                var minSlider = document.getElementById("joueurs_min");
+                var maxSlider = document.getElementById("joueurs_max");
+                var labelMin = document.getElementById("label_min");
+                var labelMax = document.getElementById("label_max");
+
+                // Vérifier que min ne dépasse pas max
+                if (parseInt(minSlider.value) > parseInt(maxSlider.value)) {
+                    minSlider.value = maxSlider.value;
+                }
+
+                // Vérifier que max n'est pas inférieur au min
+                if (parseInt(maxSlider.value) < parseInt(minSlider.value)) {
+                    maxSlider.value = minSlider.value;
+                }
+
+                // Mettre à jour les étiquettes
+                labelMin.textContent = minSlider.value;
+                labelMax.textContent = maxSlider.value;
+
+                // Mettre à jour les champs cachés si nécessaire
+                document.getElementById("nb_joueurs_min_hidden").value = minSlider.value;
+                document.getElementById("nb_joueurs_max_hidden").value = maxSlider.value;
+            }
+
+            // Appeler la fonction lors du chargement initial pour s'assurer que les étiquettes sont synchronisées
+            document.addEventListener("DOMContentLoaded", function() {
+                updateRangeLabels();
+            });
+        </script>
+
     </div>
-
-    <button type="submit">{% if form.instance.pk %}Mettre à jour{% else %}Créer{% endif %}</button>
-  </form>
-
-<script src="{% static 'evenement/js/AutoComplet.js' %}"></script>
-
-
-
-
 {% endblock %}

@@ -106,15 +106,11 @@
         <input type="text" name="nom_ami" id="nom_ami" placeholder="Pseudo de l'ami" required><br>
 
         <!-- Option repas -->
-        {% if evenement.repas == "Inclus" %}
-            <div>
-                <input type="checkbox" name="repas" id="repas" data-prix="{{ evenement.prix_repas }}">
-                <label for="repas">Option repas</label>
-            </div>
-            {% elif evenement.repas == "Apporter" %}
-            <div>
-                <p>Pour cet événement, veuillez informer votre ami qu'il doit apporter son propre repas.</p>
-            </div>
+        {% if evenement.repas %}
+        <div>
+            <input type="checkbox" name="repas" id="repas" data-prix="{{ evenement.prix_repas }}">
+            <label for="repas">Option repas</label>
+        </div>
         {% endif %}
 
         <div class="spacer_50"></div>

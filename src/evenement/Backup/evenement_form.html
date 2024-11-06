@@ -1,0 +1,102 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}
+  <title>{% if form.instance.pk %}Modifier l'événement/partie{% else %}Créer un nouvel événement/partie{% endif %}</title>
+{% endblock %}
+
+{% block Css %}
+  <link rel="stylesheet" href="{% static 'css/style.css' %}">
+  <link rel="stylesheet" href="{% static 'css/index.css' %}">
+  <style>
+    input[readonly] {
+      background-color: #494b4d;
+      pointer-events: none;
+    }
+    .replique-section {
+      margin-bottom: 10px;
+    }
+  </style>
+{% endblock %}
+
+{% block content %}
+  <h2>{% if form.instance.pk %}Modifier l'événement/partie{% else %}Créer un nouvel événement/partie{% endif %}</h2>
+
+  <form method="post">
+    {% csrf_token %}
+
+    <!-- Affichage des autres champs du formulaire -->
+    {{ form.non_field_errors }} <br>
+
+    {{ form.type_evenement }}<br>
+    Nom : {{ form.nom }}<br>
+    Description : {{ form.description }}<br>
+    <label for="id_date_heure">Date et Heure :</label>
+    <input type="datetime-local" id="id_date_heure" name="date_heure" value="{{ form.date_heure.value }}">
+    <br>
+
+    <!-- Sélection du lieu -->
+    <select id="id_lieu" name="lieu">
+    {% for lieu in form.fields.lieu.queryset %}
+        <option value="{{ lieu.id }}" data-adresse="{{ lieu.adresse_postale|default:lieu.coordonnees_gps }}">
+            {{ lieu.nom_propre }}
+        </option>
+    {% endfor %}
+    <option value="autre">Autre</option>
+</select>
+
+
+
+    <!-- Champ Adresse -->
+    <label for="adresse">Adresse :</label>
+    <input type="text" id="adresse" name="adresse" value="{{ form.instance.adresse }}" readonly>
+    <br>
+
+
+    Joueurs max : {{ form.nb_joueurs_max }}<br>
+    Joueurs min : {{ form.nb_joueurs_min }}<br>
+    Puissance max (joules) : {{ form.puissance_max_joule }}<br>
+
+    <!-- Gestion des freelance, locations et repas avec les prix -->
+    <label for="freelance">Freelance :</label>
+    <input type="checkbox" id="freelance" name="freelance" {% if freelance %}checked{% endif %}>
+    <input type="number" id="prix_freelance" name="prix_freelance" value="{{ prix_freelance|floatformat:0 }}" min="0" {% if not freelance %}readonly{% endif %}>
+    <br>
+
+    <label for="locations">Locations :</label>
+    <input type="checkbox" id="locations" name="locations" {% if locations %}checked{% endif %}>
+    <input type="number" id="prix_location" name="prix_location" value="{{ prix_location|floatformat:0 }}" min="0" {% if not locations %}readonly{% endif %}>
+    <br>
+
+    <label for="repas">Repas :</label>
+    <input type="checkbox" id="repas" name="repas" {% if repas %}checked{% endif %}>
+    <input type="number" id="prix_repas" name="prix_repas" value="{{ prix_repas|floatformat:0 }}" min="0" {% if not repas %}readonly{% endif %}>
+    <br>
+
+    <!-- Gestion des répliques -->
+    <div id="limite_repliques">
+      {% for replique, label in form.fields.type_replique_autorisee.choices %}
+        <div class="replique-section">
+          <input type="checkbox" id="id_{{ replique }}" name="type_replique_autorisee" value="{{ replique }}"
+                 {% if replique in form.instance.get_type_replique_autorisee %}checked{% endif %}>
+          <label for="id_{{ replique }}">{{ label }}</label>
+
+          <!-- Champ de limite lié à la réplique -->
+          <input type="number" id="limite_{{ replique }}" name="limite_{{ replique }}"
+                 value="{% if replique == 'DMR' %}{{ limite_dmr }}{% elif replique == 'AEG' %}{{ limite_aeg }}{% elif replique == 'SMG' %}{{ limite_smg }}{% elif replique == 'PA' %}{{ limite_pa }}{% elif replique == 'POMPE' %}{{ limite_pompe }}{% elif replique == 'MG' %}{{ limite_mg }}{% elif replique == 'AUTRE' %}{{ limite_autre }}{% else %}0{% endif %}"
+                 min="0"
+                 {% if not replique in form.instance.get_type_replique_autorisee %}readonly{% endif %}>
+          <br>
+        </div>
+      {% endfor %}
+    </div>
+
+    <button type="submit">{% if form.instance.pk %}Mettre à jour{% else %}Créer{% endif %}</button>
+  </form>
+
+<script src="{% static 'evenement/js/AutoComplet.js' %}"></script>
+
+
+
+
+{% endblock %}

@@ -10,27 +10,15 @@ class EvenementForm(forms.ModelForm):
 
     lieu = forms.ModelChoiceField(
         queryset=Lieu.objects.filter(actif=True),
-        required=True,
+        required=False,
         empty_label="Sélectionnez un lieu",
         widget=forms.Select(attrs={'id': 'id_lieu'})
-    )
-
-    repas = forms.ChoiceField(
-        choices=Evenement.REPAS_CHOICES,
-        widget=forms.RadioSelect,
-        required=True
-    )
-
-    # Autres champs du formulaire
-    adresse = forms.CharField(
-        required=False,
-        widget=forms.TextInput(attrs={'readonly': 'readonly'})
     )
 
     class Meta:
         model = Evenement
         fields = [
-            'type_evenement', 'nom', 'description', 'date_heure', 'lieu',
+            'type_evenement', 'nom', 'description', 'date_heure', 'lieu', 'adresse',
             'nb_joueurs_max', 'nb_joueurs_min', 'freelance', 'locations', 'repas',
             'prix_freelance', 'prix_location', 'prix_repas', 'puissance_max_joule', 'type_replique_autorisee'
         ]
@@ -41,18 +29,11 @@ class EvenementForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super(EvenementForm, self).__init__(*args, **kwargs)
 
+        # Ajouter l'option "autre" manuellement
         lieux = list(self.fields['lieu'].queryset)
-        self.fields['lieu'].widget.choices = [(lieu.id, lieu.nom_propre) for lieu in lieux] + [('autre', 'Autre')]
-
-        self.fields['nom'].widget.attrs.update({'placeholder': 'Entrez le nom de l\'événement ou de la partie'})
-        self.fields['description'].widget.attrs.update({'placeholder': 'Description de l\'événement.'})
+        self.fields['lieu'].choices = [(None, "Sélectionnez un lieu")] + [(lieu.id, lieu.nom_propre) for lieu in lieux] + [('autre', 'Autre')]
 
         if self.instance and self.instance.pk:
             self.fields['type_replique_autorisee'].initial = self.instance.get_type_replique_autorisee()
-            if self.instance.lieu:
+            if self.instance.lieu and self.instance.lieu != 'autre':
                 self.fields['adresse'].initial = self.instance.lieu.adresse_postale or self.instance.lieu.coordonnees_gps
-
-class LieuForm(forms.ModelForm):
-    class Meta:
-        model = Lieu
-        fields = ['identifiant', 'nom_propre', 'note', 'actif', 'adresse_postale', 'coordonnees_gps', 'description_publique', 'taille']

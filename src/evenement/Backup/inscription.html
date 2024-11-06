@@ -62,15 +62,11 @@
         {% endif %}
 
         <h3>Les options :</h3>
-        {% if evenement.repas == "Inclus" %}
-            <div>
-                <input type="checkbox" name="repas" id="repas" data-prix="{{ evenement.prix_repas }}">
-                <label for="repas">Option repas</label>
-            </div>
-            {% elif evenement.repas == "Apporter" %}
-            <div>
-                <p>Pour cet événement, veuillez apporter votre propre repas.</p>
-            </div>
+        {% if evenement.repas %}
+        <div>
+            <input type="checkbox" name="repas" id="repas" data-prix="{{ evenement.prix_repas }}">
+            <label for="repas">Option repas</label>
+        </div>
         {% endif %}
 
         {% if evenement.locations %}

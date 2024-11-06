@@ -4,13 +4,15 @@ from django.contrib import messages
 from django.utils import timezone
 from django.contrib.auth.models import AnonymousUser
 from user_profiles.models import UserProfile
-from .forms import EvenementForm, LieuForm
+from .forms import EvenementForm
 from .models import Lieu
 from django.template.defaultfilters import register
-from collections import Counter
+
+
 from .models import Evenement, Inscription, Gun, CustomUser
 from django.contrib.admin.views.decorators import staff_member_required
-from django.core.exceptions import ObjectDoesNotExist
+
+from math import pow
 
 from datetime import datetime
 
@@ -19,90 +21,61 @@ def evenement_create_or_update(request, pk=None):
     evenement = get_object_or_404(Evenement, pk=pk) if pk else None
 
     if request.method == 'POST':
-        print("Données POST reçues :", request.POST)  # Ajouté pour déboguer
         form = EvenementForm(request.POST, instance=evenement)
         if form.is_valid():
             evenement = form.save(commit=False)
 
-            process_type_evenement(request, evenement)
-            process_repliques(evenement, request)
-            process_options(request, evenement)
-            process_prix(request, evenement)
-            process_adresse(request, evenement)
+            # Enregistrement des limites des répliques
+            selected_repliques = form.cleaned_data['type_replique_autorisee']
+            evenement.limite_dmr = request.POST.get('limite_DMR', 0) if 'DMR' in selected_repliques else 0
+            evenement.limite_aeg = request.POST.get('limite_AEG', 0) if 'AEG' in selected_repliques else 0
+            evenement.limite_smg = request.POST.get('limite_SMG', 0) if 'SMG' in selected_repliques else 0
+            evenement.limite_pa = request.POST.get('limite_PA', 0) if 'PA' in selected_repliques else 0
+            evenement.limite_pompe = request.POST.get('limite_POMPE', 0) if 'POMPE' in selected_repliques else 0
+            evenement.limite_mg = request.POST.get('limite_MG', 0) if 'MG' in selected_repliques else 0
+            evenement.limite_autre = request.POST.get('limite_AUTRE', 0) if 'AUTRE' in selected_repliques else 0
 
-            print("Adresse après process_adresse :", evenement.adresse)  # Ajouté pour vérifier l'adresse
+            # Enregistrement des cases à cocher
+            evenement.freelance = 'freelance' in request.POST
+            evenement.locations = 'locations' in request.POST
+            evenement.repas = 'repas' in request.POST
+
+            # Gestion des prix avec validation pour les champs vides
+            def to_float(value):
+                try:
+                    return float(value) if value else 0.0
+                except ValueError:
+                    return 0.0
+
+            evenement.prix_freelance = to_float(request.POST.get('prix_freelance', 0))
+            evenement.prix_location = to_float(request.POST.get('prix_location', 0))
+            evenement.prix_repas = to_float(request.POST.get('prix_repas', 0))
+
+            # Remplir l'adresse selon le lieu sélectionné
+            selected_lieu = form.cleaned_data.get('lieu')
+            if selected_lieu and selected_lieu.identifiant != 'autre':
+                if selected_lieu.adresse_postale:
+                    evenement.adresse = selected_lieu.adresse_postale
+                else:
+                    evenement.adresse = selected_lieu.coordonnees_gps
+            else:
+                # Permet de définir une adresse personnalisée si aucun lieu n'est choisi
+                evenement.adresse = form.cleaned_data.get('adresse', '')
+
+
 
             evenement.save()
-
             messages.success(request, "Événement mis à jour avec succès." if pk else "Événement créé avec succès.")
             return redirect('evenement_list')
-        else:
-            print("Formulaire non valide :", form.errors)  # Ajouté pour déboguer les erreurs de validation
     else:
         form = EvenementForm(instance=evenement)
-        prepare_context(evenement, form)
 
-    return render(request, 'evenement/evenement_form.html', prepare_context(evenement, form))
+        # Convertir la date au format attendu par le champ datetime-local si l'événement existe
+        if evenement and evenement.date_heure:
+            form.initial['date_heure'] = evenement.date_heure.strftime('%Y-%m-%dT%H:%M')
 
-def process_type_evenement(request, evenement):
-    """Enregistre le type d'événement (Evenement ou Partie)"""
-    type_evenement_checkbox = request.POST.get('type_evenement_toggle')
-    evenement.type_evenement = 'Evenement' if type_evenement_checkbox == 'on' else 'Partie'
-
-def process_repliques(evenement, request):
-    """Récupère et enregistre les répliques sélectionnées et leurs limites"""
-    selected_repliques = request.POST.get('type_replique_autorisee_hidden', '')
-    selected_repliques = selected_repliques.split(',') if selected_repliques else []
-    evenement.type_replique_autorisee = selected_repliques
-
-    evenement.limite_dmr = request.POST.get('limite_DMR', 0) if 'DMR' in selected_repliques else 0
-    evenement.limite_aeg = request.POST.get('limite_AEG', 0) if 'AEG' in selected_repliques else 0
-    evenement.limite_smg = request.POST.get('limite_SMG', 0) if 'SMG' in selected_repliques else 0
-    evenement.limite_pa = request.POST.get('limite_PA', 0) if 'PA' in selected_repliques else 0
-    evenement.limite_pompe = request.POST.get('limite_POMPE', 0) if 'POMPE' in selected_repliques else 0
-    evenement.limite_mg = request.POST.get('limite_MG', 0) if 'MG' in selected_repliques else 0
-    evenement.limite_autre = request.POST.get('limite_AUTRE', 0) if 'AUTRE' in selected_repliques else 0
-
-def process_options(request, evenement):
-    """Enregistre les options (freelance, location, repas)"""
-    evenement.freelance = 'freelance' in request.POST
-    evenement.locations = 'locations' in request.POST
-    evenement.repas = request.POST.get('repas', False)
-
-def process_prix(request, evenement):
-    """Gestion des prix avec validation pour les champs vides"""
-    def to_float(value):
-        try:
-            return float(value) if value else 0.0
-        except ValueError:
-            return 0.0
-
-    evenement.prix_freelance = to_float(request.POST.get('prix_freelance', 0))
-    evenement.prix_location = to_float(request.POST.get('prix_location', 0))
-    evenement.prix_repas = to_float(request.POST.get('prix_repas', 0))
-
-def process_adresse(request, evenement):
-    """Enregistre l'adresse en fonction du lieu sélectionné"""
-    lieu_id = request.POST.get('lieu')
-    try:
-        lieu = Lieu.objects.get(pk=lieu_id)
-        evenement.adresse = lieu.adresse_postale or lieu.coordonnees_gps
-        evenement.lieu = lieu
-        evenement.adresse_autre = None
-        print("Adresse récupérée du lieu :", evenement.adresse)
-    except Lieu.DoesNotExist:
-        evenement.adresse = ''
-        evenement.lieu = None
-        evenement.adresse_autre = None
-        print("Aucune adresse trouvée pour le lieu sélectionné")
-
-def prepare_context(evenement, form):
-    """Prépare le contexte pour le rendu de la vue"""
-    # Convertir la date au format attendu par le champ datetime-local si l'événement existe
-    if evenement and evenement.date_heure:
-        form.initial['date_heure'] = evenement.date_heure.strftime('%Y-%m-%dT%H:%M')
-
-    return {
+    # Ajout des valeurs au contexte pour les afficher dans le formulaire
+    context = {
         'form': form,
         'limite_dmr': evenement.limite_dmr if evenement else 0,
         'limite_aeg': evenement.limite_aeg if evenement else 0,
@@ -117,9 +90,8 @@ def prepare_context(evenement, form):
         'prix_freelance': evenement.prix_freelance if evenement else 0,
         'prix_location': evenement.prix_location if evenement else 0,
         'prix_repas': evenement.prix_repas if evenement else 0,
-        'type_evenement': evenement.type_evenement if evenement else 'Partie',
     }
-
+    return render(request, 'evenement/evenement_form.html', context)
 
 
 @staff_member_required
@@ -139,16 +111,15 @@ def evenement_list(request):
     debut_annee = datetime(annee_actuelle, 1, 1, tzinfo=timezone.utc)
     fin_annee = datetime(annee_actuelle, 12, 31, 23, 59, 59, tzinfo=timezone.utc)
 
-    evenements_futurs = Evenement.objects.filter(date_heure__gte=today).order_by('date_heure').prefetch_related('inscription_set')
-    evenements_passes = Evenement.objects.filter(date_heure__lt=today).order_by('-date_heure').prefetch_related('inscription_set')
+    evenements_futurs = Evenement.objects.filter(date_heure__gte=today, date_heure__lte=fin_annee).order_by('date_heure').prefetch_related('inscription_set')
+    evenements_passes = Evenement.objects.filter(date_heure__lt=today, date_heure__gte=debut_annee,date_heure__lte=fin_annee).order_by('-date_heure').prefetch_related('inscription_set')
     evenements = list(evenements_futurs) + list(evenements_passes)
 
     evenements_details = []
 
 
     for evenement in evenements:
-
-        is_event_in_future = evenement.date_heure >= today
+        # Compter le nombre de participants inscrits
         nombre_participants = evenement.inscription_set.count()
         places_restantes = evenement.nb_joueurs_max - nombre_participants
 
@@ -163,7 +134,6 @@ def evenement_list(request):
             'nombre_participants': nombre_participants,
             'places_restantes': places_restantes,
             'utilisateur_inscrit': utilisateur_inscrit,
-            'is_event_in_future': is_event_in_future,
             'today': today,
         })
 
@@ -176,16 +146,8 @@ def evenement_detail(request, pk):
     evenement = get_object_or_404(Evenement, pk=pk)
     inscriptions = evenement.inscription_set.all()
 
-    today = timezone.now()
-
     # Récupérer le nombre maximum de joueurs
     nombre_max_joueurs = evenement.nb_joueurs_max
-
-    # Compter combien de répliques sont utilisées par type
-    count_repliques = Counter()
-    for inscription in inscriptions:
-        for replique in inscription.repliques.all():
-            count_repliques[replique.replica_type] += 1
 
     # Vérifier si une réplique est limitée (moins de slots que le nombre de joueurs max)
     limited_replicas = {
@@ -207,13 +169,18 @@ def evenement_detail(request, pk):
         # Cas où l'ami apporte ses propres répliques
         repliques_ami = inscription.amis_repliques.split(",") if inscription.amis_repliques else []
 
+        # Variable pour stocker la réplique ou l'option à afficher
         replique_affichee = None
 
         # Si l'ami utilise un pack de location
         if inscription.location:
             replique_affichee = "Location"
+
+        # Si l'ami utilise une réplique prêtée
         elif inscription.replique_ami:
             replique_affichee = f"{inscription.replique_ami.replica_type}"
+
+        # Si l'ami vient avec ses propres répliques
         elif repliques_ami:
             repliques_limited_ami = [r for r in repliques_ami if limited_replicas.get(r, False)]
             repliques_unlimited_ami = [r for r in repliques_ami if not limited_replicas.get(r, False)]
@@ -222,6 +189,8 @@ def evenement_detail(request, pk):
                 replique_affichee = ', '.join(repliques_limited_ami)
             else:
                 replique_affichee = ', '.join(repliques_unlimited_ami)
+
+        # Si l'utilisateur n'a pas de répliques ou de location, on laisse vide
         elif repliques:
             repliques_limited = [r.replica_type for r in repliques if limited_replicas.get(r.replica_type, False)]
             repliques_unlimited = [r.replica_type for r in repliques if not limited_replicas.get(r.replica_type, False)]
@@ -231,10 +200,11 @@ def evenement_detail(request, pk):
             else:
                 replique_affichee = ', '.join(repliques_unlimited)
 
+        # Ajouter les informations à la liste des participants
         participants.append({
             'joueur': joueur,
             'repliques': replique_affichee if replique_affichee else 'Aucune réplique sélectionnée',
-            'inscription': inscription,
+            'inscription': inscription
         })
 
     # Calculer les places restantes
@@ -255,11 +225,9 @@ def evenement_detail(request, pk):
     return render(request, 'evenement/evenement_detail.html', {
         'evenement': evenement,
         'participants': participants,
-        'count_repliques': count_repliques,  # Ajout du comptage des répliques pour chaque type
         'places_restantes': places_restantes,
         'is_inscrit': is_inscrit,
-        'user_role': user_role,
-        'today': today,
+        'user_role': user_role
     })
 
 
@@ -553,7 +521,7 @@ def comptabilite_evenement(request, pk):
 
 
 
-
+from django.utils import timezone
 
 
 @staff_member_required
@@ -716,22 +684,3 @@ def lieu_list(request):
     # On récupère tous les lieux
     lieux = Lieu.objects.all()
     return render(request, 'evenement/lieu_list.html', {'lieux': lieux})
-
-
-def regles(request):
-    return render(request, 'evenement/regles.html')
-
-@staff_member_required
-def lieu_create_view(request):
-    if request.method == 'POST':
-        form = LieuForm(request.POST)
-        if form.is_valid():
-            form.save()
-            messages.success(request, "Lieu créé avec succès.")
-            return redirect('evenement_create_or_update')  # Redirige vers la création d'un événement
-        else:
-            messages.error(request, "Erreur dans le formulaire. Veuillez vérifier les informations.")
-    else:
-        form = LieuForm()
-
-    return render(request, 'evenement/lieu_create_form.html', {'form': form})

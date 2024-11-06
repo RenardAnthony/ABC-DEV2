@@ -5,6 +5,7 @@ from django.conf import settings
 from gun.models import Gun
 from django.urls import reverse
 from decimal import Decimal
+
 class Evenement(models.Model):
     TYPE_CHOICES = [
         ('Partie', 'Partie'),
@@ -21,26 +22,20 @@ class Evenement(models.Model):
         ('Pas de réplique', 'Pas de réplique'),
     ]
 
-    REPAS_CHOICES = [
-        ('Aucun', 'Aucun repas fourni'),
-        ('Inclus', 'Repas inclus'),
-        ('Apporter', 'Apportez votre propre repas')
-    ]
-
     type_evenement = models.CharField(max_length=20, choices=TYPE_CHOICES)
     nom = models.CharField(max_length=100)
     description = models.TextField()
     date_heure = models.DateTimeField()
 
     # Relation avec le modèle Lieu
-    lieu = models.ForeignKey('Lieu', on_delete=models.SET_NULL, null=True, blank=False)  # Lieu obligatoire, mais peut être "null" s'il est supprimé
-    adresse_autre = models.CharField(max_length=255, blank=True, null=True, default="")  # Adresse personnalisée
+    lieu = models.ForeignKey('Lieu', on_delete=models.SET_NULL, null=True, blank=True)
+    adresse = models.CharField(max_length=255, blank=True, null=True)
 
     nb_joueurs_max = models.PositiveIntegerField()
     nb_joueurs_min = models.PositiveIntegerField()
     freelance = models.BooleanField(default=False)
     locations = models.BooleanField(default=False)
-    repas = models.CharField(max_length=20, choices=REPAS_CHOICES, default='Aucun')
+    repas = models.BooleanField(default=False)
     prix_freelance = models.DecimalField(max_digits=6, decimal_places=2, null=True, blank=True)
     prix_location = models.DecimalField(max_digits=6, decimal_places=2, null=True, blank=True)
     prix_repas = models.DecimalField(max_digits=6, decimal_places=2, null=True, blank=True)
@@ -78,6 +73,8 @@ class RepliqueType(models.Model):
 
     def __str__(self):
         return self.nom
+
+
 
 
 class Inscription(models.Model):

@@ -157,8 +157,6 @@ a:hover{
     color: var(--color-sand-light);
 }
 
-
-
 .btn_2{
     /* Boutton entièrement bleu text blancv. Hover bleu clair*/
     color: var(--color-text-white);
@@ -175,8 +173,6 @@ a:hover{
 
 }
 
-
-
 .btn_3{
     /* Boutton entièrement rouge text blanc . Hover rouge clair*/
     color: var(--color-text-white);
@@ -192,8 +188,6 @@ a:hover{
     background-color: var(--color-red-light);
 
 }
-
-
 
 .btn_4{
     /* Boutton transparent border bleu, text blanc . Hover border bleu clair*/
@@ -225,8 +219,6 @@ a:hover{
     transition: 0.7s;
     cursor: default;
 }
-
-
 
 .btn_5{
     /* Boutton transparent border vert . Hover border vert clair*/
@@ -260,8 +252,6 @@ a:hover{
     cursor: default;
 }
 
-
-
 .btn_6{
     /* Boutton transparent border orange . Hover border orange clair*/
     padding: 1rem 2rem;
@@ -294,7 +284,6 @@ a:hover{
     cursor: default;
 }
 
-
 .btn_7{
     /* Boutton transparent border rouge . Hover border rouge clair*/
     padding: 1rem 2rem;
@@ -325,4 +314,34 @@ a:hover{
     cursor: pointer;
     transition: 0.7s;
     cursor: default;
+}
+
+.checkbox_1{
+    position: relative;
+    width: 50px;
+    height: 26px;
+    -webkit-appearance: none;
+    background-color: var(--color-gray7);
+    border-radius: 50px;
+    transition: .5s;
+    cursor: pointer;
+}
+.checkbox_1:checked{
+    background-color: var(--color-blue-light);
+}
+.checkbox_1:before{
+    content: '';
+    position: absolute;
+    width: 26px;
+    height: 26px;
+    border-radius: 50px;
+    top: 0px;
+    left: 0px;
+    background-color: var(--color-text-white);
+    transform: scale(1.1);
+    transition: 0.5s;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+}
+.checkbox_1:checked:before{
+    left: 25px;
 }

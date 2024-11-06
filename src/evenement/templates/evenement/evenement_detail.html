@@ -35,46 +35,193 @@
 
 
 
-    <div class="options">
-
-        {% if evenement.freelance %}
-        <article>
+<div class="options">
+    <!-- Freelance Section -->
+    {% if evenement.freelance %}
+        <article class="option-available">
             <h1>Freelance</h1>
             <p>
-                Vous n'est pas membre de l'association ?
-                pas de problème, vous pouvez nous rejoindre sur cette partie !
+                Vous n'êtes pas membre de l'association ? Pas de problème, vous pouvez nous rejoindre sur cette partie !
             </p>
-            <h2>{{ evenement.prix_freelance}}€</h2>
+            <h2>{{ evenement.prix_freelance }}€</h2>
         </article>
-        {% endif %}
-        {% if evenement.locations %}
-        <article>
+    {% else %}
+        <article class="option-unavailable">
+            <h1>Freelance</h1>
+            <p>
+                Pour cet événement, les freelance ne sont pas acceptés, désolé...
+            </p>
+            <h2>Non accepté</h2>
+        </article>
+    {% endif %}
+
+    <!-- Location Section -->
+    {% if evenement.locations %}
+        <article class="option-available">
             <h1>Location</h1>
             <p>
-                Tu n'a pas t'on propre équipement ? <br>
-                Pas de souci on peut t'équiper sur place avec notre pack de location.
+                Tu n'as pas ton propre équipement ? Pas de souci, on peut t'équiper sur place avec notre pack de location.
             </p>
-            <h2>{{ evenement.prix_location}}€</h2>
+            <h2>{{ evenement.prix_location }}€</h2>
         </article>
-        {% endif %}
-        {% if evenement.repas %}
-        <article>
+    {% else %}
+        <article class="option-unavailable">
+            <h1>Location</h1>
+            <p>
+                La location d'équipement n'est pas disponible pour cet événement.
+            </p>
+            <h2>Non disponible</h2>
+        </article>
+    {% endif %}
+
+    <!-- Repas Section (reste inchangé car déjà géré) -->
+    {% if evenement.repas == "Inclus" %}
+        <article class="option-available">
             <h1>Repas</h1>
             <p>
-                Prolonge ce moment avec nous !
-                En fin de partie on organise un barbecue, vien avec nous !
+                Prolonge ce moment avec nous ! En fin de partie, on organise un barbecue, viens avec nous !
+                ça sera surement Barbeque
             </p>
-            <h2>{{ evenement.prix_repas}}€</h2>
+            <h2>{{ evenement.prix_repas }}€</h2>
         </article>
-        {% endif %}
-    </div>
+    {% elif evenement.repas == "Apporter" %}
+        <article class="option-available">
+            <h1>Repas</h1>
+            <p style="font-weight: bold; color: #FF5722;">
+                N'oubliez pas d'apporter votre propre repas pour prolonger le plaisir en fin de partie avec tout le monde !
+                (On a pas le droit de faire de feu et on a pas d'éléctricitée)
+            </p>
+            <h2>Le votre</h2>
+        </article>
+    {% else %}
+        <article class="option-unavailable">
+            <h1>Repas</h1>
+            <p>
+                Pas de repas pour cette évenement.
+            </p>
+            <h2>Pas de repas</h2>
+        </article>
+    {% endif %}
+</div>
 
     <div class="bloque_3">
         <p>
             Pour ne pas te voir interdit de jeu :
         </p>
-        <a href="#" class="btn_1">Les règles</a>
+        <a href="{% url 'regles' %}" class="btn_1">Les règles</a>
     </div>
+
+
+<div id="repliques_listes">
+
+    {% if evenement.limite_aeg != 0 %}
+        <article>
+            <img src="{% static 'gun/images/aeg.png' %}" alt="AEG">
+            <h1>AEG</h1>
+            <p>Nombre maximum autorisé : {{ evenement.limite_aeg }}</p>
+            <p>Utilisé par les joueurs : {{ count_repliques.AEG }}</p>
+        </article>
+    {% else %}
+        <article class="replique_pasok">
+            <img src="{% static 'gun/images/aeg.png' %}" alt="AEG">
+            <h1>AEG</h1>
+            <p>Ce type de réplique n'est pas autorisé</p>
+        </article>
+    {% endif %}
+
+    {% if evenement.limite_smg != 0 %}
+        <article>
+            <img src="{% static 'gun/images/smg.png' %}" alt="SMG">
+            <h1>SMG</h1>
+            <p>Nombre maximum autorisé : {{ evenement.limite_smg }}</p>
+            <p>Utilisé par les joueurs : {{ count_repliques.SMG }}</p>
+        </article>
+    {% else %}
+        <article class="replique_pasok">
+            <img src="{% static 'gun/images/smg.png' %}" alt="SMG">
+            <h1>SMG</h1>
+            <p>Ce type de réplique n'est pas autorisé</p>
+        </article>
+    {% endif %}
+
+    {% if evenement.limite_pa != 0 %}
+        <article>
+            <img src="{% static 'gun/images/pa.png' %}" alt="PA">
+            <h1>PA</h1>
+            <p>Nombre maximum autorisé : {{ evenement.limite_pa }}</p>
+            <p>Utilisé par les joueurs : {{ count_repliques.PA }}</p>
+        </article>
+    {% else %}
+        <article class="replique_pasok">
+            <img src="{% static 'gun/images/pa.png' %}" alt="PA">
+            <h1>PA</h1>
+            <p>Ce type de réplique n'est pas autorisé</p>
+        </article>
+    {% endif %}
+
+    {% if evenement.limite_pompe != 0 %}
+        <article>
+            <img src="{% static 'gun/images/pompe.png' %}" alt="POMPE">
+            <h1>POMPE</h1>
+            <p>Nombre maximum autorisé : {{ evenement.limite_pompe }}</p>
+            <p>Utilisé par les joueurs : {{ count_repliques.POMPE }}</p>
+        </article>
+    {% else %}
+        <article class="replique_pasok">
+            <img src="{% static 'gun/images/pompe.png' %}" alt="POMPE">
+            <h1>POMPE</h1>
+            <p>Ce type de réplique n'est pas autorisé</p>
+        </article>
+    {% endif %}
+
+    {% if evenement.limite_mg != 0 %}
+        <article>
+            <img src="{% static 'gun/images/mg.png' %}" alt="MG">
+            <h1>MG</h1>
+            <p>Nombre maximum autorisé : {{ evenement.limite_mg }}</p>
+            <p>Utilisé par les joueurs : {{ count_repliques.MG }}</p>
+        </article>
+    {% else %}
+        <article class="replique_pasok">
+            <img src="{% static 'gun/images/mg.png' %}" alt="MG">
+            <h1>MG</h1>
+            <p>Ce type de réplique n'est pas autorisé</p>
+        </article>
+    {% endif %}
+
+    {% if evenement.limite_dmr != 0 %}
+        <article>
+            <img src="{% static 'gun/images/dmr.png' %}" alt="DMR">
+            <h1>DMR</h1>
+            <p>Nombre maximum autorisé : {{ evenement.limite_dmr }}</p>
+            <p>Utilisé par les joueurs : {{ count_repliques.DMR }}</p>
+        </article>
+    {% else %}
+        <article class="replique_pasok">
+            <img src="{% static 'gun/images/dmr.png' %}" alt="DMR">
+            <h1>DMR</h1>
+            <p>Ce type de réplique n'est pas autorisé</p>
+        </article>
+    {% endif %}
+
+    {% if evenement.limite_autre != 0 %}
+        <article>
+            <img src="{% static 'gun/images/autre.png' %}" alt="AUTRE">
+            <h1>AUTRE</h1>
+            <p>Nombre maximum autorisé : {{ evenement.limite_autre }}</p>
+            <p>Utilisé par les joueurs : {{ count_repliques.AUTRE }}</p>
+        </article>
+    {% else %}
+        <article class="replique_pasok">
+            <img src="{% static 'gun/images/autre.png' %}" alt="AUTRE">
+            <h1>AUTRE</h1>
+            <p>Ce type de réplique n'est pas autorisé</p>
+        </article>
+    {% endif %}
+
+</div>
+
+
 
 
 
@@ -118,7 +265,7 @@
                         <a class="btn_3" href="{% url 'desinscription_evenement' evenement.id %}">Se désinscrire</a>
                     {% endif %}
                 {% else %}
-                    <p>Cette evenement est fini, vous ne pouvez plus vous inscrir !</p>
+                    <p>Cette événement est fini, vous ne pouvez plus vous inscrire !</p>
                 {% endif %}
             {% else %}
                 <p>Votre compte doit être validé pour vous inscrire à une partie.</p>
@@ -129,11 +276,11 @@
 
         {% if user.is_staff %}
             <div class="spacer_100"></div>
-                <a class="btn_5" href="{% url 'comptabilite_evenement' evenement.pk %}">Comptabilité</a>
+            <a class="btn_5" href="{% url 'comptabilite_evenement' evenement.pk %}">Comptabilité</a>
             {% if evenement.date_heure >= today %}
                 <a class="pc btn_6" href="{% url 'evenement_update' evenement.pk %}">Modifier</a>
                 <a class="pc btn_7" href="{% url 'evenement_delete' evenement.pk %}">Supprimer</a>
-                <p class="mobil pasmodifiable">*Vous ne pouvez pas modifier ou supprimer un evenement depuis un téléphone.</p>
+                <p class="mobil pasmodifiable">*Vous ne pouvez pas modifier ou supprimer un événement depuis un téléphone.</p>
             {% endif %}
         {% endif %}
     </div>
@@ -142,7 +289,6 @@
 
 
     <div class="spacer_100"></div>
-        <p>Type de réplique autorisée : <br> {{ evenement.type_replique_autorisee }}</p>
         <p>Puissance max {{ evenement.puissance_max_joule }} joule(s)</p>
     <div class="spacer_200"></div>
 

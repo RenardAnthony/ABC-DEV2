@@ -192,27 +192,83 @@ body{
 .options article{
     margin-bottom: var(--size-xl);
 }
-.options h1{
-    text-align: center;
+
+.option-available {
     background-color: var(--color-blue-light);
-    padding: var(--size-s) 0;
+    border-radius: 10px;
+    margin-bottom: var(--size-xl);
+}
+
+/* Styles pour les options disponibles */
+
+
+.option-available h1 {
+    background-color: var(--color-blue-light);
+    color: var(--color-text-white);
+    text-align: center;
+    padding: var(--size-s);
     font-size: var(--size-m);
-    border-top-left-radius: 5px;
-    border-top-right-radius: 5px;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
 }
-.options p{
+
+.option-available p {
     background-color: var(--color-gray8);
-    padding: var(--size-xxl) var(--size-xl) var(--size-xxl) var(--size-xl);
+    padding: var(--size-m);
     font-size: 14px;
+    min-height: 150px;
 }
-.options h2{
+
+.option-available h2 {
     text-align: center;
     font-size: var(--size-l);
-    background-color: var(--color-gray8);
-    border-bottom-right-radius: 5px;
-    border-bottom-left-radius: 5px;
-    padding: 0 0 var(--size-m) 0;
+    background-color: var(--color-light-blue);
+    padding: var(--size-m);
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
 }
+
+/* Styles pour les options non disponibles */
+.option-unavailable {
+    background-color: var(--color-gray7);
+    border-radius: 10px;
+    margin-bottom: var(--size-xl);
+    opacity: 0.7;
+}
+
+.option-unavailable h1 {
+    background-color: var(--color-gray7);
+    color: var(--color-text-white);
+    text-align: center;
+    padding: var(--size-s);
+    font-size: var(--size-m);
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+}
+
+.option-unavailable p {
+    background-color: var(--color-gray8);
+    padding: var(--size-m);
+    font-size: 14px;
+    color: var(--color-text-muted);
+    min-height: 150px;
+}
+
+.option-unavailable h2 {
+    text-align: center;
+    font-size: var(--size-l);
+    background-color: var(--color-gray7);
+    padding: var(--size-m);
+    color: var(--color-text-muted);
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+}
+
+
+
+
+
+
 .liste_joueurs{
     background-color: var(--color-gray8);
     border-radius: 5px;
@@ -463,6 +519,7 @@ body{
 }
 .mobilsize input[type="text"]::placeholder{
     color: var(--color-gray3);
+
 }
 
 
@@ -534,13 +591,15 @@ body{
 }
 #compta p{
     color: var(--color-text-white);
+
 }
 form{
     text-align:center;
-}
 
+}
 .recapitulatif{
     width: 100%;
+
 }
 .recapitulatif p{
     margin-top: var(--size-xs);
@@ -558,7 +617,7 @@ form{
     text-align: center;
     margin: var(--size-xl) auto;
 }
-/*Detail prix*/
+
 #participant .detail_prix{
     border: 1px dashed var(--color-sand-dark);
     background-color: var(--color-gray10);
@@ -567,6 +626,7 @@ form{
 }
 #participant .detail_prix ul li p{
     font-size: var(--size-m);
+
 }
 #participant .detail_prix .text-center{
     margin: auto;
@@ -582,7 +642,6 @@ form{
     font-size: var(--size-l);
     margin-bottom: var(--size-m);
 }
-
 #participant form .replique{
     display: flex;
     flex-direction: column;
@@ -608,6 +667,394 @@ form{
     align-items:center;
     cursor: pointer;
 }
+
+#repliques_listes {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: var(--size-xl) 0;
+}
+#repliques_listes article {
+    background-color: var(--color-gray8);
+    border-radius: 10px;
+    padding: var(--size-m);
+    text-align: center;
+    width: 90%;
+    margin-bottom: var(--size-l);
+    box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
+}
+#repliques_listes article img {
+    width: 80px;
+    margin-bottom: var(--size-s);
+}
+#repliques_listes article h1 {
+    font-size: var(--size-m);
+    margin-bottom: var(--size-s);
+    color: var(--color-text-white);
+}
+#repliques_listes article p {
+    font-size: var(--size-s);
+    color: var(--color-gray4);
+    margin-bottom: var(--size-xs);
+}
+#repliques_listes .replique_pasok {
+    opacity: 0.25;
+
+}
+
+input[readonly] {
+  background-color: #494b4d;
+  pointer-events: none;
+}
+.replique-section {
+  margin-bottom: 10px;
+
+}
+
+
+/*Création d'evenement*/
+#content-creation{
+    width: 100%;
+    margin: auto;
+}
+#content-creation h2{
+    text-align: center;
+    margin: var(--size-xxl);
+}
+#content-creation form{
+    display: flex;
+    flex-direction: column;
+
+}
+#content-creation div.parte{
+    align-items: center;
+    margin: auto;
+    width: 100%;
+}
+
+#content-creation .parte.titre{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    align-items: normal;
+}
+#content-creation .parte.titre p{
+    text-align: left;
+
+}
+#content-creation .parte.titre input{
+    width: 100%;
+    border-radius: 5px;
+    background-color: var(--color-gray7);
+    color: var(--color-text-white);
+    padding: var(--size-s) var(--size-m);
+    border: 0;
+}
+#content-creation .parte.titre textarea{
+    width: 100%;
+    border-radius: 5px;
+    background-color: var(--color-gray7);
+    color: var(--color-text-white);
+    padding: var(--size-s) var(--size-m);
+    border: 0;
+}
+#content-creation .parte.date{
+    width: 100%;;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin: var(--size-m) auto;
+}
+#content-creation .parte.date input[type="datetime-local"]{
+    border: 0;
+    padding: var(--size-s) var(--size-m);
+    border-radius: 5px;
+    background-color: var(--color-gray7);
+    color: var(--color-text-white);
+}
+
+#content-creation .parte.lieu{
+    margin: var(--size-m) auto;
+    width: 100%;
+    height: 100px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+
+}
+#content-creation .parte.lieu .col{
+    width: 45%;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    text-align: left;
+}
+#content-creation .parte.lieu select{
+    background-color: var(--color-gray7);
+    color: var(--color-text-white);
+    padding: var(--size-s) var(--size-m);
+    border: 0;
+    border-radius: 5px;
+    margin-top: var(--size-xxs);
+}
+#content-creation .parte.lieu input{
+    background-color: var(--color-gray7);
+    color: var(--color-text-white);
+    padding: var(--size-s) var(--size-m);
+    border: 0;
+    border-radius: 5px;
+    border: 1px solid var(--color-gray7);
+    margin-top: var(--size-xxs);
+}
+#content-creation .parte.lieu input[readonly]{
+    background-color: var(--color-gray10);
+    cursor: nodrop;
+    color: var(--color-text-white);
+    border: 1px solid var(--color-gray7);
+}
+
+/* Conteneur pour les sliders de nombre de joueur */
+#content-creation .parte.nbre_joueur{
+    width: 100%;
+
+}
+#content-creation .parte.nbre_joueur .slider-range-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 20px auto;
+}
+#content-creation .parte.nbre_joueur #range-slider {
+    position: relative;
+    width: 100%;
+    z-index: 1; /* Assurez-vous que la barre soit en arrière-plan */
+}
+#content-creation .parte.nbre_joueur #range-slider input[type="range"] {
+    -webkit-appearance: none;
+    width: 100%;
+    height: 5px;
+    background: var(--color-gray7);
+    border-radius: 5px;
+    outline: none;
+    position: absolute;
+    left: 0;
+    pointer-events: none; /* Éviter de déplacer les deux sliders simultanément */
+    margin: var(--size-m) auto;
+    z-index: 1; /* z-index de la barre */
+}
+#content-creation .parte.nbre_joueur #range-slider input[type="range"]:first-child {
+    pointer-events: all; /* Autoriser le premier slider à être déplacé */
+
+}
+#content-creation .parte.nbre_joueur #range-slider input[type="range"]:last-child {
+    background-color: transparent;
+
+}
+#content-creation .parte.nbre_joueur #range-slider input[type="range"]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 20px;
+    height: 20px;
+    background: var(--color-blue-light);
+    border-radius: 50%;
+    cursor: pointer;
+    pointer-events: all;
+    z-index: 10; /* Le curseur est plus au-dessus que la barre */
+    position: relative; /* Nécessaire pour appliquer z-index */
+}
+#content-creation .parte.nbre_joueur #range-slider input[type="range"]::-moz-range-thumb {
+    width: 20px;
+    height: 20px;
+    background: var(--color-blue-light);
+    border-radius: 50%;
+    cursor: pointer;
+    z-index: 10; /* Assurez-vous que le curseur est toujours au-dessus */
+    position: relative;
+}
+#content-creation .parte.nbre_joueur .range-labels {
+    display: flex;
+    justify-content: space-between;
+    width: 80%;
+    margin-top: 40px;
+    font-size: 1em;
+    color: var(--color-text-white);
+}
+
+#content-creation .parte.puissance{
+    width: 100%;
+    display:  flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin: var(--size-m) auto;
+    border-bottom: 1px solid var(--color-text-white);
+    padding-bottom: var(--size-m);
+}
+#content-creation .parte.puissance input{
+    background-color: var(--color-gray7);
+    color: var(--color-text-white);
+    padding: var(--size-s) var(--size-m);
+    border: 0;
+    border-radius: 5px;
+    text-align: center;
+}
+
+#content-creation .parte#repliques_listes{
+    margin: var(--size-xxl) auto;
+
+}
+#content-creation .parte#repliques_listes input{
+    background-color: var(--color-gray7);
+    color: var(--color-text-white);
+    padding: var(--size-s) var(--size-m);
+    border: 0;
+    border-radius: 5px;
+    text-align: center;
+    margin: var(--size-m) 0 var(--size-xxs);
+}
+#content-creation .parte#repliques_listes .replique-section {
+    opacity: 0.2; /* Réduction de l'opacité par défaut */
+    cursor: pointer;
+    transition: opacity 0.3s, transform 0.3s, box-shadow 0.3s;
+}
+#content-creation .parte#repliques_listes .replique-section.active {
+    opacity: 1;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2); /* Légère ombre pour mettre en valeur */
+}
+
+
+#content-creation .parte.option_choix{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+#content-creation .parte.option_choix h1{
+    font-size: var(--size-m);
+
+}
+#content-creation .parte.option_choix label {
+    font-size: var(--size-s);
+
+}
+#content-creation .parte.option_choix .element{
+    border: 1px solid var(--color-gray7);
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+    width: 28%;
+    display: flex;
+    flex-direction: column;
+    height: 200px;
+    border-radius: 5px;
+    justify-content: space-between;
+}
+#content-creation .parte.option_choix .lesoptions{
+    text-align: left;
+
+}
+#content-creation .parte.option_choix input[type="checkbox"]{
+    margin: auto;
+
+}
+#content-creation .parte.option_choix input[type="number"]{
+    padding: var(--size-xs) var(--size-m);
+    border: 0;
+    border-radius: 5px;
+    text-align: center;
+}
+#content-creation .parte button[type="submit"]{
+    border: 0;
+    width: 30%;
+    cursor: pointer;
+}
+
+
+
+
+
+#suppression_evenement{
+    width: 60%;
+    margin: var(--size-xxl) auto;
+    padding: var(--size-m) var(--size-l);
+    border-radius: 5px;
+    background-color: var(--color-gray8);
+    box-shadow: 5px 5px 10px #00000050;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-evenly;
+    height: 500px;
+}
+#suppression_evenement div{
+    text-align: center;
+}
+
+
+
+
+
+/* Container pour le slider evenement/partie */
+#content-creation .slider-container {
+    margin: var(--size-s) 0 var(--size-xxl) 0;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+}
+#content-creation .slider-container span{
+    width: 50px;
+
+}
+#content-creation .slider-switch {
+    position: relative;
+    width: 50px;
+    height: 25px;
+    background-color: transparent;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    margin: 0 var(--size-m);
+}
+#content-creation .slider-switch input[type="checkbox"] {
+    display: none;
+
+}
+#content-creation .slider {
+    position: relative;
+    width: 50px;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    transition: background-color 0.3s;
+    border-radius: 50px;
+}
+#content-creation .slider-label {
+    font-size: 1.2em;
+    color: #fff;
+    z-index: 2;
+    transition: color 0.3s;
+}
+#content-creation .toggle {
+    position: absolute;
+    top: 3px;
+    left: 4px;
+    width: 20px;
+    height: 20px;
+    background-color: #fff;
+    border-radius: 50%;
+    transition: transform 0.3s ease-in-out;
+}
+#content-creation .slider-switch input[type="checkbox"]:checked + .slider {
+    background-color: var(--color-sand-normal); /* Couleur marron pour Événement */
+
+}
+#content-creation .slider-switch input[type="checkbox"] + .slider {
+    background-color: var(--color-blue-light); /* Couleur marron pour Événement */
+
+}
+#content-creation .slider-switch input[type="checkbox"]:checked + .slider .toggle {
+        transform: translateX(22px);
+
+    }
+
+
 
 
 
@@ -658,5 +1105,34 @@ form{
         height: 410px;
         object-fit: cover;
         border-radius: 10px;
+    }
+
+    #repliques_listes {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: space-around;
+        margin: var(--size-xxl) 0;
+    }
+
+    #repliques_listes article {
+        width: 200px;
+        margin-bottom: var(--size-xl);
+    }
+
+    #repliques_listes article img {
+        width: 100px;
+        margin-bottom: var(--size-m);
+    }
+
+    #content-creation{
+        width: 50%;
+    }
+
+    #content-creation .parte.option_choix .element{
+        padding: var(--size-m);
+    }
+    #content-creation .parte.option_choix h1{
+    font-size: var(--size-l);
     }
 }

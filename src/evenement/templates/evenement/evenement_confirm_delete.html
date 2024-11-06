@@ -1,17 +1,36 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}
+  <title>Suppression d'événement</title>
+{% endblock %}
+
+{% block Css %}
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link rel="stylesheet" href="{% static 'evenement/css/evenement2.css' %}">
+{% endblock %}
+
 
 {% block content %}
-  <h2>Supprimer l'événement/partie</h2>
-  <p>Êtes-vous sûr de vouloir supprimer cet événement/partie ?</p>
-  <form method="post">
-    {% csrf_token %}
-    <button type="submit">Oui, supprimer</button>
-  </form>
-  <a href="{% url 'evenement_detail' evenement.pk %}">Annuler</a>
+
+    <div id="suppression_evenement">
+
+      <h2>Supprimer l'événement/partie</h2>
+
+      <p>
+          Êtes-vous sûr de vouloir supprimer cet événement ? <br><br>
+          Si la cette événement est simplement terminer, il est conseiller de ne simplement <br>
+          pas y toucher pour garder un historique. <br><br>
+          Cette action est ireversible. <br>
+      </p>
+
+      <div>
+          <form method="post">
+            {% csrf_token %}
+            <button class="btn_6" type="submit">Oui, je veut supprimer cette événement.</button>
+          </form>
+          <a class="btn_5" href="{% url 'evenement_detail' evenement.pk %}">Annuler</a>
+      </div>
+
+    </div>
+
 {% endblock %}
