@@ -29,6 +29,7 @@ urlpatterns = [
     path('evenement/', include('evenement.urls')), # Include les urls de l'application evenement
     path('todo/', include('todo.urls')), # Application todoliste
     path('gestion_projet/', include('gestion_projet.urls')), # Application gestion projet
+    path('regles/', include('regles.urls')),
 
     path('test/', views.test, name="test"), #Page vierge juste pour les test
 

@@ -6,7 +6,7 @@
 {% endblock %}
 
 {% block Css %}
-    <link rel="stylesheet" href="{% static 'evenement/css/evenement.css' %}">
+    <link rel="stylesheet" href="{% static 'evenement/css/evenement2.css' %}">
 {% endblock %}
 
 {% block js %}
@@ -121,7 +121,7 @@
 
         <!-- Menu pour choisir le type de réplique ou pack de location -->
         <h3>Choix de la réplique :</h3>
-        <select id="replique_choice" name="replique_choice">
+        <select id="replique_choice" class="replique_choice_input" name="replique_choice">
             <option value="">Sélectionner une option</option>
             {% if evenement.locations %}
             <option value="pack_location">Pack Location</option>
@@ -135,7 +135,7 @@
         <!-- Choix des répliques si l'ami utilise une réplique appartenant à l'utilisateur -->
         <div id="repliques_section" style="display: none;">
             <h3>Choisir une réplique à prêter à l'ami :</h3>
-            <select name="replique_ami" id="replique_ami">
+            <select name="replique_ami" class="replique_choice_input" id="replique_ami">
                 <option value="">Sélectionner une réplique</option>
                 {% for replique in replique_utilisateur %}
                 <option value="{{ replique.id }}">{{ replique.name }} ({{ replique.replica_type }})</option>
@@ -197,7 +197,7 @@
 
         <div class="spacer_100"></div>
 
-        <button class="btn-light" type="submit">Inscrire l'ami</button>
+        <button class="btn_8" type="submit">Inscrire l'ami</button>
     </form>
 </div>
 {% endblock %}

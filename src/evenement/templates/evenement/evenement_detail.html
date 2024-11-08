@@ -108,7 +108,7 @@
         <p>
             Pour ne pas te voir interdit de jeu :
         </p>
-        <a href="{% url 'regles' %}" class="btn_1">Les règles</a>
+        <a href="{% url 'regles_general' %}" class="btn_1">Les règles</a>
     </div>
 
 
@@ -220,6 +220,9 @@
     {% endif %}
 
 </div>
+<div id="text-limite-puissance">
+    <p>Puissance maximal: {{ evenement.puissance_max_joule }} Joule(s)</p>
+</div>
 
 
 
@@ -287,9 +290,6 @@
 
 
 
-
-    <div class="spacer_100"></div>
-        <p>Puissance max {{ evenement.puissance_max_joule }} joule(s)</p>
     <div class="spacer_200"></div>
 
 {% endblock %}

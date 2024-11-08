@@ -701,6 +701,22 @@ form{
     opacity: 0.25;
 
 }
+#text-limite-puissance{
+    margin: -30px auto var(--size-xxl) auto;
+    text-align: center;
+    font-style: italic;
+}
+#text-limite-puissance p{
+    color: var(--color-gray5);
+
+}
+.replique_choice_input{
+    padding: var(--size-m);
+    border-radius: 5px;
+    background-color: var(--color-gray7);
+    border: 0;
+    color: var(--color-text-white);
+}
 
 input[readonly] {
   background-color: #494b4d;
@@ -709,6 +725,10 @@ input[readonly] {
 .replique-section {
   margin-bottom: 10px;
 
+}
+#amis_repliques_section{
+    text-align: left;
+    margin: auto;
 }
 
 
@@ -811,6 +831,16 @@ input[readonly] {
     cursor: nodrop;
     color: var(--color-text-white);
     border: 1px solid var(--color-gray7);
+}
+#content-creation .parte.lieu .add_new_adresse{
+    color: red;
+    margin: var(--size-xs) 0 0 var(--size-xs);
+    font-size: var(--size-s);
+    color: var(--color-gray4);
+}
+#content-creation .parte.lieu .add_new_adresse:hover{
+    color: var(--color-gray1);
+
 }
 
 /* Conteneur pour les sliders de nombre de joueur */
@@ -920,7 +950,6 @@ input[readonly] {
     opacity: 1;
     box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2); /* Légère ombre pour mettre en valeur */
 }
-
 
 #content-creation .parte.option_choix{
     display: flex;

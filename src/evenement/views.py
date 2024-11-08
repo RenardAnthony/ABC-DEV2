@@ -718,8 +718,7 @@ def lieu_list(request):
     return render(request, 'evenement/lieu_list.html', {'lieux': lieux})
 
 
-def regles(request):
-    return render(request, 'evenement/regles.html')
+
 
 @staff_member_required
 def lieu_create_view(request):

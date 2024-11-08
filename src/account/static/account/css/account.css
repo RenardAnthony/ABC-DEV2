@@ -111,15 +111,16 @@ body{
 .userprofilform {
     min-height: 100%; /* Permet au formulaire de s'étendre verticalement */
     padding-bottom: 20px; /* Ajouter un peu d'espace en bas du formulaire */
+    display: flex;
+    flex-direction: column;
 }
 .input-box2 input::placeholder{
     color: var(--color-text-white);
 }
 .input-box2{
-    position: relative;
     width: 90%;
     height: 50px;
-    margin: 30px auto;
+    margin: 50px auto 0;
 }
 
 
@@ -172,12 +173,17 @@ body{
     color: var(--color-text-white);
     pointer-events: none; /* Empêche l'interaction avec la flèche */
 }
-
+.colform{
+    display: flex;
+    flex-direction: column;
+}
 .link-editprofil{
     width: 90%;
-    margin: auto;
+    margin: 100px auto;
     height: 124px;
     justify-content: space-between;
+    display: flex;
+    flex-direction: column;
 }
 .link-editprofil .inclass{
     justify-content: space-between;
@@ -216,6 +222,8 @@ a.button-gray:hover{
     text-align: center;
     width: 50%;
     margin: 5rem auto auto auto;
+    display: flex;
+    flex-direction: column;
 }
 
 .mobilsize {

@@ -13,7 +13,6 @@ urlpatterns = [
     path('<int:pk>/delete/', views.evenement_delete, name='evenement_delete'),
     path('<int:pk>/comptabilite/', views.comptabilite_evenement, name='comptabilite_evenement'),
     path('<int:evenement_id>/gestion_participant/<int:inscription_id>/', views.gestion_participant, name='gestion_participant'),
-    path('regles/', views.regles, name="regles"),
 
     # Page pour auto complet la bdd des terrains
     path('remplir-bdd-lieux/', views.remplir_bdd_lieux, name='remplir_bdd_lieux'),

@@ -10,7 +10,7 @@
 {% block content %}
     <div class="mobilsize">
 
-        <form class="userprofilform col" method="post" enctype="multipart/form-data">
+        <form class="userprofilform" method="post" enctype="multipart/form-data">
             {% csrf_token %}
 
             <img class="" src="{{ user.userprofile.avatar.url }}" alt="Avatar de {{ user.username }}">
@@ -86,7 +86,7 @@
 
 
 
-            <button type="submit" class="btn-light">Mettre à jour</button>
+            <button type="submit" class="btn_5">Mettre à jour</button>
         </form>
 
     </div>

@@ -1,11 +1,20 @@
 {% extends 'base.html' %}
-{% block title %}Créer un Nouveau Lieu{% endblock %}
+{% load static %}
+{% block title %}
+  <title>ajoute lieu</title>
+{% endblock %}
+
+{% block Css %}
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link rel="stylesheet" href="{% static 'evenement/css/evenement2.css' %}">
+{% endblock %}
+
+
 {% block content %}
-    <h2>Ajouter un Lieu</h2>
-    <form method="post">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit">Créer</button>
-    </form>
-    <a href="{% url 'evenement_create' %}">Annuler</a>
+
+    <p>Pour des résons de simplicité de developpement, veuiller passer par l'interface administration de django pour ajouter de nouvelle adresse.</p>
+    <br>
+    <a href="/admin/evenement/lieu/" class="btn_4">Via ce lien</a>
+
+
 {% endblock %}

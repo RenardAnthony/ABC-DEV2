@@ -9,7 +9,7 @@
 
 {% block content %}
 
-    <form method="post" class="col">
+    <form method="post" class="colform">
         {% csrf_token %}
 
         <div class="input-box2">
@@ -25,19 +25,18 @@
             {% endif %}
         </div>
 
-        <div class="link-editprofil col">
+        <div class="link-editprofil">
             <div class="inclass row">Email actuel : {{ user.email }}</p> <a href="{% url 'change_email' %}">Modifier</a></div>
             <div><a href="{% url 'password_reset' %}">Modifier mon mot de passe</a></div>
             <div><a class="button-gray" href="{% url 'delete_user' %}">Supprimer mon compte</a></div>
         </div>
 
-        <div class="submit-logout col">
-            <button class="btn-light" type="submit">Mettre à jour</button>
+        <div class="submit-logout">
+            <button class="btn_5" type="submit">Mettre à jour</button>
             <br>
-            <a class="btn-borderwhite" href="{% url 'logout' %}">Logout</a>
+            <a href="{% url 'logout' %}">Logout</a>
         </div>
 
     </form>
-
 
 {% endblock %}

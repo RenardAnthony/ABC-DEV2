@@ -315,6 +315,39 @@ a:hover{
     transition: 0.7s;
     cursor: default;
 }
+.btn_8{
+    /* Boutton transparent border vert . Hover border vert clair*/
+    padding: 1rem 2rem;
+    border: 2px solid var(--color-blue-light);
+    border-radius: 50px;
+    background: transparent;
+    color: var(--color-blue-light);
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.7s;
+    margin: 2rem 0;
+}
+.btn_8:hover{
+    padding: 1rem 2rem;
+    border: 2px solid var(--color-blue-light);
+    border-radius: 50px;
+    background: var(--color-blue-light);
+    color: var(--color-text-white);
+    cursor: pointer;
+    transition: 0.2s;
+}
+.btn_8:disabled{
+    padding: 1rem 2rem;
+    border: 2px solid var(--color-gray7);
+    border-radius: 50px;
+    background: transparent;
+    color: var(--color-gray7);
+    cursor: pointer;
+    transition: 0.7s;
+    cursor: default;
+}
+
+
 
 .checkbox_1{
     position: relative;

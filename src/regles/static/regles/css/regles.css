@@ -1,0 +1,135 @@
+body{
+    background-color: var(--color-gray9);
+}
+.toggle_btn{
+    background-color: transparent;
+    border: 0;
+    color: var(--color-gray5);
+    font-style: italic;
+    cursor: pointer;
+}
+.toggle_btn{
+    color: var(--color-gray3);
+}
+
+
+bold{
+    font-weight: bold;
+}
+
+#container{
+    width: 80%;
+    margin: auto;
+    display: flex;
+    flex-direction: column;
+
+}
+
+.component{
+    background: var(--grade-1);
+    border-radius: 5px;
+    padding: var(--size-m);
+    margin: var(--size-xl) 0;
+}
+.component h1{
+    font-size: var(--size-xl);
+    margin-bottom: var(--size-m);
+}
+.component h2{
+    font-size: var(--size-l);
+    margin-bottom: var(--size-m);
+    color: var(--color-gray1);
+    font-weight: bold;
+}
+.component h3{
+    font-size: var(--size-m);
+    margin-bottom: var(--size-s);
+    color: var(--color-gray2);
+    font-weight: bold;
+    text-decoration: underline;
+}
+.component h4{
+    font-size: var(--size-m);
+    margin-bottom: var(--size-m);
+    color: var(--color-gray1);
+    font-weight: normal;
+}
+.component p{
+    font-size: var(--size-m);
+    margin-bottom: var(--size-xxl);
+    color: var(--color-gray3);
+}
+.component ul.dot{
+    list-style: disc;
+}
+.component ul.num{
+    list-style: decimal;
+}
+.component li{
+    color: var(--color-gray3);
+    font-size: var(--size-m);
+    margin: var(--size-s) 0;
+}
+
+.component .note{
+    border: 2px solid var(--color-orange);
+    padding: var(--size-m);
+    border-radius: 7px;
+    background-color: var(--color-gray10);
+    margin-bottom: var(--size-xxl);
+}
+
+
+.collapsible-content {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.5s ease-out, padding 0.5s ease-out;
+}
+
+.collapsible-content.open {
+    max-height: 500px; /* Ajuste cette valeur en fonction de la hauteur que tu estimes nécessaire pour le contenu */
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
+
+
+#menu{
+    width: 100%;
+    margin: var(--size-xl) 0 var(--size-xxl);
+}
+#menu h2{
+    font-size: var(--size-l);
+    margin-bottom: var(--size-m);
+}
+#menu #ligne{
+    background-color: var(--color-text-white);
+    min-height: 2px;
+    width: 100%;
+    margin: 4rem 0 2rem 0;
+    border-radius: 5px;
+}
+#menu #liste{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+}
+#menu a{
+    padding: var(--size-xxs) var(--size-m);
+    margin: var(--size-xxs);
+    border-radius: 5px;
+    background-color: var(--color-blue-normal);
+    font-size: var(--size-m);
+}
+#menu a:hover{
+    background-color: var(--color-blue-light);
+}
+
+
+
+@media screen and (min-width: 700px){
+    #conteneur{
+        width: 50%;
+    }
+
+}
