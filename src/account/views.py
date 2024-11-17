@@ -29,6 +29,8 @@ from django.utils.dateparse import parse_date
 from datetime import date
 from .forms import CustomUserForm
 
+from badges.models import Badge, UserBadge
+
 
 
 
@@ -145,7 +147,10 @@ def profile(request, user_id=None):
     # Calculer l'âge si la date de naissance est présente
     age = calculate_age(user_profile.date_of_birth) if user_profile.date_of_birth else None
 
-    return render(request, 'account/profile.html', {'user': user_profile, 'age': age})
+    # Obtenir les badges sélectionnés
+    selected_badges = UserBadge.objects.filter(user=user_profile, is_selected=True)
+
+    return render(request, 'account/profile.html', {'user': user_profile, 'age': age, 'selected_badges': selected_badges})
 
 
 @staff_required

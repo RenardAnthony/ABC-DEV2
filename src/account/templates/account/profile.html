@@ -28,6 +28,23 @@
 
     <div class="profilpc">
         <table>
+
+            {% if user.id == request.user.id %}<a href="{% url 'manage_badges' %}">{% endif %}
+                <div class="badges">
+
+                    {% if selected_badges %}
+                        {% for user_badge in selected_badges %}
+                        <div class="badge">
+                            <img src="{{ user_badge.badge.image.url }}" title="{{ user_badge.badge.name }} : {{ user_badge.badge.description }}" alt="{{ user_badge.badge.name }}">
+                        </div>
+                        {% endfor %}
+                    {% else %}
+                        <a style="cursor: pointer;" href="{% url 'manage_badges' %}"><p>Vous avez aucun badges sur votre profil</p></a>
+                    {% endif %}
+                </div>
+            {% if user.id == request.user.id %}</a>{% endif %}
+
+
             <tr>
                 <td class="firstrow"><img class="photo_de_profil" src="{{ user.userprofile.avatar.url }}" alt="Photo de profil de {{user.pseudo}}"></td>
                 <td colspan="2">
@@ -120,6 +137,8 @@
             <a class="btn-2 add-commentaire" href="">Ajouter un commentaire</a>
         {% endif %}
     </div>
+
+
 
 
 </div>

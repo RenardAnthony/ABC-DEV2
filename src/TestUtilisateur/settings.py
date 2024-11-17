@@ -47,6 +47,7 @@ INSTALLED_APPS = [
     'todo',
     'gestion_projet',
     'regles',
+    'badges',
 ]
 
 MIDDLEWARE = [

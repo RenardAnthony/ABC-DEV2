@@ -3,6 +3,7 @@ db.sqlite3
 __pycache__/
 .venv/
 .env
-TestUtilisateur/settings_DEV.py
-TestUtilisateur/settings_PUBLIC.py
-TestUtilisateur/settings.py
+settings_DEV.py
+settings_PUBLIC.py
+settings.py
+settings_PUBLIC_Pythonanywhere.py

@@ -1,0 +1,72 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load custom_filters %}  <!-- Charger les filtres personnalisés -->
+
+{% block title %} <title>Inventaire de badges</title> {% endblock %}
+{% block Css %}
+    <link rel="stylesheet" href="{% static 'badges/css/badges.css' %}">
+{% endblock %}
+{% block content %}
+
+<div id="contener">
+    <h2>Inventaire de badges</h2>
+
+    <form method="post">
+        {% csrf_token %}
+        <div id="content">
+            {% for user_badge in badges_for_template %}
+                {% if user_badge %}
+                    <div class="badge-item filled" data-checkbox-id="checkbox-{{ user_badge.id }}">
+                        <img src="{{ user_badge.badge.image.url }}" alt="{{ user_badge.badge.name }}" title="{{ user_badge.badge.name }} : {{ user_badge.badge.description }}">
+                        <input id="checkbox-{{ user_badge.id }}" type="checkbox" name="selected_badges" value="{{ user_badge.id }}"
+                               {% if user_badge.is_selected %}checked{% endif %}>
+                    </div>
+                {% else %}
+                    <div class="badge-item empty">
+                        <!-- Case vide -->
+                    </div>
+                {% endif %}
+            {% endfor %}
+        </div>
+        <p>Choisissez jusqu'à 3 badges à afficher sur votre profil :</p>
+        <button class="btn_4" type="submit">Enregistrer les badges sélectionnés</button>
+    </form>
+</div>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        // Récupère tous les éléments avec la classe 'badge-item'
+        const badgeItems = document.querySelectorAll(".badge-item");
+
+        badgeItems.forEach(function(badgeItem) {
+            // Récupère l'id du checkbox correspondant
+            const checkboxId = badgeItem.getAttribute("data-checkbox-id");
+            if (checkboxId) {
+                const checkbox = document.getElementById(checkboxId);
+
+                // Initialisation de l'état visuel pour synchroniser les badges déjà sélectionnés
+                if (checkbox.checked) {
+                    badgeItem.classList.add('selected');
+                }
+
+                // Ajoute l'événement 'click' pour changer l'état des badges
+                badgeItem.addEventListener("click", function() {
+                    // Change l'état du checkbox seulement s'il n'est pas désactivé
+                    if (!checkbox.disabled) {
+                        checkbox.checked = !checkbox.checked;
+
+                        // Met à jour l'apparence visuelle du badge (ajout/suppression de la classe 'selected')
+                        if (checkbox.checked) {
+                            badgeItem.classList.add('selected');
+                        } else {
+                            badgeItem.classList.remove('selected');
+                        }
+                    }
+                });
+            }
+        });
+    });
+</script>
+
+{% endblock %}
+

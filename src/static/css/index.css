@@ -47,7 +47,7 @@ body{
     min-height: 80vh;
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    /*justify-content: center;*/
     position: relative;
 }
 .element_3 .content img{

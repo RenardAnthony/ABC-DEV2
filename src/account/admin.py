@@ -1,9 +1,5 @@
 from django.contrib import admin
-
-# Register your models here.
 from account.models import CustomUser
-
-
 
 @admin.register(CustomUser)
 class CustomUserAdmin(admin.ModelAdmin):
@@ -13,4 +9,4 @@ class CustomUserAdmin(admin.ModelAdmin):
         "is_active",
     )
     list_per_page = 30
-
+    search_fields = ("email", "pseudo")  # Nécessaire pour l'autocomplétion dans UserBadgeAdmin
