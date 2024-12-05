@@ -1087,6 +1087,170 @@ input[readonly] {
 
 
 
+/*Commentaire Chat*/
+.chat-section{
+    padding: var(--size-m);
+    border-radius: 10px;
+    background: var(--grade-1);
+    margin: var(--size-xxl) 0;
+}
+.chat-section h2{
+    margin-bottom: var(--size-s);
+}
+.message-content{
+    margin-left: var(--size-m);
+}
+.timestamp{
+    margin-left: var(--size-m);
+    position: absolute;
+    right: 10px;
+    bottom: 4px;
+    color: var(--color-gray4);
+}
+.message {
+    display: flex;
+    align-items: flex-start;
+    gap: 15px;
+    background: var(--grade-1);
+    padding: var(--size-s);
+    border-radius: 8px;
+    margin: var(--size-m) 0;
+    position: relative;
+}
+.profile-picture img {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid var(--color-gray7);
+}
+.message-content-wrapper {
+    flex: 1;
+}
+.message-actions {
+    display: flex;
+    gap: 10px;
+    position: absolute;
+    top: 10px;
+    right: 10px;
+}
+.btn-action {
+    background-color: var(--color-gray6);
+    color: var(--color-text-white);
+    border: none;
+    border-radius: 5px;
+    padding: 5px 10px;
+    font-size: 0.9em;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.btn-action:hover {
+    background-color: var(--color-gray4);
+}
+
+.btn-delete {
+    background-color: var(--color-red);
+}
+
+.btn-delete:hover {
+    background-color: var(--color-red-light);
+}
+
+.btn-edit {
+    background-color: var(--color-blue-normal);
+}
+
+.btn-edit:hover {
+    background-color: var(--color-blue-light);
+}
+.mymessage{
+    background: var(--color-gray9);
+}
+.message.deleted {
+    color: var(--color-gray8);
+    font-style: italic;
+}
+.no-messages{
+    color: var(--color-gray2);
+    margin-bottom: var(--size-m);
+}
+.message.edited .edited-tag {
+    color: var(--color-gray5);
+    font-size: 0.8em;
+    font-style: italic;
+}
+.message .pseudo{
+    color: var(--color-sand-normal);
+    font-weight: bold;
+}
+.message .btn-delete{
+    color: var(--color-gray3);
+    font-weight: bold;
+}
+.message .btn-delete:hover{
+    color: var(--color-orange);
+    text-decoration: none;
+}
+
+.message-actions {
+    margin-top: 10px;
+}
+
+.message-actions a {
+    margin-right: 10px;
+    text-decoration: none;
+    font-size: 0.9em;
+    color: #007bff;
+}
+
+.message-actions a:hover {
+    text-decoration: underline;
+}
+
+
+.chat-section form{
+    width: 100%;
+    position: relative;
+}
+.chat-section form textarea{
+    width: 100%;
+    height: 75px;
+    padding: var(--size-s);
+    border-radius: 10px;
+    border: 0;
+    background-color: var(--color-gray7);
+    color: var(--color-text-white);
+    resize: none;
+}
+.chat-section form button[type=submit]{
+    position: absolute;
+    bottom: 7px;
+    right: 7px;
+    width: 100px;
+    height: 35px;
+    border-radius: 5px;
+    border: 0;
+    cursor: pointer;
+    background-color: var(--color-blue-normal);
+    color: var(--color-text-white);
+    transition: 0.7s;
+}
+.chat-section form button[type=submit]:hover{
+    background-color: var(--color-blue-light);
+    color: var(--color-text-white);
+    transition: 0.2s;
+}
+
+
+
+
+
+
+
+
+
+
 @media screen and (min-width: 700px){
     #evemenent-liste .list-element .element .info{
         display:flex;

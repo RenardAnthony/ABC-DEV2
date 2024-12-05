@@ -220,6 +220,7 @@
     {% endif %}
 
 </div>
+
 <div id="text-limite-puissance">
     <p>Puissance maximal: {{ evenement.puissance_max_joule }} Joule(s)</p>
 </div>
@@ -290,6 +291,77 @@
 
 
 
+
+<div class="chat-section">
+    <h2>Discussion</h2>
+    {% if messages %}
+        <div class="chat-messages">
+            {% for message in messages %}
+                <div class="message {% if message.is_deleted %}deleted{% elif message.updated_at > message.created_at %}edited{% endif %} {% if message.user == user %}mymessage{% endif %}" id="message-{{ message.id }}">
+                    <!-- Image de profil -->
+                    <div class="profile-picture">
+                        <img src="{{ message.user.userprofile.avatar.url }}" alt="Photo de {{ message.user.pseudo }}">
+                    </div>
+
+                    <!-- Contenu du message -->
+                    <div class="message-content-wrapper">
+                        <p class="pseudo">{{ message.user.userprofile.role }} - {{ message.user.pseudo }} :</p>
+                        {% if message.is_deleted %}
+                            <p>Ce message a été supprimé</p>
+                        {% else %}
+                            <p class="message-content">{{ message.content }}</p>
+                            {% if message.updated_at > message.created_at %}
+                                <p class="edited-tag">(Édité)</p>
+                            {% endif %}
+                        {% endif %}
+                        <p class="timestamp">
+                            {% if message.created_at|date:"d/m/Y" == today|date:"d/m/Y" %}
+                                {{ message.created_at|time:"H:i" }}
+                            {% elif message.created_at|date:"d/m/Y" == yesterday|date:"d/m/Y" %}
+                                Hier : {{ message.created_at|time:"H:i" }}
+                            {% else %}
+                                {{ message.created_at|date:"d/m/Y H:i" }}
+                            {% endif %}
+                        </p>
+                    </div>
+
+                    <!-- Actions -->
+                    {% if message.user == user or user.is_staff %}
+                        <div class="message-actions">
+                            {% if message.user == user %}
+                                <button class="btn-action btn-edit" data-message-id="{{ message.id }}">Modifier</button>
+                            {% endif %}
+                            {% if message.user == user or user.is_staff %}
+                                <button class="btn-action btn-delete" data-message-id="{{ message.id }}">Supprimer</button>
+                            {% endif %}
+                        </div>
+                    {% endif %}
+                </div>
+            {% endfor %}
+        </div>
+    {% else %}
+        <p class="no-messages">Aucun message pour cet événement.</p>
+    {% endif %}
+
+    <!-- Formulaire d'envoi -->
+    {% if user.is_authenticated %}
+        <form method="POST" action="{% url 'send_message' chat_room.id %}">
+            {% csrf_token %}
+            <textarea name="content" placeholder="Écrivez un message..." required></textarea>
+            <button type="submit">Envoyer</button>
+        </form>
+    {% else %}
+        <p>Connectez-vous pour participer à la discussion.</p>
+    {% endif %}
+</div>
+
+
+
+
+
     <div class="spacer_200"></div>
+
+<script src="{% static 'evenement/js/commentaires.js' %}"></script>
+
 
 {% endblock %}

@@ -31,6 +31,8 @@ urlpatterns = [
     path('gestion_projet/', include('gestion_projet.urls')), # Application gestion projet
     path('regles/', include('regles.urls')),
     path('badges/', include('badges.urls')),
+    path('commentaires/', include('commentaires.urls')),
+    path('notifications/', include('notifications.urls')),
 
     path('test/', views.test, name="test"), #Page vierge juste pour les test
 

@@ -11,6 +11,7 @@ from collections import Counter
 from .models import Evenement, Inscription, Gun, CustomUser
 from django.contrib.admin.views.decorators import staff_member_required
 from django.core.exceptions import ObjectDoesNotExist
+from notifications.utils import CreateNotification
 
 from datetime import datetime
 
@@ -33,6 +34,10 @@ def evenement_create_or_update(request, pk=None):
             print("Adresse après process_adresse :", evenement.adresse)  # Ajouté pour vérifier l'adresse
 
             evenement.save()
+
+            # Si c'est une création (pas une mise à jour), notifier les utilisateurs
+            if not pk:  # Si pk est None, c'est une création
+                notify_users_about_event(evenement)
 
             messages.success(request, "Événement mis à jour avec succès." if pk else "Événement créé avec succès.")
             return redirect('evenement_list')
@@ -176,6 +181,9 @@ def evenement_detail(request, pk):
     evenement = get_object_or_404(Evenement, pk=pk)
     inscriptions = evenement.inscription_set.all()
 
+    chat_room = evenement.chat_room  # Récupérer la salle de discussion associée
+    messages = chat_room.messages.filter(is_deleted=False).order_by('-created_at') if chat_room else [] # Messages les plus récents en premier
+
     today = timezone.now()
 
     # Récupérer le nombre maximum de joueurs
@@ -255,11 +263,13 @@ def evenement_detail(request, pk):
     return render(request, 'evenement/evenement_detail.html', {
         'evenement': evenement,
         'participants': participants,
-        'count_repliques': count_repliques,  # Ajout du comptage des répliques pour chaque type
+        'count_repliques': count_repliques,
         'places_restantes': places_restantes,
         'is_inscrit': is_inscrit,
         'user_role': user_role,
         'today': today,
+        'messages': messages,
+        'chat_room': chat_room,
     })
 
 
@@ -734,3 +744,11 @@ def lieu_create_view(request):
         form = LieuForm()
 
     return render(request, 'evenement/lieu_create_form.html', {'form': form})
+
+
+
+
+def notify_users_about_event(event):
+    # Récupérer tous les utilisateurs
+    users = CustomUser.objects.all()
+    CreateNotification("all", f"Un nouvelle evenement a été créée : {event.nom}", url=f"/evenement/{event.id}/")

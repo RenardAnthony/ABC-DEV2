@@ -48,6 +48,8 @@ INSTALLED_APPS = [
     'gestion_projet',
     'regles',
     'badges',
+    'commentaires',
+    'notifications',
 ]
 
 MIDDLEWARE = [

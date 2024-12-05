@@ -8,6 +8,8 @@
         <link rel="stylesheet" href="{% static 'css/style.css' %}">
     {% block Css %}{% endblock %}
     {% block js %}{% endblock %}
+
+
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
     <link rel="shortcut icon" type="image/png" href="{% static 'images/favicon.png' %}" >
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
@@ -30,23 +32,25 @@
                     <li><a href="#">CONTACT</a></li>
                 </ul>
             </div>
-
-
-
             <div>
                 {% if user.is_authenticated %}
+                    <div class="notifications_pc">
+                        <button id="notification-bell" class="bell">
+                            <i class='bx bxs-bell'></i>
+                            <span class="badge" style="display: none;"></span>
+                        </button>
+                        <div id="notification-dropdown" class="dropdown" style="display: none;">
+                            <p>Chargement...</p>
+                        </div>
+                    </div>
                     <a id="pseudo" href="{% url 'profile' %}">{{ request.user.pseudo }}</a>
-                {%  else %}
-                    <a href="{% url 'profile' %}">CONNEXION</a>
-                {% endif %}
-
-                {% if user.is_authenticated %}
                     <img class="pdp_de_profiles" src="{{ request.user.userprofile.avatar.url }}" alt="Photo de profil de {{user.pseudo}}">
-                {%  else %}
+                {% else %}
+                    <a href="{% url 'profile' %}">CONNEXION</a>
                     <img class="pdp_de_profiles" src="{% static 'images/profil_default.png' %}" alt="Photo de profil">
                 {% endif %}
-
             </div>
+
         </nav>
     </header>
     <header class="mobil" style="display:none;">
@@ -63,7 +67,19 @@
             <a href="{% url 'index' %}">ACCUEIL</a>
             <a href="">CONTACT</a>
         </div>
-        <img class="logo" src="{% static 'images/logo.png'%}" alt="Logo airsoft Bordeaux Concept" onclick="btn_adi_toggle()">
+        <div id="logo_mobil">
+            <img class="logo" src="{% static 'images/logo.png'%}" alt="Logo airsoft Bordeaux Concept" onclick="btn_adi_toggle()">
+        </div>
+        {% if user.is_authenticated %}
+            <div class="notification-mobile">
+                <button id="notification-bell-mobile" class="bell">
+                    <i class='bx bxs-bell'></i>
+                    <span class="badge" style="display: none;"></span>
+                </button>
+                <div id="notification-dropdown_mobil" class="dropdown" style="display: none;">
+                </div>
+            </div>
+        {% endif %}
     </header>
 
     <section id="content-general">
@@ -106,8 +122,9 @@
 
 
     <script id="notification-messages" type="application/json">{% if messages %}[{% for message in messages %}{"level": "{{ message.tags }}", "text": "{{ message|escapejs }}"}{% if not forloop.last %},{% endif %}{% endfor %}]{% else %}[] {% endif %}</script>
-    <script src="{% static 'js/notification.js' %}"></script>
+    <script src="{% static 'js/bandeau_notification.js' %}"></script>
     <script src="{% static 'js/btn_aditionel_mobil.js' %}"></script>
+    <script src="{% static 'notifications/js/notifications.js' %}"></script> <!--notification la cloche en haut-->
 
 </body>
 </html>

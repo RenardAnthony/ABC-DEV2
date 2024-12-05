@@ -227,7 +227,7 @@ header.mobil nav{
     width: 100%;
 }
 header.mobil i{
-    font-size:32px;
+    font-size: 32px;
 
 }
 header.mobil a{
@@ -235,17 +235,18 @@ header.mobil a{
     text-align: center;
     width: 120px;
 }
-header.mobil .logo{
+header.mobil #logo_mobil{
     position: fixed;
     bottom: 35px;
     padding: 10px;
     background-color: var(--color-gray8);
     border-radius: 50px;
 }
-header.mobil img.logo{
+header.mobil #logo_mobil img{
     width: 70px;
     height 70px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 1);
+    border-radius: 50px;
 }
 header.mobil #button_aditionnel{
     display: flex;
@@ -271,6 +272,198 @@ header.mobil #button_aditionnel a{
 
 
 
+
+.notifications_pc {
+    position: relative;
+    margin-right: 10px;
+
+}
+.notifications_pc .bell {
+    font-size: 1.5em;
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: var(--color-text-white);
+    position: relative;
+}
+
+.notifications_pc .bell .badge {
+    position: absolute;
+    top: -5px;
+    right: -5px;
+    background-color: var(--color-red);
+    color: white;
+    border-radius: 50%;
+    padding: 2px 6px;
+    font-size: var(--size-s);
+}
+
+.notifications_pc .dropdown {
+    position: absolute;
+    top: 45px;
+    right: 0;
+    background: var(--color-gray8);
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    padding: 10px;
+    width: 500px;
+    display: none;
+    z-index: 1000;
+}
+
+.notifications_pc .notification-item {
+    padding: 10px;
+    border-bottom: 1px solid var(--color-gray6);
+    display: flex;
+    justify-content: space-between;
+
+}
+
+.notifications_pc .notification-item.unread {
+    font-weight: bold;
+}
+
+.notifications_pc .notification-item p {
+    margin: 0;
+    font-size: var(--size-m);
+    flex: 1; /* Permet au texte d'occuper l'espace restant */
+    white-space: nowrap; /* Empêche les retours à la ligne */
+    overflow: hidden; /* Cache le texte qui dépasse */
+    text-overflow: ellipsis; /* Ajoute "..." pour indiquer qu'il y a plus de texte */
+}
+
+.notifications_pc .notification-item a {
+    font-size: var(--size-m);
+    color: var(--color-blue-light);
+    text-decoration: none;
+}
+
+.notifications_pc .notification-item a:hover {
+    text-decoration: underline;
+}
+.notifications_pc .mark-as-read {
+    flex-shrink: 0; /* Empêche l'élément de se compresser */
+    margin-left: 10px; /* Ajoute un espace entre le texte et le bouton */
+    color: var(--color-gray4);
+    font-size: var(--size-s);
+    cursor: pointer;
+    text-decoration: none;
+}
+
+.notifications_pc .mark-as-read:hover {
+    color: var(--color-gray3);
+    text-decoration: underline;
+}
+
+
+
+/* notification bell verison mobil */
+.notification-mobile {
+    position: none;
+    top: 18px;
+    left: 10px;
+    z-index: 1000;
+    display: none; /* Masqué par défaut */
+}
+
+.notification-mobile .bell {
+    font-size: 1em;
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: var(--color-text-white);
+    position: relative;
+    transform: translateY(-1px);
+}
+.notification-mobile .bell i{
+    font-size: var(--size-xl);
+}
+
+.notification-mobile .badge {
+    position: absolute;
+    top: -5px;
+    right: -5px;
+    background-color: var(--color-red);
+    color: white;
+    border-radius: 50%;
+    padding: 2px 6px;
+    font-size: 0.8rem;
+    display: none; /* Masqué par défaut */
+}
+
+.notification-mobile .dropdown {
+    position: absolute;
+    top: 60px; /* Ajustez selon la hauteur de la cloche */
+    left: 10px; /* Alignement */
+    background: var(--color-gray8);
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    padding: 10px;
+    width: 430px; /* Ajustez pour s'adapter à l'écran mobile */
+    height: 650px;
+    display: none; /* Masqué par défaut */
+    z-index: 1000;
+}
+.notification-mobile .dropdown.show {
+    display: block; /* Affiche le dropdown quand ouvert */
+}
+.notification-mobile .notification-item {
+    display: flex;
+    flex-direction: column; /* Empile les éléments verticalement */
+    align-items: flex-start; /* Aligne le contenu à gauche */
+    padding: 10px;
+    border-bottom: 1px solid var(--color-gray6);
+}
+.notification-mobile .notification-actions {
+    display: flex;
+    gap: 10px;
+    width: 100%;
+    justify-content: space-around;
+}
+.notification-mobile .notification-actions a,
+.notification-mobile .notification-actions .mark-as-read {
+    font-size: var(--size-s);
+    text-decoration: underline; /* Ajoute un soulignement */
+    cursor: pointer;
+}
+
+.notification-mobile .notification-actions a:hover,
+.notification-mobile .notification-actions .mark-as-read:hover {
+    color: var(--color-blue-light); /* Change la couleur au survol */
+}
+
+.notification-mobile .notification-item.unread {
+    font-weight: bold;
+}
+
+.notification-mobile .notification-item p {
+    margin: 0 0 10px 0; /* Espace entre le texte et les boutons */
+    font-size: var(--size-m);
+    white-space: normal; /* Permet au texte de revenir à la ligne */
+}
+
+.notification-mobile .notification-item a,
+.notification-mobile .mark-as-read {
+    margin: 5px 0; /* Espacement entre les boutons */
+    font-size: var(--size-s);
+    text-decoration: underline; /* Ajoute un soulignement pour les rendre plus clairs */
+    cursor: pointer;
+}
+
+.notification-mobile .notification-item a:hover,
+.notification-mobile .mark-as-read:hover {
+    color: var(--color-blue-light); /* Change la couleur au survol */
+}
+
+header.mobil .notification-mobile i{
+    font-size: var(--size-l);
+}
+
+
+
+
+
+
 .mobil{
     display: none;
 }
@@ -284,13 +477,24 @@ header.mobil #button_aditionnel a{
 @media screen and (max-width: 700px){
 
     .pc{
-        display:none;
+        display: none;
     }
     .mobil{
         display: block;
     }
 
-
+    .notification-mobile{
+        width: 50px;
+        height: 50px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        border-radius: 50px;
+        position: fixed;
+        top: 18px;
+        left: 10px;
+        z-index: 1000;
+    }
 
     header.mobil{
         display: flex;

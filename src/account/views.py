@@ -31,6 +31,8 @@ from .forms import CustomUserForm
 
 from badges.models import Badge, UserBadge
 
+from notifications.utils import CreateNotification
+
 
 
 
@@ -44,17 +46,22 @@ def signup(request):
         password1 = request.POST.get("password1")
         password2 = request.POST.get("password2")
 
+        # Validation des champs
+        if not all([pseudo, email, password1, password2]):
+            messages.error(request, "Tous les champs sont requis.")
+            return render(request, "account/signup.html", {"pseudo": pseudo, "email": email})
+
         if password1 != password2:
-            messages.error(request, "Les mots de passe ne sont pas identiques")
-            return render(request, "account/signup.html")
+            messages.error(request, "Les mots de passe ne sont pas identiques.")
+            return render(request, "account/signup.html", {"pseudo": pseudo, "email": email})
 
         if CustomUser.objects.filter(pseudo=pseudo).exists():
             messages.error(request, "Le pseudo est déjà pris.")
-            return render(request, "account/signup.html")
+            return render(request, "account/signup.html", {"email": email})
 
         if CustomUser.objects.filter(email=email).exists():
             messages.error(request, "L'email est déjà utilisé.")
-            return render(request, "account/signup.html")
+            return render(request, "account/signup.html", {"pseudo": pseudo})
 
         user = CustomUser(email=email, pseudo=pseudo)
         user.set_password(password1)
@@ -87,7 +94,8 @@ def signup(request):
             return render(request, "account/signup.html")
 
         messages.success(request, "Votre compte a été créé avec succès. Veuillez vérifier votre email pour confirmer votre inscription.")
-        return redirect('login')
+        return render(request, "account/login.html", {"success": True})
+        #return redirect('login')
 
     return render(request, "account/signup.html")
 
@@ -197,6 +205,7 @@ def verify_email(request, uidb64, token):
         user.save()
         login(request, user)
         messages.success(request, "Merci pour votre confirmation par email. Vous êtes maintenant connecté.")
+        CreateNotification("staff", f"Une nouvelle inscription nécessite votre approbation. ({user.pseudo})", url="/admin/inscriptions/")
         return redirect('profile')
     else:
         messages.error(request, "Le lien de confirmation est invalide ou a expiré.")
