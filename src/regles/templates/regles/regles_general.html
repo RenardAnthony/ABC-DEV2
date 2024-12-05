@@ -1,0 +1,289 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}<title>Règles générales</title>{% endblock %}
+{% block Css %}
+    <link rel="stylesheet" href="{% static 'regles/css/regles.css' %}">
+{% endblock %}
+
+{% block content %}
+
+<div class="spacer_50"></div>
+
+<div id="container">
+
+
+    <div id="presentation" class="component">
+        <h1>Bienvenue sur notre page de règles et conseils</h1>
+        <p>
+            Nous savons que cette page contient beaucoup d’informations, mais tout ce qui y est expliqué est essentiel pour profiter pleinement et en sécurité de nos parties d'airsoft.
+            <br><br>
+            Enfreindre une de ces règles peut entraîner votre exclusion des événements, alors merci de bien prendre le temps de tout lire et de comprendre ce qu'il faut pour jouer chez nous !
+            <br><br>
+            Nous allons évoquer nos règles spécifiques, ainsi que les règles générales de sécurité. Prenez votre temps, c'est vraiment important !
+        </p>
+    </div>
+
+    <div id="menu">
+        <h2>Tables des matières :</h2>
+        <div id="liste">
+            <a href="#presentation">Presentation</a>
+            <a href="#termes_importants">Termes Importants</a>
+            <a href="#regles_generales">Règles Générales</a>
+            <a href="#puissance_distance">Puissance et Distance</a>
+            <a href="#recommandations">Recommandations</a>
+        </div>
+        <div id="ligne"><p></p></div>
+
+    </div>
+
+
+    <div class="component" id="termes_importants">
+        <h2>Les Termes Importants :</h2>
+        <h3>Réplique en sécurité :</h3>
+            <p>Une réplique est en sécurité quand :
+                <ul class="num">
+                    <li>Le chargeur est retiré et la bille engagée dans le canon est éjectée. (le canon est vide)</li>
+                    <li>La sécurité est mise.</li>
+                    <li>La réplique est posée ou accrochée à une sangle (afin de réduire le caractère agressif visuel).</li>
+                </ul>
+            </p>
+
+        <h3>Fair-play :</h3>
+        <p>
+            Faire preuve de maîtrise de soi et de loyauté, que l'on gagne ou que l'on perde.<br><br>
+            Jouer le jeux, avec sourir et bien veuillence .<br><br>
+            Nos ennemis sont avant tout nos amis. En cas de problème, n'hésitez jamais à demander de l'aide même à l'équipe adversaire !<br><br>
+            Tout se règle avec le sourire !
+        </p>
+
+        <h3>Highlander :</h3>
+        <p>
+            Le terme "highlander" fait référence aux joueurs qui ne se déclarent jamais "out", même lorsqu'ils sont touchés, à cause d'un manque de fair-play.<br><br>
+            Ne pas sentir une bille ca peut arrivé une fois dans l'adrenaline, mais pas deux.<br><br>
+            Ces joueurs ne sont pas les bienvenus parmis nous.</p>
+
+        <div class="note">
+            <h4>Actions en Cas de Conflit avec un Highlander</h4>
+            <div id="content-1" class="collapsible-content">
+                <p>
+                    Si un joueur refuse de reconnaître avoir été touché (ne "prend pas ses billes"), commencez par rappeler la règle à voix haute.<br><br>
+                    Dans la plupart des cas, cela suffira à résoudre le problème. <br><br>
+                    Si le conflit persiste et qu'aucun accord n'est trouvé, rapprochez-vous d'un membre du staff ou d'un joueur habitué de l'association. Le joueur concerné pourra être exclu immédiatement et de toutes les futures parties.
+                </p>
+            </div>
+            <button class="toggle_btn" onclick="toggleVisibility(this, 'content-1')">Voir Plus</button>
+        </div>
+
+        <h3>Chrony :</h3>
+        <p>
+            Le Chrony est un chronotachygraphe, un appareil permettant de mesurer la vitesse d'un projectile et, en fonction de la masse de ce dernier, de calculer sa puissance en joules ou en FPS (Feet per Second).<br><br>
+            Le passage au chrony est essentiel pour s'assurer que toutes les répliques respectent les limites de puissance établies pour garantir la sécurité de tous les joueurs.
+        </p>
+
+        <h3>Freeze :</h3>
+        <p>
+            Le Freeze est une commande utilisée lorsqu'un adversaire est trop proche pour effectuer un tir sans douleur. <br><br>
+            En criant "Freeze !", vous pouvez éliminer un adversaire sans tir réel. <br>
+            Ce geste remplace le tir de manière sécuritaire lorsque la distance est trop courte.<br><br>
+            Le tir peut être contesté si l'adversaire estime que la probabilité de toucher était trop faible et peut demander à vérifier le bon fonctionnement de votre réplique. <br>
+            Si pas de billes, réplique déchargée ou trajectoire impossible, le Freeze peut être contesté et vous repartez chacun de votre côté sans élimination.
+        </p>
+    </div>
+
+
+
+    <div class="component" id="regles_generales">
+        <h1>Règles Générales</h1>
+        <h2>Passage au Chrony</h2>
+        <p>
+            Toutes les répliques doivent passer au chrony avant chaque partie. <br><br>
+            Une réplique estimer trop puissante pourra être repasser au chrony à tout moment et sous la demande de n'import qui.<br><br>
+            La puissance maximale de votre réplique ne dépassera jamais 1.2 joules. (voir cas spécifique sur sertaine partie) 2j pour les snipper<br><br>
+            Chez ABC, la puissance est mesurée avec les <bold>billes de jeu, hop-up à zéro.</bold><br><br>
+            Note : Vous pouvez changer de réplique en cours de partie ou entre les manches, à condition que toutes vos répliques aient été validées au chrony.
+        </p>
+
+        <h2>Responsabilité Environnementale</h2>
+        <p>
+            Le terrain doit rester propre. Nous jouons avec des billes biodégradables, et aucun déchet ne doit être laissé.<br>
+            Nous jouons dans des forêts privées, avec des propriétaires que nous respectons, et nous tenons à préserver la faune et la flore locales.<br><br>
+            À la fin de chaque manche, pendant que vous marchez vers la base, regardez bien le sol et ramassez tout déchet que vous trouvez, qu'il soit à nous ou non.<br><br>
+            Prenez l'habitude de vérifier au sol pour ramasser les objets perdus (chargeurs, bandages, radios) qui peuvent appartenir à d'autres joueurs.
+        </p>
+
+        <h2>Ce Qui Est Interdit</h2>
+        <p>
+            <ul style="dot">
+                <li>Mineurs (-18 ans) : Une carte d'identité peut être demandée en cas de doute.</li>
+                <li>Retrait des équipements de protection individuelle (EPI) pendant une partie. Cela est interdit et entraîne des sanctions sévères.</li>
+                <li>Badges Croix-Rouge : Seuls les réel médecins, pompiers ou secouristes peuvent les porter.</li>
+                <li>Tenues politiques : Tout élément à caractère politique est interdit (seconde guerre mondiale oui, mais sans les symboles).</li>
+                <li>Chargeurs haute capacité (≥ 150 billes) : Exception pour les mitrailleuses lourdes pouvant atteindre jusqu'à 500 billes.</li>
+                <li>Billes non biodégradables.</li>
+                <li>HPA (air comprimé).</li>
+                <li>Laser / flashlight stroboscopique .</li>
+                <li>Tir en Full Automatique : Utilisez le mode semi si votre réplique le permet.</li>
+                <li>Objets pyrotechniques (fumigènes, grenades, petard).</li>
+                <li>Fumer / vaper : Interdit en dehors des zones prévues.</li>
+                <li>Armes blanches, stupéfiants, alcool : Strictement interdits.</li>
+                <li>Comportement agressif ou disputes : Tout acte d'agression verbale ou physique est sanctionné par une exclusion immédiate et définitive.</li>
+            </ul>
+
+        </p>
+
+        <h2>Ce Qui Est Obligatoire</h2>
+        <p>
+            <ul class="dot">
+                <li>Chaussures montantes : Type rangers ou randonnée, pour protéger vos chevilles.</li>
+                <li>Protection faciale (Stalker ou équivalent): Un foulard n'est pas suffisant.</li>
+                <li>Lunettes de protection homologuées : Les lunettes de soleil ou de vue ne sont pas acceptées.</li>
+            </ul>
+        </p>
+
+        <h2>Recommandé Mais Facultatif</h2>
+        <p>
+            <ul>
+                <li>Casque rigide : Pour éviter les bosses.</li>
+                <li>Protection d'oreilles : Une bille peut rapidement blesser l'oreille externe.</li>
+                <li>Gants : Protègent des branches et des impacts douloureux.</li>
+                <li>Gilet tactique : Une couche épaisse pour protéger le torse.</li>
+                <li>Radio : Utilisez des canaux légaux. Les radios facilitent grandement la communication sur le terrain, même si tout le monde n'en possède pas.</li>
+                <li>Badge de groupe sanguin : Si vous en portez un, assurez-vous qu'il corresponde à la réalité.</li>
+                <li>Santé : Informez le staff de toute allergie ou condition médicale.</li>
+            </ul>
+        </p>
+
+        <h2>Scénarios de Jeu</h2>
+        <p>
+            Les scénarios n'ont pas de règles spécifiques, mis à part les objectifs qui changent à chaque manche. Les règles générales de sécurité et de fair-play restent en vigueur. Les règles sont réexpliquées avant chaque manche pour éviter toute confusion.
+        </p>
+    </div>
+
+    <div class="component" id="puissance_distance">
+
+        <h1>Règles de Jeu</h1>
+        <h2>Puissance et Distance</h2>
+            <p>
+                <ul class="dot">
+                    <li>Limite de puissance : Engagement interdit à moins de 10 mètres, 20 mètres pour les snipers.</li>
+                    <li>Freeze : En cas de distance trop courte, utilisez la commande "Freeze !" pour éliminer un adversaire sans tir.</li>
+                    <li>Tête : Ciblez la tête uniquement en dernier recours si aucune autre partie du corps n'est exposée.</li>
+                </ul>
+            </p>
+
+        <h2>Soin en Jeu</h2>
+            <p>
+                Chez ABC, tout le monde est médecin.<br><br>
+
+                <bold>Kit de soin :</bold> Composé de 3 bandages blancs, 1 bandage jaune, et une casquette orange.<br><br>
+
+                Lorsqu'on est touché, crier "OUT" et brandir la casquette orange.<br>
+                La casquette orange indique à tous les joueurs que vous êtes "hors jeu", soit parce que vous êtes éliminé, soit parce que vous avez un problème.<br><br>
+
+                <bold>Réanimation :</bold><br>
+                Une fois éliminé, vous devez rester sur place pendant 1 minute. Si vous êtes en danger ou au milieu du feu, vous pouvez vous déplacer pour vous mettre en sécurité (dans un rayon de 5 mètres maximum), mais ce déplacement ne doit en aucun cas servir à vous rapprocher d'un allié.<br><br>
+
+                Pendant cette minute, un allié peut venir vous soigner. Pour cela, il doit venir à votre niveau, utiliser un de VOS bandages blancs et l'attacher à votre poignet. Vous pouvez ensuite retourner en jeu immédiatement.<br><br>
+
+                Si personne n'est venu vous aider après une minute, vous avez le droit de vous déplacer pour chercher un allié, mais attention : les "morts" ne parlent pas, et vous ne pouvez pas donner ou recevoir d'informations durant ce déplacement. Profitez-en pour recharger ou refaire vos lacets, mais restez en silence par rapport au jeu.<br><br>
+
+                Vous avez 3 bandages blancs, ce qui signifie que vous pouvez être réanimé 3 fois de cette manière. Lors de la 4ème élimination, il n'y a plus de bandage blanc : c'est à ce moment que le bandage jaune est utilisé. Le bandage jaune indique que vous n'avez plus de "vies" restantes.<br><br>
+
+                <bold>Réanimation avec bandage jaune :</bold> Si vous êtes éliminé avec un bandage jaune, un allié peut toujours vous réanimer, mais cette fois, il doit poser ses deux mains sur vos épaules pendant 20 secondes pour que vous puissiez retourner en jeu. Ce processus peut être répété autant de fois que nécessaire.<br><br>
+
+                Cependant, si un ennemi atteint votre position pendant que vous portez un bandage jaune et que vous êtes OUT, il peut simuler un "craquage de nuque", et vous serez éliminé jusqu'à la fin de la partie. Cela signifie que vous devez retourner a la safe zone et attendre la prochaine manche.
+            </p>
+
+
+        <h2>Gestion des Équipes</h2>
+        <p>
+            Pendant les pauses, des changements d'équipes peuvent avoir lieu pour rééquilibrer les forces en présence. Par exemple, si une équipe a trop de snipers par rapport à l'autre, un rééquilibrage peut être effectué. Ces rééquilibrages sont décidés uniquement par le staff pour maintenir une expérience de jeu agréable pour tous.
+        </p>
+    </div>
+
+    <div class="component" id="recommandations">
+        <h1>Recommandations Avant et Après la Partie</h1>
+        <h2>Transport des Répliques</h2>
+            <p>
+                <ul>
+                    <li>Transportez vos répliques dans des boîtes ou sacs opaques, sans batterie et sans chargeur engagé.</li>
+                    <li>Prévoyez une veste civile par-dessus vos équipements pour éviter les malentendus.</li>
+                </ul>
+            </p>
+
+        <h2>Après la Partie</h2>
+            <p>
+                <lu>
+                    <li>Inspection des tiques : Vérifiez soigneusement vos bras, l'aine, les oreilles. Les tiques peuvent causer de graves maladies.</li>
+                    <li>Entretiens des équipements : Sortez vos répliques de leurs boîtes, débranchez les batteries, nettoyez vos canons, et replacez vos hop-up à zéro pour éviter une déformation prématurée.</li>
+                </lu>
+            </p>
+
+        <h2>Règles de Sécurité</h2>
+            <p>
+                <ul class="num">
+                    <li>Toutes répliques sont toujours considérées comme chargées.</li>
+                    <li>Ne jamais pointer une réplique sur quelqu’un en dehors de la zone de jeu.</li>
+                    <li>Gardez l’index hors de la détente tant que la cible n’est pas alignée.</li>
+                    <li>Soyez sûr de votre objectif avant de tirer.</li>
+                </ul>
+            </p>
+
+        <h1>Membres vs Freelances</h1>
+        <p>
+            Les freelances représentent la majorité des joueurs (environ 85 %). Ils ont les mêmes règles que les membres, mais doivent payer la Participation Aux Frais (PAF) pour chaque partie. Certains événements sont réservés aux membres, mais c'est rare.<br><br>
+            Les membres ont plusieurs avantages :<br></p>
+
+            <ul>
+                <li>Pas de PAF lors des parties régulières.</li>
+                <li>Tarifs préférentiels lors des grands événements.</li>
+                <li>Accès prioritaire aux inscriptions.</li>
+                <li>Droit de regard sur les décisions de l'association, avec des réunions annuelles.</li>
+                <li>Écusson de l'association fourni à l'adhésion, à porter au choix.</li>
+                <li>Avantages partenaires (par exemple, réductions chez certains commerçants locaux).</li>
+                <li>Activités réservées : Certains entraînements comme des parcours du combattant ou des stages de tir sont réservés aux membres.</li>
+            </ul>
+
+            <p>
+                Si vous souhaitez devenir membre, parlez-en au staff. Chaque année, une session d'inscription est ouverte, et vous recevrez une invitation pour devenir membre. Nous vous recontacterons pour le paiement et pour vous expliquer le fonctionnement de l'association en interne.
+            </p>
+
+        <h1>Inclusivité et Diversité</h1>
+        <p>
+            Notre association est constituée de personnes matures, principalement âgées de :<br><br>
+            - 18-20 ans : 10 %<br>
+            - 20-30 ans : 60 %<br>
+            - 30-40 ans : 20 %<br>
+            - 40+ ans : 10 %<br><br>
+            Nous sommes ouverts à tous, et environ 10 % de nos membres sont des femmes, et nous aimerions voir ce pourcentage augmenter.<br>
+            L'airsoft n'est pas un sport exclusivement masculin, tout le monde est bienvenu !<br><br>
+            De plus, nous sommes une association inclusive et respectueuse de la communauté LGBTQIA+. Les joueurs transgenres, non-binaires, ou d'autres orientations sont les bienvenus, et il est possible de personnaliser son profil en conséquence.
+        </p>
+
+        <h1>Conclusion</h1>
+        <p>
+            Nous espérons que ces règles et recommandations vous aideront à mieux apprécier votre expérience de jeu. L’airsoft chez ABC est avant tout une question de respect et de fair-play pour que chacun puisse s’amuser en toute sécurité.<br><br>
+            Bonne partie !
+        </p>
+    </div>
+</div>
+
+<div class="spacer_200"></div>
+
+<script>
+    function toggleVisibility(button, contentId) {
+        const content = document.getElementById(contentId);
+        if (content.classList.contains("open")) {
+            content.classList.remove("open");
+            button.textContent = "Voir Plus";
+        } else {
+            content.classList.add("open");
+            button.textContent = "Voir Moins";
+        }
+    }
+</script>
+
+
+
+{% endblock %}

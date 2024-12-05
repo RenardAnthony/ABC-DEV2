@@ -7,3 +7,5 @@ settings_DEV.py
 settings_PUBLIC.py
 settings.py
 settings_PUBLIC_Pythonanywhere.py
+staticfiles/
+migrations/

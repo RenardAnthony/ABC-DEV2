@@ -1,0 +1,9 @@
+Pour crée une notification :
+
+
+from notifications.utils import CreateNotification
+
+CreateNotification("all", "Une nouvelle fonctionnalité est disponible !", url="/nouvelle-fonction/")
+CreateNotification(["User1", "User2"], "Un événement spécial est prévu pour vous.", url="/evenement/123/")
+CreateNotification("admin", "Une nouvelle inscription nécessite votre approbation.", url="/admin/inscriptions/")
+CreateNotification("JohnDoe", "Votre profil a été mis à jour.", url="/profile/")

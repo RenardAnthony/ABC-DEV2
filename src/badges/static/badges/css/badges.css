@@ -1,0 +1,92 @@
+body {
+    background-color: var(--color-gray9);
+}
+
+#contener {
+    width: 90%;
+    max-width: 800px;
+    margin: var(--size-xxl) auto;
+    background-color: var(--color-gray8);
+    padding: var(--size-m);
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#contener h2 {
+    margin: var(--size-s) auto var(--size-l);
+}
+
+#contener form {
+    width: 100%;
+}
+
+input[type="checkbox"] {
+    display: none;  /* Masque la case à cocher */
+}
+
+#content {
+    width: 100%;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+    grid-gap: 10px;  /* Espacement entre les cases */
+    margin-bottom: 20px;
+}
+
+.badge-item {
+    width: 100%;
+    height: 100px;
+    cursor: pointer;
+    background-color: var(--color-gray9);
+    margin: 6px;
+    border-radius: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 2px dashed var(--color-gray7);  /* Style des cases vides */
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.badge-item.filled {
+    border: 2px solid var(--color-primary);  /* Style des cases remplies */
+}
+
+.badge-item.selected {
+    background-color: var(--color-gray6);
+    border-color: var(--color-highlight);
+}
+.badge-item:hover {
+    transform: scale(1.05);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+#content img {
+    max-width: 80%;
+    max-height: 80%;
+}
+/* Media Queries pour les petits écrans */
+@media (max-width: 600px) {
+    #content {
+        grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
+        grid-gap: 8px;
+    }
+
+    .badge-item {
+        height: 80px;
+    }
+
+    #content img {
+        max-width: 70%;
+        max-height: 70%;
+    }
+
+    #contener h2 {
+        font-size: 1.5rem;
+    }
+
+    button {
+        font-size: 1rem;
+        padding: 8px 16px;
+    }
+}
