@@ -309,9 +309,11 @@
                         {% if message.is_deleted %}
                             <p>Ce message a été supprimé</p>
                         {% else %}
-                            <p class="message-content">{{ message.content }}</p>
+                            <div class="message-content">
+                                <p>{{ message.content }}</p>
+                            </div>
                             {% if message.updated_at > message.created_at %}
-                                <p class="edited-tag">(Édité)</p>
+                                <p class="edited-tag">Édité</p>
                             {% endif %}
                         {% endif %}
                         <p class="timestamp">
@@ -328,11 +330,13 @@
                     <!-- Actions -->
                     {% if message.user == user or user.is_staff %}
                         <div class="message-actions">
-                            {% if message.user == user %}
-                                <button class="btn-action btn-edit" data-message-id="{{ message.id }}">Modifier</button>
-                            {% endif %}
-                            {% if message.user == user or user.is_staff %}
-                                <button class="btn-action btn-delete" data-message-id="{{ message.id }}">Supprimer</button>
+                            {% if not message.is_deleted %}
+                                {% if message.user == user %}
+                                    <button class="btn-action btn-edit" data-message-id="{{ message.id }}">Modifier</button>
+                                {% endif %}
+                                {% if user.is_staff %}
+                                    <button class="btn-action btn-delete" data-message-id="{{ message.id }}">Supprimer</button>
+                                {% endif %}
                             {% endif %}
                         </div>
                     {% endif %}

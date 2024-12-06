@@ -3,6 +3,8 @@ from django.http import JsonResponse
 from django.shortcuts import get_object_or_404, redirect, render
 from django.contrib.auth.decorators import login_required
 from .models import Message, ChatRoom
+
+
 @login_required
 def send_message(request, chat_room_id):
     chat_room = get_object_or_404(ChatRoom, id=chat_room_id)
@@ -24,15 +26,24 @@ def edit_message(request, message_id):
     if request.user != message.user and not request.user.is_staff:
         return JsonResponse({'success': False, 'error': 'Permission denied'}, status=403)
 
-    data = json.loads(request.body)
-    new_content = data.get('content', '')
+    try:
+        data = json.loads(request.body)
+        new_content = data.get('content', '')
 
-    # Mettre à jour le message
-    message.original_content = message.content  # Conserver l'ancienne version
-    message.content = new_content
-    message.save()
+        if not new_content.strip():
+            return JsonResponse({'success': False, 'error': 'Message content cannot be empty'}, status=400)
 
-    return JsonResponse({'success': True, 'updated_content': message.content})
+        # Mettre à jour le message
+        message.original_content = message.content  # Conserver l'ancienne version
+        message.content = new_content
+        message.save()
+
+        return JsonResponse({'success': True, 'updated_content': message.content})
+    except json.JSONDecodeError:
+        return JsonResponse({'success': False, 'error': 'Invalid JSON'}, status=400)
+    except Exception as e:
+        return JsonResponse({'success': False, 'error': str(e)}, status=500)
+
 
 @login_required
 def delete_message(request, message_id):

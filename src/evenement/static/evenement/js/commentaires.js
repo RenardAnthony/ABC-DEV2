@@ -1,5 +1,24 @@
+// Fonction pour récupérer le CSRF token
+function getCookie(name) {
+    let cookieValue = null;
+    if (document.cookie && document.cookie !== '') {
+        const cookies = document.cookie.split(';');
+        for (let i = 0; i < cookies.length; i++) {
+            const cookie = cookies[i].trim();
+            if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                break;
+            }
+        }
+    }
+    return cookieValue;
+}
+
+
+
+// Gestion des actions sur les messages
 document.addEventListener('click', function (event) {
-    // Gestion de la suppression d'un message
+    // Suppression d'un message
     if (event.target.classList.contains('btn-delete')) {
         event.preventDefault();
 
@@ -19,24 +38,33 @@ document.addEventListener('click', function (event) {
                 messageElement.innerHTML = '<em>Ce message a été supprimé</em>';
                 messageElement.classList.add('deleted');
             } else {
-                console.error('Erreur de suppression : ', data.error);
+                console.error('Erreur de suppression :', data.error);
             }
         })
-        .catch(error => console.error('Erreur réseau : ', error));
+        .catch(error => console.error('Erreur réseau :', error));
     }
 
-    // Gestion de la modification d'un message
+    // Modification d'un message
     if (event.target.classList.contains('btn-edit')) {
         event.preventDefault();
 
         const messageId = event.target.dataset.messageId;
         const messageElement = document.getElementById(`message-${messageId}`);
-        const currentContent = messageElement.querySelector('.message-content').textContent;
+        const messageContentElement = messageElement.querySelector('.message-content p');
+
+        // Vérifie si une édition est déjà en cours
+        if (messageElement.querySelector('.edit-textarea')) {
+            console.warn('Une édition est déjà en cours pour ce message.');
+            return;
+        }
+
+        const currentContent = messageContentElement.textContent.trim();
 
         // Remplace le contenu par un champ de texte éditable
-        messageElement.querySelector('.message-content').innerHTML = `
+        messageContentElement.innerHTML = `
             <textarea class="edit-textarea">${currentContent}</textarea>
             <button class="btn-save-edit" data-message-id="${messageId}">Enregistrer</button>
+            <button class="btn-cancel-edit" data-message-id="${messageId}">Annuler</button>
         `;
     }
 
@@ -46,7 +74,8 @@ document.addEventListener('click', function (event) {
 
         const messageId = event.target.dataset.messageId;
         const saveUrl = `/commentaires/edit/${messageId}/`;
-        const newContent = event.target.previousElementSibling.value;
+        const textarea = event.target.parentElement.querySelector('.edit-textarea');
+        const newContent = textarea.value.trim();
 
         fetch(saveUrl, {
             method: 'POST',
@@ -60,39 +89,29 @@ document.addEventListener('click', function (event) {
         .then(data => {
             if (data.success) {
                 const messageElement = document.getElementById(`message-${messageId}`);
-                messageElement.querySelector('.message-content').innerHTML = data.updated_content;
-                messageElement.classList.remove('edited');
-                messageElement.classList.add('updated');
+                const messageContentElement = messageElement.querySelector('.message-content');
+
+                messageContentElement.innerHTML = `
+                    <p>${data.updated_content}</p>
+                    <p class="edited-tag">Édité</p>
+                `;
+            } else {
+                console.error('Erreur lors de la modification :', data.error);
             }
-        });
-    }
-});
-
-
-// Fonction pour récupérer le CSRF token
-function getCookie(name) {
-    let cookieValue = null;
-    if (document.cookie && document.cookie !== '') {
-        const cookies = document.cookie.split(';');
-        for (let i = 0; i < cookies.length; i++) {
-            const cookie = cookies[i].trim();
-            if (cookie.substring(0, name.length + 1) === (name + '=')) {
-                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
-                break;
-            }
-        }
-    }
-    return cookieValue;
-}
-
-document.addEventListener('click', function (event) {
-    if (event.target.classList.contains('btn-delete')) {
-        console.log('Bouton supprimer cliqué');
-        // Le reste du code
+        })
+        .catch(error => console.error('Erreur réseau ou serveur :', error));
     }
 
-    if (event.target.classList.contains('btn-edit')) {
-        console.log('Bouton modifier cliqué');
-        // Le reste du code
+    // Annulation de la modification d'un message
+    if (event.target.classList.contains('btn-cancel-edit')) {
+        event.preventDefault();
+
+        const messageId = event.target.dataset.messageId;
+        const messageElement = document.getElementById(`message-${messageId}`);
+        const messageContentElement = messageElement.querySelector('.message-content');
+        const originalContent = messageContentElement.dataset.originalContent;
+
+        // Réinitialiser le contenu original
+        messageContentElement.innerHTML = `<p>${originalContent}</p>`;
     }
 });

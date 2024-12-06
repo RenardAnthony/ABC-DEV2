@@ -24,10 +24,10 @@ class Message(models.Model):
     room = models.ForeignKey(ChatRoom, on_delete=models.CASCADE, related_name='messages')
     user = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
     content = models.TextField()
-    original_content = models.TextField(blank=True, null=True)  # Conserver les versions éditées
+    original_content = models.TextField(blank=True, null=True)
     is_deleted = models.BooleanField(default=False)
     created_at = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField(auto_now=True)
+    updated_at = models.DateTimeField(blank=True, null=True)  # Permet le null
 
     def __str__(self):
         return f"{self.user.pseudo}: {self.content[:50]}"

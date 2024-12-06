@@ -81,7 +81,9 @@ def update_gun(request, pk):
             if 'photo' in request.FILES:
                 image = form.cleaned_data['photo']
                 extension = image.name.split('.')[-1]
-                new_image_name = f"{request.user.id}_{gun.name}.{extension}"
+                # Remplacer les espaces par des underscores dans le nom
+                sanitized_name = gun.name.replace(" ", "_")
+                new_image_name = f"{request.user.id}_{sanitized_name}.{extension}"
 
                 # Répertoire pour enregistrer l'image
                 image_dir = os.path.join(settings.MEDIA_ROOT, 'clients', 'gun')

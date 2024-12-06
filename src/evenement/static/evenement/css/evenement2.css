@@ -1175,7 +1175,7 @@ input[readonly] {
     color: var(--color-gray2);
     margin-bottom: var(--size-m);
 }
-.message.edited .edited-tag {
+.edited-tag {
     color: var(--color-gray5);
     font-size: 0.8em;
     font-style: italic;
