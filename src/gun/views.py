@@ -8,123 +8,71 @@ import os
 from django.conf import settings
 from django.contrib.admin.views.decorators import staff_member_required
 from django.utils import timezone
+from django.http import JsonResponse
 
 @login_required
-def create_gun(request):
-    if request.method == "POST":
-        form = GunForm(request.POST, request.FILES)
-        if form.is_valid():
-            gun = form.save(commit=False)
-            gun.owner = request.user
+def manage_gun(request, pk=None):
 
-            image = form.cleaned_data['photo']
-            extension = image.name.split('.')[-1]
-            new_image_name = f"{request.user.id}_{gun.name}.{extension}"
+    gun = get_object_or_404(Gun, pk=pk, owner=request.user) if pk else None
 
-            # Répertoire pour enregistrer l'image
-            image_dir = os.path.join(settings.MEDIA_ROOT, 'clients', 'gun')
-            os.makedirs(image_dir, exist_ok=True)
-
-            # Ouvrir l'image avec PIL
-            img = Image.open(image)
-
-            # Dimensions cibles
-            target_width = 300
-            target_height = 180
-
-            # Calculer les ratios de redimensionnement pour les deux dimensions
-            width_ratio = target_width / img.width
-            height_ratio = target_height / img.height
-
-            # Utiliser le plus grand ratio pour s'assurer que l'image est suffisamment grande pour recouvrir toute la cible
-            if width_ratio > height_ratio:
-                new_size = (target_width, int(img.height * width_ratio))
-            else:
-                new_size = (int(img.width * height_ratio), target_height)
-
-            # Redimensionner l'image
-            img = img.resize(new_size, Image.Resampling.LANCZOS)
-
-            # Recadrer l'image pour obtenir les dimensions exactes requises
-            left = (img.width - target_width) / 2
-            top = (img.height - target_height) / 2
-            right = (img.width + target_width) / 2
-            bottom = (img.height + target_height) / 2
-
-            img = img.crop((left, top, right, bottom))
-
-            # Enregistrer l'image redimensionnée et recadrée
-            img_path = os.path.join(image_dir, new_image_name)
-            img.save(img_path)
-
-            # Définir le chemin de l'image sur l'objet gun
-            gun.photo = os.path.join('clients', 'gun', new_image_name)
-
-            gun.save()
-
-            messages.success(request, "Réplique ajoutée avec succès.")
-            return redirect('profile')
-    else:
-        form = GunForm()
-    return render(request, 'gun/gun_form.html', {'form': form})
-
-
-@login_required
-def update_gun(request, pk):
-    gun = get_object_or_404(Gun, pk=pk, owner=request.user)
     if request.method == "POST":
         form = GunForm(request.POST, request.FILES, instance=gun)
         if form.is_valid():
             gun = form.save(commit=False)
+            gun.owner = request.user  # Assignation de l'utilisateur pour les créations
 
-            # Gérer la mise à jour de l'image, si présente
-            if 'photo' in request.FILES:
-                image = form.cleaned_data['photo']
-                extension = image.name.split('.')[-1]
-                # Remplacer les espaces par des underscores dans le nom
-                sanitized_name = gun.name.replace(" ", "_")
-                new_image_name = f"{request.user.id}_{sanitized_name}.{extension}"
-
-                # Répertoire pour enregistrer l'image
-                image_dir = os.path.join(settings.MEDIA_ROOT, 'clients', 'gun')
-                os.makedirs(image_dir, exist_ok=True)
-
-                # Ouvrir l'image avec PIL et la traiter
-                img = Image.open(image)
-                target_width = 300
-                target_height = 180
-                width_ratio = target_width / img.width
-                height_ratio = target_height / img.height
-                if width_ratio > height_ratio:
-                    new_size = (target_width, int(img.height * width_ratio))
-                else:
-                    new_size = (int(img.width * height_ratio), target_height)
-                img = img.resize(new_size, Image.Resampling.LANCZOS)
-                left = (img.width - target_width) / 2
-                top = (img.height - target_height) / 2
-                right = (img.width + target_width) / 2
-                bottom = (img.height + target_height) / 2
-                img = img.crop((left, top, right, bottom))
-
-                img_path = os.path.join(image_dir, new_image_name)
-                img.save(img_path)
-
-                # Supprimer l'ancienne image si elle existe
-                if gun.photo and os.path.exists(os.path.join(settings.MEDIA_ROOT, gun.photo.path)):
-                    os.remove(os.path.join(settings.MEDIA_ROOT, gun.photo.path))
-
-                gun.photo = os.path.join('clients', 'gun', new_image_name)
-
-            gun.save()
-            messages.success(request, "Réplique mise à jour avec succès.")
-            return redirect('profile')
+            # Gestion de l'image
+            try:
+                if 'photo' in request.FILES:
+                    image = form.cleaned_data['photo']
+                    extension = image.name.split('.')[-1]
+                    new_image_name = f"{request.user.id}_{gun.name.replace(' ', '_')}.{extension}"
+                    gun.photo.name = f"clients/gun/{new_image_name}"
+                gun.save()
+                return redirect('profile')
+            except Exception as e:
+                # Ajoute un message d'erreur pour expliquer le problème
+                messages.error(request, f"Erreur lors du traitement de l'image : {str(e)}")
+        else:
+            messages.error(request, "Erreur dans le formulaire. Veuillez vérifier les données.")
     else:
         form = GunForm(instance=gun)
 
-    return render(request, 'gun/gun_form.html', {
-        'form': form,
-        'gun': gun,  # Passe l'objet gun à la vue
-    })
+    return render(request, 'gun/gun_form.html', {'form': form, 'gun': gun})
+
+
+def handle_uploaded_image(image, user_id, gun_name):
+    """Gère le traitement et l'enregistrement de l'image."""
+    extension = image.name.split('.')[-1]
+    new_image_name = f"{user_id}_{gun_name.replace(' ', '_')}.{extension}"
+    image_dir = os.path.join(settings.MEDIA_ROOT, 'clients', 'gun')
+    os.makedirs(image_dir, exist_ok=True)
+
+    img = Image.open(image)
+    img = resize_and_crop_image(img, target_width=300, target_height=180)
+
+    img_path = os.path.join(image_dir, new_image_name)
+    img.save(img_path)
+    return os.path.join('clients', 'gun', new_image_name)
+
+
+def resize_and_crop_image(img, target_width, target_height):
+    """Redimensionne et recadre l'image pour correspondre aux dimensions spécifiées."""
+    width_ratio = target_width / img.width
+    height_ratio = target_height / img.height
+
+    new_size = (
+        target_width, int(img.height * width_ratio)
+    ) if width_ratio > height_ratio else (
+        int(img.width * height_ratio), target_height
+    )
+
+    img = img.resize(new_size, Image.Resampling.LANCZOS)
+    left = (img.width - target_width) / 2
+    top = (img.height - target_height) / 2
+    right = (img.width + target_width) / 2
+    bottom = (img.height + target_height) / 2
+    return img.crop((left, top, right, bottom))
 
 
 @login_required
@@ -184,3 +132,22 @@ def verifier_replique(request, replique_id):
         'proprietaire': replique.owner,
     }
     return render(request, 'gun/verifier_replique.html', context)
+
+@staff_member_required
+def calcul_puissance(request):
+    puissance_joules = None
+
+    if request.method == 'POST':
+        try:
+            grammage_bille = float(request.POST.get('grammage_bille').replace(',', '.'))
+            fps_mesures = float(request.POST.get('fps').replace(',', '.'))
+
+            # Calcul de la puissance en joules
+            puissance_joules = (fps_mesures ** 2) * grammage_bille / 2000
+            puissance_joules = round(puissance_joules, 2)
+
+            return JsonResponse({'success': True, 'puissance_joules': puissance_joules})
+        except (ValueError, KeyError):
+            return JsonResponse({'success': False, 'message': "Valeurs invalides pour le calcul."})
+
+    return render(request, 'gun/calcul_puissance.html', {'puissance_joules': puissance_joules})

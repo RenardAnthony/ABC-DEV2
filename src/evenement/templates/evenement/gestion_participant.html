@@ -95,7 +95,7 @@
                     {% for replique_type in amis_repliques %}
                         <li>
                             <p>Type : {{ replique_type }}</p>
-                            <a href="#">
+                            <a href="{% url 'calcul_puissance' %}">
                                 <button type="button">Calculer</button>
                             </a>
                         </li>

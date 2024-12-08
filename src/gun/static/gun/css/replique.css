@@ -1,11 +1,9 @@
 body{
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    min-height: 100vh;
-    color: var(--color-text-white);
     background-color: var(--color-gray9);
+    align-items: center;
+    justify-content: center;
+    height: 90vh;
+    color: var(--color-text-white);
 }
 #content-general {
     margin: 32px auto;
@@ -160,7 +158,10 @@ form img{
     cursor: pointer;
     transition: 0.2s;
 }
-
+.resultat{
+    font-size: var(--size-xl);
+    color: var(--color-blue-light);
+}
 
 
 

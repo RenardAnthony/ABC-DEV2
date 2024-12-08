@@ -27,6 +27,13 @@ class EvenementForm(forms.ModelForm):
         widget=forms.TextInput(attrs={'readonly': 'readonly'})
     )
 
+    puissance_max_joule = forms.DecimalField(
+        max_digits=5,
+        decimal_places=2,
+        initial=2.00,
+        label="Puissance maximale autorisée (en joules)"
+    )
+
     class Meta:
         model = Evenement
         fields = [

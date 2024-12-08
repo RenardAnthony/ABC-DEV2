@@ -27,7 +27,6 @@ urlpatterns = [
     path('profiles/', include('user_profiles.urls')), # Include les urls de l'application profile utilisateur
     path('gun/', include('gun.urls')), # Include les urls de l'application gun (répliques)
     path('evenement/', include('evenement.urls')), # Include les urls de l'application evenement
-    path('todo/', include('todo.urls')), # Application todoliste
     path('gestion_projet/', include('gestion_projet.urls')), # Application gestion projet
     path('regles/', include('regles.urls')),
     path('badges/', include('badges.urls')),

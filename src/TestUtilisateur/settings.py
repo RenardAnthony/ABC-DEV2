@@ -44,7 +44,6 @@ INSTALLED_APPS = [
     'user_profiles',
     'gun',
     'evenement',
-    'todo',
     'gestion_projet',
     'regles',
     'badges',
