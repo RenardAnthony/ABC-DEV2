@@ -9,3 +9,4 @@ settings.py
 settings_PUBLIC_Pythonanywhere.py
 staticfiles/
 migrations/
+/src/mediafiles/
