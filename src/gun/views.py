@@ -12,26 +12,66 @@ from django.http import JsonResponse
 
 @login_required
 def manage_gun(request, pk=None):
-
     gun = get_object_or_404(Gun, pk=pk, owner=request.user) if pk else None
 
     if request.method == "POST":
         form = GunForm(request.POST, request.FILES, instance=gun)
         if form.is_valid():
             gun = form.save(commit=False)
-            gun.owner = request.user  # Assignation de l'utilisateur pour les créations
+            gun.owner = request.user  # Assigne l'utilisateur connecté comme propriétaire
 
             # Gestion de l'image
             try:
                 if 'photo' in request.FILES:
-                    image = form.cleaned_data['photo']
+                    image = request.FILES['photo']
                     extension = image.name.split('.')[-1]
                     new_image_name = f"{request.user.id}_{gun.name.replace(' ', '_')}.{extension}"
-                    gun.photo.name = f"clients/gun/{new_image_name}"
+
+                    # Répertoire pour enregistrer l'image
+                    image_dir = os.path.join(settings.MEDIA_ROOT, 'clients', 'gun')
+                    os.makedirs(image_dir, exist_ok=True)
+
+                    # Ouvrir l'image avec Pillow
+                    img = Image.open(image)
+
+                    # Dimensions cibles
+                    target_width = 300
+                    target_height = 180
+
+                    # Calcul du ratio pour redimensionner sans distorsion
+                    width_ratio = target_width / img.width
+                    height_ratio = target_height / img.height
+                    if width_ratio > height_ratio:
+                        new_size = (target_width, int(img.height * width_ratio))
+                    else:
+                        new_size = (int(img.width * height_ratio), target_height)
+
+                    img = img.resize(new_size, Image.Resampling.LANCZOS)
+
+                    # Centre et recadre l'image pour qu'elle soit exactement de la taille cible
+                    left = (img.width - target_width) / 2
+                    top = (img.height - target_height) / 2
+                    right = (img.width + target_width) / 2
+                    bottom = (img.height + target_height) / 2
+                    img = img.crop((left, top, right, bottom))
+
+                    # Enregistrer l'image redimensionnée
+                    img_path = os.path.join(image_dir, new_image_name)
+                    img.save(img_path)
+
+                    # Supprimer l'ancienne image si elle existe
+                    if gun.photo and os.path.exists(os.path.join(settings.MEDIA_ROOT, gun.photo.name)):
+                        os.remove(os.path.join(settings.MEDIA_ROOT, gun.photo.name))
+
+                    # Mettre à jour le chemin de l'image dans le modèle
+                    gun.photo = os.path.join('clients', 'gun', new_image_name)
+
                 gun.save()
+                messages.success(request, "Réplique enregistrée avec succès.")
                 return redirect('profile')
+
             except Exception as e:
-                # Ajoute un message d'erreur pour expliquer le problème
+                # Ajoute un message d'erreur en cas de problème
                 messages.error(request, f"Erreur lors du traitement de l'image : {str(e)}")
         else:
             messages.error(request, "Erreur dans le formulaire. Veuillez vérifier les données.")
@@ -39,40 +79,6 @@ def manage_gun(request, pk=None):
         form = GunForm(instance=gun)
 
     return render(request, 'gun/gun_form.html', {'form': form, 'gun': gun})
-
-
-def handle_uploaded_image(image, user_id, gun_name):
-    """Gère le traitement et l'enregistrement de l'image."""
-    extension = image.name.split('.')[-1]
-    new_image_name = f"{user_id}_{gun_name.replace(' ', '_')}.{extension}"
-    image_dir = os.path.join(settings.MEDIA_ROOT, 'clients', 'gun')
-    os.makedirs(image_dir, exist_ok=True)
-
-    img = Image.open(image)
-    img = resize_and_crop_image(img, target_width=300, target_height=180)
-
-    img_path = os.path.join(image_dir, new_image_name)
-    img.save(img_path)
-    return os.path.join('clients', 'gun', new_image_name)
-
-
-def resize_and_crop_image(img, target_width, target_height):
-    """Redimensionne et recadre l'image pour correspondre aux dimensions spécifiées."""
-    width_ratio = target_width / img.width
-    height_ratio = target_height / img.height
-
-    new_size = (
-        target_width, int(img.height * width_ratio)
-    ) if width_ratio > height_ratio else (
-        int(img.width * height_ratio), target_height
-    )
-
-    img = img.resize(new_size, Image.Resampling.LANCZOS)
-    left = (img.width - target_width) / 2
-    top = (img.height - target_height) / 2
-    right = (img.width + target_width) / 2
-    bottom = (img.height + target_height) / 2
-    return img.crop((left, top, right, bottom))
 
 
 @login_required
