@@ -30,7 +30,7 @@ class EvenementForm(forms.ModelForm):
     puissance_max_joule = forms.DecimalField(
         max_digits=5,
         decimal_places=2,
-        initial=2.00,
+        initial=1.20,
         label="Puissance maximale autorisée (en joules)"
     )
 
