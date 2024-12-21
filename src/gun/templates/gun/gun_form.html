@@ -53,6 +53,8 @@
       <div class="fps">
           <p>{{ gun.joule }} - Joules</p>
           <p>Calculé le : {% if gun.last_joule_update %}{{ gun.last_joule_update|date:"d/m/Y" }}{% else %}Non calculé{% endif %}</p>
+          <div class="spacer_20"></div>
+          <a href="/gun/calcul_puissance/" target="_blank">Calculateur puissance</a>
       </div>
 
     <div class="spacer_50"></div>

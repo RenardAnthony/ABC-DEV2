@@ -57,7 +57,7 @@ class Evenement(models.Model):
     type_replique_autorisee = models.CharField(max_length=200, blank=True)
 
     #puissance_max_joule = models.PositiveIntegerField(default=2)
-    puissance_max_joule = models.DecimalField(max_digits=5, decimal_places=2, default=2.0)
+    puissance_max_joule = models.DecimalField(max_digits=10, decimal_places=2, default=2.0)
 
     def __str__(self):
         return self.nom

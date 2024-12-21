@@ -64,7 +64,9 @@ form img{
 .fps p{
     font-size: 16px;
 }
-
+.fps a{
+    color: var(--color-blue-normal);
+}
 
 
 
