@@ -109,9 +109,12 @@ def verifier_replique(request, replique_id):
             grammage_bille = float(request.POST.get('grammage_bille').replace(',', '.'))
             fps_mesures = float(request.POST.get('fps').replace(',', '.'))
 
+            # Conversion des unités
+            masse_kg = grammage_bille / 1000  # Conversion en kilogrammes
+            vitesse_ms = fps_mesures * 0.3048  # Conversion FPS en m/s
+
             # Calcul de la puissance en joules
-            puissance_joules = (fps_mesures ** 2) * grammage_bille / 2000
-            puissance_joules = puissance_joules / 10
+            puissance_joules = (1 / 2) * masse_kg * (vitesse_ms ** 2)
             puissance_joules = round(puissance_joules, 2)
 
             # Mettez à jour les joules et la date de dernière vérification

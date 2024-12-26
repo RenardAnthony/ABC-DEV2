@@ -118,9 +118,7 @@ body{
     color: var(--color-text-white);
 }
 .input-box2{
-    width: 90%;
     height: 50px;
-    margin: 50px auto 0;
 }
 
 
@@ -141,10 +139,16 @@ body{
 }
 .input-box2-choice {
     position: relative;
-    width: 90%;
     height: 50px;
     margin: 30px auto;
 }
+input[type="file"] ~ a {
+    display: none; /* Cache le lien du fichier actuel */
+}
+input[type="file"]::after {
+    content: ""; /* Supprime l'indication du chemin */
+}
+
 
 .input-box2-choice select {
     width: 100%;

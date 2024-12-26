@@ -300,13 +300,13 @@ header.mobil #button_aditionnel a{
 
 .notifications_pc .dropdown {
     position: absolute;
-    top: 45px;
-    right: 0;
+    top: 55px;
+    right: -150px;
     background: var(--color-gray8);
     border-radius: 5px;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
     padding: 10px;
-    width: 500px;
+    width: 50vw;
     display: none;
     z-index: 1000;
 }
@@ -399,7 +399,7 @@ header.mobil #button_aditionnel a{
     border-radius: 5px;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
     padding: 10px;
-    width: 430px; /* Ajustez pour s'adapter à l'écran mobile */
+    width: 88vw; /* Ajustez pour s'adapter à l'écran mobile */
     height: 650px;
     display: none; /* Masqué par défaut */
     z-index: 1000;

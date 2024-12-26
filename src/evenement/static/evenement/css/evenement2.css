@@ -622,7 +622,6 @@ form{
     border: 1px dashed var(--color-sand-dark);
     background-color: var(--color-gray10);
     padding: var(--size-m);
-    width: 90%;
 }
 #participant .detail_prix ul li p{
     font-size: var(--size-m);

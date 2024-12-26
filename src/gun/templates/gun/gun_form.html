@@ -1,5 +1,6 @@
 {% extends 'base.html' %}
 {% load static %}
+{% load custom_filters %}
 
 {% block title %} <title>Replique</title> {% endblock %}
 {% block Css %}
@@ -29,7 +30,7 @@
     {% else %}
         <p>Aucune photo disponible</p>
     {% endif %}
-    <label for="{{ form.photo.id_for_label }}">Photo</label>
+    <label for="{{ form.photo.id_for_label }}">Ajouter ou modifier la photo</label>
     {{ form.photo }}
 
         {% if messages %}
