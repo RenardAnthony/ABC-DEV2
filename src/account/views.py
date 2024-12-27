@@ -205,7 +205,7 @@ def verify_email(request, uidb64, token):
         user.save()
         login(request, user)
         messages.success(request, "Merci pour votre confirmation par email. Vous êtes maintenant connecté.")
-        CreateNotification("staff", f"Une nouvelle inscription nécessite votre approbation. ({user.pseudo})", url="/admin/inscriptions/")
+        CreateNotification("staff", f"Une nouvelle inscription nécessite votre approbation. ({user.pseudo})", url=f"/admin/user_profiles/userprofile{user.id}/change/")
         return redirect('profile')
     else:
         messages.error(request, "Le lien de confirmation est invalide ou a expiré.")
