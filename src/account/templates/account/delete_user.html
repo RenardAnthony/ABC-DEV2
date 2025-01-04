@@ -1,15 +1,43 @@
+{% extends 'base.html' %}
 {% load static %}
 
-<!DOCTYPE html>
+{% block title %} <title>Suppression compte</title> {% endblock %}
+{% block Css %}
+    <link rel="stylesheet" href="{% static 'account/css/account.css' %}">
+{% endblock %}
 
-<html lang="fr">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Suppression compte</title>
-        <link rel="stylesheet" href="{% static 'account/css/account.css' %}">
-        <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
-    </head>
+{% block content %}
+
+    <form method="post">
+        {% csrf_token %}
+        <h1>Suppression compte</h1>
+
+
+            <div style="width: 50%; margin: 2rem auto;">
+                <p class="description">Pour supprimer votre compte, veuillez suivre les instructions suivantes :</p>
+                <p><input type="checkbox" name="confirmation"> En cochant cette case je comprends que cette action est irréversible.</p>
+            </div>
+
+
+                <div class="input-box">
+                    <p class="tps">Tapez votre pseudo pour confirmer la supression:</p>
+                    <input type="text" name="username" placeholder="Votre pseudo" required>
+                </div>
+        <div class="register-link">
+            <button type="submit" class="btn_7">Supprimer Mon Compte</button>
+        </div>
+    </form>
+
+    {% if messages %}
+        {% for message in messages %}
+            <div class="message {{ message.tags }}">{{ message }}</div>
+        {% endfor %}
+    {% endif %}
+</div>
+{% endblock %}
+
+
+
     <body class="delete">
         <div class="wrapper_delete">
             <form method="post">
