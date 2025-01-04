@@ -1099,70 +1099,16 @@ input[readonly] {
 .message-content{
     margin-left: var(--size-m);
 }
-.timestamp{
-    margin-left: var(--size-m);
-    position: absolute;
-    right: 10px;
-    bottom: 4px;
-    color: var(--color-gray4);
-}
-.message {
-    display: flex;
-    align-items: flex-start;
-    gap: 15px;
-    background: var(--grade-1);
-    padding: var(--size-s);
-    border-radius: 8px;
-    margin: var(--size-m) 0;
-    position: relative;
-}
-.profile-picture img {
-    width: 50px;
-    height: 50px;
-    border-radius: 50%;
-    object-fit: cover;
-    border: 2px solid var(--color-gray7);
-}
+
+
 .message-content-wrapper {
     flex: 1;
 }
-.message-actions {
-    display: flex;
-    gap: 10px;
-    position: absolute;
-    top: 10px;
-    right: 10px;
-}
-.btn-action {
-    background-color: var(--color-gray6);
-    color: var(--color-text-white);
-    border: none;
-    border-radius: 5px;
-    padding: 5px 10px;
-    font-size: 0.9em;
-    cursor: pointer;
-    transition: 0.3s;
-}
 
-.btn-action:hover {
-    background-color: var(--color-gray4);
-}
 
-.btn-delete {
-    background-color: var(--color-red);
-}
 
-.btn-delete:hover {
-    background-color: var(--color-red-light);
-}
 
-.btn-edit {
-    background-color: var(--color-blue-normal);
-}
 
-.btn-edit:hover {
-    background-color: var(--color-blue-light);
-}
 .mymessage{
     background: var(--color-gray9);
 }
@@ -1179,33 +1125,33 @@ input[readonly] {
     font-size: 0.8em;
     font-style: italic;
 }
+.message {
+    display: flex;
+    align-items: flex-start;
+    gap: 15px;
+    background: var(--grade-1);
+    padding: var(--size-s);
+    border-radius: 8px;
+    margin: var(--size-m) 0;
+}
 .message .pseudo{
     color: var(--color-sand-normal);
     font-weight: bold;
 }
 .message .btn-delete{
-    color: var(--color-gray3);
-    font-weight: bold;
+    color: var(--color-gray7);
+    background-color: transparent;
 }
 .message .btn-delete:hover{
-    color: var(--color-orange);
-    text-decoration: none;
+    color: var(--color-gray5);
+    background-color: transparent;
+}
+.chat-messages{
+    display: flex;
+    flex-direction: column;
+
 }
 
-.message-actions {
-    margin-top: 10px;
-}
-
-.message-actions a {
-    margin-right: 10px;
-    text-decoration: none;
-    font-size: 0.9em;
-    color: #007bff;
-}
-
-.message-actions a:hover {
-    text-decoration: underline;
-}
 
 
 .chat-section form{
@@ -1246,8 +1192,73 @@ input[readonly] {
 
 
 
-
-
+table.OneMessage{
+    width: 100%;
+}
+.OneMessage, .OneMessage tr, .OneMessage td{
+    border-collapse: collapse;
+}
+.profile-picture {
+    width: 70px;
+}
+.profile-picture img {
+    width: 70px;
+    height: 70px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid var(--color-gray7);
+    margin: 10px;
+}
+.OneMessage{
+    margin-bottom: 2rem;
+}
+.OneMessage .pseudo{
+    color: var(--color-sand-normal);
+    font-weight: bold;
+    margin-top: 10px;
+}
+.OneMessage .messages{
+    width: 90%;
+}
+.OneMessage .messages p{
+    margin-left: 1rem;
+}
+.OneMessage .timestamp{
+    color: var(--color-gray4);
+    width: 10%;
+    font-size: var(--size-s);
+}
+.OneMessage .btn-delete {
+    color: var(--color-gray7);
+    background-color: transparent;
+}
+.OneMessage .message-actions{
+    margin-left: 1rem;
+}
+.btn-delete:hover {
+    color: var(--color-gray5);
+    background-color: transparent;
+}
+.btn-edit {
+    color: var(--color-gray7);
+    background-color: transparent;
+}
+.btn-edit:hover {
+    color: var(--color-gray5);
+    background-color: transparent;
+}
+.btn-action {
+    color: var(--color-gray7);
+    border: none;
+    padding: 5px 10px 5px 0;
+    font-size: var(--size-s);
+    cursor: pointer;
+    transition: 0.3s;
+    margin-bottom: 10px;
+}
+.btn-action:hover{
+    color: var(--color-gray5);
+}
 
 
 @media screen and (min-width: 700px){

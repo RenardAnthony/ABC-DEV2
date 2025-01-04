@@ -27,7 +27,7 @@ class Message(models.Model):
     original_content = models.TextField(blank=True, null=True)
     is_deleted = models.BooleanField(default=False)
     created_at = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField(blank=True, null=True)  # Permet le null
+    updated_at = models.DateTimeField(auto_now=True, blank=True, null=True)  # Permet le null
 
     def __str__(self):
         return f"{self.user.pseudo}: {self.content[:50]}"

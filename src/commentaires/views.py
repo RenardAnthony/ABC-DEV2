@@ -1,4 +1,6 @@
 import json
+from django.utils import timezone
+
 from django.http import JsonResponse
 from django.shortcuts import get_object_or_404, redirect, render
 from django.contrib.auth.decorators import login_required
@@ -36,6 +38,7 @@ def edit_message(request, message_id):
         # Mettre à jour le message
         message.original_content = message.content  # Conserver l'ancienne version
         message.content = new_content
+        message.updated_at = timezone.now()  # Mise à jour explicite de updated_at
         message.save()
 
         return JsonResponse({'success': True, 'updated_content': message.content})

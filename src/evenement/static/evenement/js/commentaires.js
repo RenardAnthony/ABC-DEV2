@@ -50,7 +50,7 @@ document.addEventListener('click', function (event) {
 
         const messageId = event.target.dataset.messageId;
         const messageElement = document.getElementById(`message-${messageId}`);
-        const messageContentElement = messageElement.querySelector('.message-content p');
+        const messageContentElement = messageElement.querySelector('.messages p');
 
         // Vérifie si une édition est déjà en cours
         if (messageElement.querySelector('.edit-textarea')) {
@@ -89,7 +89,7 @@ document.addEventListener('click', function (event) {
         .then(data => {
             if (data.success) {
                 const messageElement = document.getElementById(`message-${messageId}`);
-                const messageContentElement = messageElement.querySelector('.message-content');
+                const messageContentElement = messageElement.querySelector('.messages');
 
                 messageContentElement.innerHTML = `
                     <p>${data.updated_content}</p>
