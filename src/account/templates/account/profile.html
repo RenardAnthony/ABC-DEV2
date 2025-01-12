@@ -18,12 +18,29 @@
 
         <p class="user_description">"{{ user.userprofile.bio }}"</p>
 
+        {% if user.id == request.user.id %}<a href="{% url 'manage_badges' %}">{% endif %}
+                <div class="badges">
+
+                    {% if selected_badges %}
+                        {% for user_badge in selected_badges %}
+                        <div class="badge">
+                            <img src="{{ user_badge.badge.image.url }}" title="{{ user_badge.badge.name }} : {{ user_badge.badge.description }}" alt="{{ user_badge.badge.name }}">
+                        </div>
+                        {% endfor %}
+                    {% else %}
+                        <a style="cursor: pointer;" href="{% url 'manage_badges' %}"><p>Vous avez aucun badges sur votre profil</p></a>
+                    {% endif %}
+                </div>
+            {% if user.id == request.user.id %}</a>{% endif %}
+
         {% if user.id == request.user.id %}
             <div class="edit_profil">
                 <a href="{% url 'update_user' %}" class="btn_2">Mes informations</a>
                 <a href="{% url 'update_user_profile' %}" class="btn_2">Modifier mon profil</a>
             </div>
         {% endif %}
+
+
     </div>
 
     <div class="profilpc">

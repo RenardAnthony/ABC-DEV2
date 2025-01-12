@@ -42,7 +42,21 @@
     background-color: red;
 }
 
-
+.profilmobil .badges{
+    display: flex;
+    width: 180px;
+    justify-content: space-evenly;
+    margin: auto auto var(--size-xxl);
+    width: 60%;
+}
+.profilmobil .badges img{
+    width: 50px;
+    height: 50px;
+    cursor: pointer;
+}
+.profilmobil .badges img:title{
+    background-color: red;
+}
 
 
 .photo_de_profil{
@@ -70,7 +84,11 @@
     padding: var(--size-xs) var(--size-xs);
     width: 40%;
 }
-
+.edit_profil a{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
 
 
 

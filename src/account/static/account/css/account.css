@@ -184,7 +184,7 @@ input[type="file"]::after {
 }
 .link-editprofil{
     width: 90%;
-    margin: 100px auto;
+    margin: 100px auto 50px;
     height: 124px;
     justify-content: space-between;
     display: flex;
@@ -226,7 +226,7 @@ a.button-gray:hover{
 .submit-logout{
     text-align: center;
     width: 50%;
-    margin: 5rem auto auto auto;
+    margin: 0 auto 5rem;
     display: flex;
     flex-direction: column;
 }
