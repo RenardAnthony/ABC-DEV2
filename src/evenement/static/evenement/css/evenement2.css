@@ -435,7 +435,7 @@ body{
 /*Inscription*/
 .mobilsize{
     margin: 32px auto;
-    width: 80%;
+    width: 90%;
 }
 .mobilsize h2{
     text-align: center;
@@ -1190,7 +1190,8 @@ input[readonly] {
 
 
 
-
+.replique_tab{
+}
 
 table.OneMessage{
     width: 100%;

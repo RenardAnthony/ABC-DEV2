@@ -33,15 +33,6 @@
     width: 180px;
     justify-content: space-evenly;
 }
-.profilpc .badges img{
-    width: 50px;
-    height: 50px;
-    cursor: pointer;
-}
-.profilpc .badges img:title{
-    background-color: red;
-}
-
 .profilmobil .badges{
     display: flex;
     width: 180px;
@@ -49,14 +40,15 @@
     margin: auto auto var(--size-xxl);
     width: 60%;
 }
-.profilmobil .badges img{
+.badges img{
     width: 50px;
     height: 50px;
     cursor: pointer;
 }
-.profilmobil .badges img:title{
+.badges img:title{
     background-color: red;
 }
+
 
 
 .photo_de_profil{
