@@ -32,6 +32,7 @@ urlpatterns = [
     path('badges/', include('badges.urls')),
     path('commentaires/', include('commentaires.urls')),
     path('notifications/', include('notifications.urls')),
+    path('tools/', views.tools, name="tools"),
 
     path('test/', views.test, name="test"), #Page vierge juste pour les test
 

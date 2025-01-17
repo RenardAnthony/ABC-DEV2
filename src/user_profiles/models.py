@@ -3,6 +3,20 @@ from account.models import CustomUser #Dependance a l'application "account" pour
 from django.conf import settings
 from django.urls import reverse
 
+
+
+class RolePermission(models.Model):
+    """
+    Modèle pour les rôle spécifiques avec des permissions. ca ne remplace pas les "role" et
+    permet de donner des droit a des utilisateur sans leur donnée un acces staff.
+    """
+    name = models.CharField(max_length=50, unique=True)
+    description = models.TextField(blank=True)
+    denomination = models.CharField(max_length=50, unique=True)
+
+    def __str__(self):
+        return self.name
+
 class UserProfile(models.Model):
 
     user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
@@ -32,21 +46,22 @@ class UserProfile(models.Model):
         ('unknown', 'Inconnu'),
     ]
 
-    ROLE = [
+    ROLE = [ #Ici c'est uniquement le role primaire de notre utilisateur. pour les role de permission c'est dans ROLE_PERM
         ('new', 'Nouveau'),
         ('freelance', 'Freelance'),
         ('member', 'Membre'),
         ('staff', 'Staff'),
-        # Ajouter d'autres rôles ici si nécessaire
     ]
+
+    role = models.CharField(max_length=10, choices=ROLE, default="new")
+
+    role_permissions = models.ManyToManyField(RolePermission, blank=True, related_name="users")
 
     bio_gender = models.CharField(max_length=6, choices=BIO_GENDER)
 
     choices_gender = models.CharField(max_length=30, choices=CHOICES_GENDER, blank=True)
 
     blood_group = models.CharField(max_length=7, choices=BLOOD_GROUP)
-
-    role = models.CharField(max_length=10, choices=ROLE, default="new")
 
     avatar = models.ImageField(upload_to='clients/avatars', default='../static/images/profil_default.png')
 
@@ -65,3 +80,6 @@ class UserProfile(models.Model):
 
     def get_absolute_url(self):
         return reverse('profile', kwargs={'user_id': self.user.id})
+
+    def has_permission(self, permission_name):
+        return self.role_permissions.filter(name=permission_name).exists()

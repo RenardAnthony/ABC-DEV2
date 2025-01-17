@@ -1,9 +1,9 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpResponse
-from django.utils import timezone
 from django.contrib.auth.decorators import login_required
 from django.db.models import Count
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+from django.utils import timezone
 
 from datetime import timedelta
 
@@ -13,15 +13,24 @@ from .forms import TaskForm, BugReportForm, BugResolutionForm
 
 
 def format_timestamp(timestamp):
+    # Validation du type
+    if not isinstance(timestamp, datetime.datetime):
+        return "Invalid timestamp"
+
+    # Gestion des fuseaux horaires
     now = timezone.now()
+    if timezone.is_aware(timestamp):
+        timestamp = timezone.localtime(timestamp)
+
+    # Comparaisons et formatage
     if timestamp.date() == now.date():
-        return "Aujourd'hui"
+        return f"Aujourd'hui à {timestamp.strftime('%H:%M')}"
     elif timestamp.date() == (now - timedelta(days=1)).date():
-        return "Hier"
+        return f"Hier à {timestamp.strftime('%H:%M')}"
     elif timestamp.year == now.year:
-        return timestamp.strftime('%d %b')
+        return timestamp.strftime('%d %b à %H:%M')
     else:
-        return timestamp.strftime('%d %b %Y')
+        return timestamp.strftime('%d %b %Y à %H:%M')
 
 # views.py
 @login_required

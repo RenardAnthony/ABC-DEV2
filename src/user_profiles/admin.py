@@ -1,7 +1,7 @@
 from django.contrib import admin
 from django.conf import settings
 import os
-from .models import UserProfile
+from .models import UserProfile, RolePermission
 
 @admin.action(description="Supprimer les images non utilisées")
 def clear_unused_avatars(modeladmin, request, queryset):
@@ -33,6 +33,18 @@ class UserProfileAdmin(admin.ModelAdmin):
         "role",
         "tel",
         "adresse",
+        "get_permissions",
     )
     list_per_page = 30
+    list_filter = ('role',)
     actions = [clear_unused_avatars]
+
+    def get_permissions(self, obj):
+        return ", ".join([perm.denomination for perm in obj.role_permissions.all()])
+
+    get_permissions.short_description = "Permissions"
+
+@admin.register(RolePermission)
+class RolePermissionAdmin(admin.ModelAdmin):
+    list_display = ('denomination', 'name', 'description')
+    search_fields = ('name', 'denomination')

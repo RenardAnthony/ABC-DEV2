@@ -278,15 +278,18 @@
             <p>Vous devez être connecté pour vous inscrire.</p>
         {% endif %}
 
-        {% if user.is_staff %}
-            <div class="spacer_100"></div>
-            <a class="btn_5" href="{% url 'comptabilite_evenement' evenement.pk %}">Comptabilité</a>
+
+        {% if can_manage_event %}<div class="spacer_100"></div>{% endif %}
+
+        {% if can_show_conta %}<a class="btn_5" href="{% url 'comptabilite_evenement' evenement.pk %}">Comptabilité</a>{% endif %}
+        {% if can_show_manage %}
             {% if evenement.date_heure >= today %}
                 <a class="btn_6" href="{% url 'evenement_update' evenement.pk %}">Modifier</a>
                 <a class="pc btn_7" href="{% url 'evenement_delete' evenement.pk %}">Supprimer</a>
                 <p class="mobil pasmodifiable">*Vous ne pouvez pas supprimer un événement depuis un téléphone.</p>
             {% endif %}
         {% endif %}
+
     </div>
 
 

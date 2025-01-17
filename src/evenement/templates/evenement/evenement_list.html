@@ -48,7 +48,8 @@
   </div>
 </div>
 
-{% if user.is_staff %}
+
+{% if can_create_event %}
 <div class="staff_button_liste_evenement">
     <a href="{% url 'evenement_create' %}" class="btn_2">Créer une partie</a>
 </div>

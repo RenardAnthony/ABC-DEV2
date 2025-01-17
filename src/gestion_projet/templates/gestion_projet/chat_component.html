@@ -8,7 +8,7 @@
         <li>
             <div class="side">
                 <h2>{{ message.user.pseudo }}</h2>
-                <span>{{ message.timestamp|format_timestamp }}</span>
+                <span>{{ message.timestamp}}</span>
             </div>
             <p>{{ message.message|mention_links|safe }}</p>  <!-- Appliquer le filtre `mention_links` -->
         </li>

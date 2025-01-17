@@ -4,8 +4,6 @@ from django import template
 import re
 from django.urls import reverse
 from gestion_projet.models import Task, BugReport
-from django.template.defaultfilters import register
-
 
 register = template.Library()
 

@@ -48,7 +48,7 @@
     <!-- Récapitulatif final -->
     <div class="recapitulatif">
 
-        <p>Total de l'argent attendu : {{ total_depenses }} €</p>
+        {% if can_show_monney %} <p>Total de l'argent attendu : {{ total_depenses }} €</p> {% endif %}
 
         {% if total_repas > 0 %}
         <p>Participants au repas : {{ total_repas }}</p>

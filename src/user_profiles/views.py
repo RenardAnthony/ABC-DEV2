@@ -1,11 +1,13 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
-from .models import UserProfile
+from .models import UserProfile, RolePermission
 from .forms import UserProfileForm
 from PIL import Image
 import os
 from django.conf import settings
+from django.contrib.admin.views.decorators import staff_member_required
+from django.http import HttpResponse
 
 def crop_center(image, size):
     """Crop the image to the center with a square size."""
@@ -70,3 +72,31 @@ def update_user_profile(request):
         form = UserProfileForm(instance=user_profile)
 
     return render(request, 'user_profiles/update_profile.html', {'form': form})
+
+
+@staff_member_required
+def populate_role_permissions(request):
+    permissions = [
+        {"name": "hab_chrony", "denomination": "Habilitation Chrony", "description": "Peut valider les puissances des répliques au chrony."},
+        {"name": "hab_payment", "denomination": "Habilitation Validation Paiement", "description": "Peut valider les paiements lors des parties."},
+        {"name": "hab_secu", "denomination": "Habilitation Sécurité", "description": "Peut effectuer le briefing sécurité."},
+        {"name": "hab_loc", "denomination": "Habilitation Location", "description": "Peut effectuer le briefing des packs de location."},
+        {"name": "hab_orga", "denomination": "Habilitation Organisation de Partie", "description": "Peut créer, modifier et supprimer des parties."},
+    ]
+
+    for perm in permissions:
+        # Crée ou récupère la permission avec les nouveaux champs
+        role, created = RolePermission.objects.get_or_create(
+            name=perm["name"],
+            defaults={
+                "denomination": perm["denomination"],
+                "description": perm["description"],
+            }
+        )
+        if not created:
+            # Si le rôle existe déjà, on peut mettre à jour la description et la dénomination
+            role.denomination = perm["denomination"]
+            role.description = perm["description"]
+            role.save()
+
+    return HttpResponse("Permissions ajoutées ou mises à jour avec succès.")

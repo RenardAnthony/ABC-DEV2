@@ -161,12 +161,6 @@ def profile(request, user_id=None):
     return render(request, 'account/profile.html', {'user': user_profile, 'age': age, 'selected_badges': selected_badges})
 
 
-@staff_required
-def list_user(request):
-    users = CustomUser.objects.all()
-    return render(request, 'account/user_list.html', {"users": users})
-
-
 @login_required
 def delete_user(request):
     if request.method == 'POST':

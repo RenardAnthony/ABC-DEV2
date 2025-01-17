@@ -1,0 +1,16 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<form action="{% url 'remplir_bdd_rolepermission' %}" method="POST">
+    {% csrf_token %}
+    <button type="submit" class="btn btn-primary">Remplir la base de données</button>
+</form>
+
+</body>
+</html>

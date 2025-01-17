@@ -2,7 +2,7 @@
 
 from django.urls import path
 from .views import (
-    signup, update_user, login_view, logout_view, profile, list_user, delete_user, verify_email, test,
+    signup, update_user, login_view, logout_view, profile, delete_user, verify_email, test,
     CustomPasswordResetView, CustomPasswordResetConfirmView, CustomPasswordResetDoneView, CustomPasswordResetCompleteView,
     ChangeEmailView, ConfirmEmailChangeView
 )
@@ -15,7 +15,6 @@ urlpatterns = [
     path('logout/', logout_view, name='logout'),
     path('profile/', profile, name='profile'),
     path('profile/<int:user_id>/', profile, name="user_profile"),
-    path('liste-utilisateur/', list_user, name="list_user"),
     path('delete-user/', delete_user, name="delete_user"),
     path('verify-email/<uidb64>/<token>/', verify_email, name='verify_email'),
     path('', login_view, name='login'),

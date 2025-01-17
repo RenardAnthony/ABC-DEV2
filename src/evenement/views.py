@@ -1,3 +1,4 @@
+from django.http import HttpResponseForbidden
 from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
@@ -15,8 +16,15 @@ from notifications.utils import CreateNotification
 
 from datetime import datetime
 
-@staff_member_required
 def evenement_create_or_update(request, pk=None):
+
+    # Verifier permission de l'utilisateur
+    user_profile = request.user.userprofile
+    if user_profile.role != "staff" and not user_profile.has_permission("hab_orga"):
+        return HttpResponseForbidden("Vous n'avez pas la permission de crée ou modifier des partie")
+    ################
+
+
     evenement = get_object_or_404(Evenement, pk=pk) if pk else None
 
     if request.method == 'POST':
@@ -127,8 +135,14 @@ def prepare_context(evenement, form):
 
 
 
-@staff_member_required
 def evenement_delete(request, pk):
+
+    # Verifier permission de l'utilisateur
+    user_profile = request.user.userprofile
+    if user_profile.role != "staff" and not user_profile.has_permission("hab_orga"):
+        return HttpResponseForbidden("Vous n'avez pas la permission de crée ou modifier des partie")
+    ################
+
     evenement = get_object_or_404(Evenement, pk=pk)
     if request.method == "POST":
         evenement.delete()
@@ -149,6 +163,20 @@ def evenement_list(request):
     evenements = list(evenements_futurs) + list(evenements_passes)
 
     evenements_details = []
+
+    # Vérification des permissions pour le bouton de création
+    can_create_event = False
+    if request.user:
+        if request.user.is_staff:
+            can_create_event = True
+        else :
+            try:
+                user_profile = request.user.userprofile
+                if user_profile.has_permission("hab_orga"): # or user_profile.has_permission("hab_event_manager"):...
+                        can_create_event = True
+            except UserProfile.DoesNotExist:
+                pass
+    #######################
 
 
     for evenement in evenements:
@@ -174,6 +202,7 @@ def evenement_list(request):
 
     return render(request, 'evenement/evenement_list.html', {
         'evenements_details': evenements_details,
+        'can_create_event': can_create_event,
     })
 
 
@@ -260,6 +289,45 @@ def evenement_detail(request, pk):
         if user_profile:
             user_role = user_profile.role
 
+    # Vérification des permissions
+    can_manage_event = False
+    if request.user:
+        if request.user.is_staff:
+            can_manage_event = True
+        else:
+            try:
+                user_profile = request.user.userprofile
+                if user_profile.has_permission("hab_orga") or user_profile.has_permission("hab_event_manager"):
+                    can_manage_event = True
+            except UserProfile.DoesNotExist:
+                pass
+
+    can_show_conta = False
+    if request.user:
+        if request.user.is_staff:
+            can_show_conta = True
+        else:
+            try:
+                user_profile = request.user.userprofile
+                if user_profile.has_permission("hab_orga") or user_profile.has_permission("hab_chrony") or user_profile.has_permission("hab_payment"):
+                    can_show_conta = True
+            except UserProfile.DoesNotExist:
+                pass
+
+    can_show_manage = False
+    if request.user:
+        if request.user.is_staff:
+            can_show_manage = True
+        else:
+            try:
+                user_profile = request.user.userprofile
+                if user_profile.has_permission("hab_orga"):
+                    can_show_manage = True
+            except UserProfile.DoesNotExist:
+                pass
+    #######################
+
+
     return render(request, 'evenement/evenement_detail.html', {
         'evenement': evenement,
         'participants': participants,
@@ -270,6 +338,9 @@ def evenement_detail(request, pk):
         'today': today,
         'messages': messages,
         'chat_room': chat_room,
+        'can_manage_event': can_manage_event,
+        'can_show_conta': can_show_conta,
+        'can_show_manage': can_show_manage,
     })
 
 
@@ -492,8 +563,20 @@ def desinscription_evenement(request, evenement_id):
 
 
 # Comptabilité de l'événement
-@staff_member_required
 def comptabilite_evenement(request, pk):
+
+
+    # Verifier permission de l'utilisateur
+    user_profile = request.user.userprofile
+    if user_profile.role != "staff" and not (
+            user_profile.has_permission("hab_orga") or
+            user_profile.has_permission("hab_chrony") or
+            user_profile.has_permission("hab_payment")
+    ):
+        return HttpResponseForbidden("Vous n'avez pas la permission d'accéder à cette page.")
+    ################
+
+
     evenement = get_object_or_404(Evenement, pk=pk)
     inscriptions = evenement.inscription_set.all()
 
@@ -548,6 +631,35 @@ def comptabilite_evenement(request, pk):
         })
         total_depenses += depense
 
+    # Vérifier si l'utilisateur est inscrit à l'événement
+    is_inscrit = False
+    if request.user.is_authenticated:
+        is_inscrit = Inscription.objects.filter(evenement=evenement, utilisateur=request.user).exists()
+
+    # Récupérer le rôle de l'utilisateur si connecté
+    user_role = None
+    if request.user.is_authenticated:
+        user_profile = UserProfile.objects.filter(user=request.user).first()
+        if user_profile:
+            user_role = user_profile.role
+
+    # Vérification des permissions
+    can_show_monney = False
+    if request.user:
+        if request.user.is_staff:
+            can_show_monney = True
+        else:
+            try:
+                user_profile = request.user.userprofile
+                if user_profile.has_permission("hab_orga") or user_profile.has_permission("hab_payment"):
+                    can_show_monney = True
+            except UserProfile.DoesNotExist:
+                pass
+
+
+    #######################
+
+
     return render(request, 'evenement/comptabilite.html', {
         'evenement': evenement,
         'participants': participants,
@@ -557,6 +669,7 @@ def comptabilite_evenement(request, pk):
         'total_freelance': total_freelance,
         'total_membre': total_membre,
         'repliques_par_categorie': repliques_par_categorie,
+        'can_show_monney': can_show_monney,
     })
 
 
@@ -566,8 +679,18 @@ def comptabilite_evenement(request, pk):
 
 
 
-@staff_member_required
 def gestion_participant(request, evenement_id, inscription_id):
+
+    # Verifier permission de l'utilisateur
+    user_profile = request.user.userprofile
+    if user_profile.role != "staff" and not (
+            user_profile.has_permission("hab_orga") or
+            user_profile.has_permission("hab_chrony") or
+            user_profile.has_permission("hab_payment")
+    ):
+        return HttpResponseForbidden("Vous n'avez pas la permission d'accéder à cette page.")
+    ################
+
     evenement = get_object_or_404(Evenement, id=evenement_id)
     inscription = get_object_or_404(Inscription, id=inscription_id)
 
@@ -663,6 +786,36 @@ def gestion_participant(request, evenement_id, inscription_id):
 
         return redirect('gestion_participant', evenement_id=evenement.id, inscription_id=inscription.id)
 
+
+
+
+    # Vérification des permissions
+    can_valider_payment = False
+    if request.user:
+        if request.user.is_staff:
+            can_valider_payment = True
+        else:
+            try:
+                user_profile = request.user.userprofile
+                if user_profile.has_permission("hab_payment"):
+                    can_valider_payment = True
+            except UserProfile.DoesNotExist:
+                pass
+
+    can_valider_chrony = False
+    if request.user:
+        if request.user.is_staff:
+            can_valider_chrony = True
+        else:
+            try:
+                user_profile = request.user.userprofile
+                if user_profile.has_permission("hab_chrony"):
+                    can_valider_chrony = True
+            except UserProfile.DoesNotExist:
+                pass
+
+
+
     context = {
         'evenement': evenement,
         'inscription': inscription,
@@ -671,6 +824,8 @@ def gestion_participant(request, evenement_id, inscription_id):
         'repliques_selectionnees': repliques_selectionnees,
         'repliques_non_selectionnees': repliques_non_selectionnees,
         'amis_repliques': amis_repliques,  # On passe ici la liste des types de répliques apportées par l'ami
+        'can_valider_payment': can_valider_payment,
+        'can_valider_chrony': can_valider_chrony,
     }
     return render(request, 'evenement/gestion_participant.html', context)
 
@@ -728,8 +883,6 @@ def lieu_list(request):
     return render(request, 'evenement/lieu_list.html', {'lieux': lieux})
 
 
-
-
 @staff_member_required
 def lieu_create_view(request):
     if request.method == 'POST':
@@ -751,4 +904,4 @@ def lieu_create_view(request):
 def notify_users_about_event(event):
     # Récupérer tous les utilisateurs
     users = CustomUser.objects.all()
-    CreateNotification("all", f"Un nouvelle evenement a été créée : {event.nom}", url=f"/evenement/{event.id}/")
+    CreateNotification("all", f"Un nouveau événement a été créée : {event.nom}", url=f"/evenement/{event.id}/")

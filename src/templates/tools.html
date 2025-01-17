@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %} <title>Accueil</title> {% endblock %}
+{% block Css %}
+    <link rel="stylesheet" href="{% static 'css/tools.css' %}">
+{% endblock %}
+
+
+
+{% block content %}
+
+<div id="menu_tools">
+
+    <a href="/gun/calcul_puissance/">
+        <img src="" alt="images">
+        <h2>Calculateur de puissance</h2>
+    </a>
+
+    <a href="">
+        <img src="" alt="images">
+        <h2>Générateur d'équipes</h2>
+    </a>
+
+    <a href="">
+        <img src="" alt="images">
+        <h2>Random user</h2>
+    </a>
+
+</div>
+
+
+
+{% endblock %}
+

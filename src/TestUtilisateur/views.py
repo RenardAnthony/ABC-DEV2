@@ -27,3 +27,6 @@ def index(request):
 
 def test(request):
     return render(request, "test.html")
+
+def tools(request):
+    return render(request, "tools.html")

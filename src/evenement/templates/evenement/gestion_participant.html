@@ -38,10 +38,12 @@
 
     <form method="post">
         {% csrf_token %}
-        <button class="btn_4" type="submit" name="valider_paiement"
-            {% if inscription.paiement_valide %}class="btn-disabled" disabled{% endif %}>
-            {% if inscription.paiement_valide %}Paiement Validé{% else %}Valider le paiement{% endif %}
-        </button>
+        {% if can_valider_payment %}
+            <button class="btn_4" type="submit" name="valider_paiement"
+                {% if inscription.paiement_valide %}class="btn-disabled" disabled{% endif %}>
+                 {% if inscription.paiement_valide %}Paiement Validé{% else %}Valider le paiement{% endif %}
+            </button>
+        {% endif %}
 
         <div class="replique">
             <h4>Répliques sélectionnées</h4>
@@ -105,11 +107,12 @@
                 <p>Aucune réplique sélectionnée.</p>
             {% endif %}
         </div>
-
-        <button class="btn_4" type="submit" name="valider_chrony"
-            {% if inscription.chrony_valide %}disabled{% endif %}>
-            {% if inscription.chrony_valide %}Chrony Validé{% else %}Valider le chrony{% endif %}
-        </button>
+        {% if can_valider_chrony %}
+            <button class="btn_4" type="submit" name="valider_chrony"
+                {% if inscription.chrony_valide %}disabled{% endif %}>
+                {% if inscription.chrony_valide %}Chrony Validé{% else %}Valider le chrony{% endif %}
+            </button>
+        {% endif %}
 
         <div class="replique">
             <h4>Autres répliques</h4>
