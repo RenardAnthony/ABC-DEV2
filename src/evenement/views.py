@@ -134,7 +134,6 @@ def prepare_context(evenement, form):
     }
 
 
-
 def evenement_delete(request, pk):
 
     # Verifier permission de l'utilisateur
@@ -325,6 +324,19 @@ def evenement_detail(request, pk):
                     can_show_manage = True
             except UserProfile.DoesNotExist:
                 pass
+
+    can_delete_message = False
+    if request.user:
+        if request.user.is_staff:
+            can_delete_message = True
+        else:
+            try:
+                user_profile = request.user.userprofile
+                if user_profile.has_permission("hab_modo"):
+                    can_delete_message = True
+            except UserProfile.DoesNotExist:
+                pass
+
     #######################
 
 
@@ -341,6 +353,7 @@ def evenement_detail(request, pk):
         'can_manage_event': can_manage_event,
         'can_show_conta': can_show_conta,
         'can_show_manage': can_show_manage,
+        'can_delete_message': can_delete_message,
     })
 
 

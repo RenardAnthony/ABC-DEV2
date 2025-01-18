@@ -322,13 +322,13 @@
 
                 </tr>
                 <tr>
-                    <td colspan="2">{% if message.user == user or user.is_staff %}
+                    <td colspan="2">{% if message.user == user or user.is_staff or can_delete_message%}
                         <div class="message-actions">
                             {% if not message.is_deleted %}
                                 {% if message.user == user %}
                                     <button class="btn-action btn-edit" data-message-id="{{ message.id }}">Modifier</button>
-                                {% endif %}
-                                {% if user.is_staff %}
+                                    <button class="btn-action btn-delete" data-message-id="{{ message.id }}">Supprimer</button>
+                                {% elif can_delete_message %}
                                     <button class="btn-action btn-delete" data-message-id="{{ message.id }}">Supprimer</button>
                                 {% endif %}
                             {% endif %}

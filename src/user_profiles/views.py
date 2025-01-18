@@ -82,6 +82,7 @@ def populate_role_permissions(request):
         {"name": "hab_secu", "denomination": "Habilitation Sécurité", "description": "Peut effectuer le briefing sécurité."},
         {"name": "hab_loc", "denomination": "Habilitation Location", "description": "Peut effectuer le briefing des packs de location."},
         {"name": "hab_orga", "denomination": "Habilitation Organisation de Partie", "description": "Peut créer, modifier et supprimer des parties."},
+        {"name": "hab_modo", "denomination": "Habilitation Moderation web", "description": "Peut supprimer des message, bannire, valider des comptes sur le site."},
     ]
 
     for perm in permissions:

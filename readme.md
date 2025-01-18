@@ -113,7 +113,4 @@ Cette page n'est accessible que au is_admin is_staff via l'url
 >> - Selectionner l'utilisateur et le badge à lui donner
 >> - "is selected" indique si le badge sera afficher sur son profil ou simplement dans son inventaire. Attention, un utilisateur ne peut afficher que 3 badge a la fois, si vous ne forcé 4 je ne sais pas ce qu'il va ce passer :x
 
-
-#
-#
-#
+____
